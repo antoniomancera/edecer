@@ -34,7 +34,8 @@ npm-debug.log*
 
 # misc
 /.angular/cache
-/src/environments/**
+/src/environments/environment.prod.ts
+/src/environments/environment.ts
 
 # Firebase
 .firebase

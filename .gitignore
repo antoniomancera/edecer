@@ -34,3 +34,9 @@ npm-debug.log*
 
 # misc
 /.angular/cache
+/src/environments/**
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

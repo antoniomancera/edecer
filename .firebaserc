@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "apprendre-fr": {
+      "hosting": {
+        "app": [
+          "apprendre-fr"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "apprendre-fr"
+  }
+}

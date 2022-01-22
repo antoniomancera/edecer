@@ -13,19 +13,29 @@ import { Mot } from './mot';
 })
 export class FirebaseServiceService {
   motsCollection: AngularFirestoreCollection<Mot>;
+  percentageCollection: AngularFirestoreCollection<number>;
+
   mots: Observable<Mot[]>;
+  percentage: Observable<number[]>;
 
   constructor(private firestore: AngularFirestore) {
     this.motsCollection = firestore.collection<Mot>('mots');
-    // .snapshotChanges() returns a DocumentChangeAction[], which contains
-    // a lot of information about "what happened" with each change. If you want to
-    // get the data and the id use the map operator.
     this.mots = this.motsCollection.snapshotChanges().pipe(
       map((actions) =>
         actions.map((a) => {
           const data = a.payload.doc.data() as Mot;
-          const id = a.payload.doc.id;
-          return { id, ...data };
+          return data;
+        })
+      )
+    );
+
+    this.percentageCollection = firestore.collection<number>('percentage');
+    this.percentage = this.percentageCollection.snapshotChanges().pipe(
+      map((actions) =>
+        actions.map((a) => {
+          const data = a.payload.doc.data() as number;
+          const probability = data['probability'];
+          return probability;
         })
       )
     );
@@ -36,7 +46,6 @@ export class FirebaseServiceService {
   }
 
   getMotId(id: string): Observable<Mot> {
-    let a1: Mot;
     return this.firestore
       .collection('mots')
       .doc(id)

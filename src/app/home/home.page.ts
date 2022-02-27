@@ -8,14 +8,6 @@ import { Mot } from '../shared/mot';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  p1: Mot[] = [];
-  p2: number[] = [];
-  constructor(private pruea: FirebaseServiceService) {}
-  ngOnInit(): void {
-    this.pruea.percentage.subscribe((data) => (this.p2 = data));
-  }
-
-  p() {
-    this.pruea.getDatabase();
-  }
+  constructor() {}
+  ngOnInit(): void {}
 }

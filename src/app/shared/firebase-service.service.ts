@@ -6,6 +6,7 @@ import {
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
 import { Mot } from './mot';
 
 @Injectable({

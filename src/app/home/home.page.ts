@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { FirebaseServiceService } from '../shared/firebase-service.service';
 import { Mot } from '../shared/mot';
 

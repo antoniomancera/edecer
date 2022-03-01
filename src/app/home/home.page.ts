@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { FirebaseServiceService } from '../shared/firebase-service.service';
 import { Mot } from '../shared/mot';
 
@@ -8,6 +9,90 @@ import { Mot } from '../shared/mot';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  constructor() {}
-  ngOnInit(): void {}
+  randomWord: Mot;
+
+  constructor(private prueba: FirebaseServiceService) {}
+
+  ngOnInit(): void {
+    this.prueba.mots.subscribe(
+      (data) => {
+        this.getRandomWordArray(data);
+      },
+      (error) => {
+        console.error(error);
+      },
+      () => {}
+    );
+  }
+
+  objectsAreSame(x, y) {
+    var objectsAreSame = true;
+    for (var propertyName in x) {
+      if (x[propertyName] !== y[propertyName]) {
+        objectsAreSame = false;
+        break;
+      }
+    }
+    return objectsAreSame;
+  }
+
+  sortArray(mots: Mot[]): Mot[] {
+    return mots.sort(function (a, b) {
+      return a.id - b.id || a.es.localeCompare(b.es);
+    });
+  }
+
+  getRandomWordArray(motArray: Mot[]): Mot {
+    let motSorted: Mot[] = this.sortArray(motArray);
+    let mot: Mot = this.getRandomWordSortedArray(motSorted);
+    return mot;
+  }
+
+  getRandomWordSortedArray(motArray: Mot[]): Mot {
+    let word: Mot | undefined;
+    let randomNumber = Math.random();
+    if (motArray.length > 1) {
+      word = this.foundWordPercentage(
+        motArray,
+        0,
+        motArray.length - 1,
+        randomNumber
+      );
+    }
+
+    return word;
+  }
+
+  foundWordPercentage(
+    motArray: Mot[],
+    left: number,
+    right: number,
+    randomNumber: number
+  ): Mot {
+    let word = motArray[left];
+    let pivot = parseInt(((right + left) / 2).toString());
+    if (right - left == 1) {
+      this.randomWord = word;
+      return word;
+    }
+    if (right - left == 2) {
+      if (motArray[left].percentage < randomNumber) {
+        word = motArray[right];
+      }
+      this.randomWord = word;
+      return word;
+    } else if (right - left > 2) {
+      if (motArray[pivot].percentage >= randomNumber) {
+        if (motArray[pivot - 1].percentage < randomNumber) {
+          word = motArray[pivot];
+          this.randomWord = word;
+          return word;
+        } else {
+          this.foundWordPercentage(motArray, left, pivot - 1, randomNumber);
+        }
+      } else {
+        this.foundWordPercentage(motArray, pivot + 1, right, randomNumber);
+      }
+    }
+  }
 }

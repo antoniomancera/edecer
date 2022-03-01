@@ -17,10 +17,9 @@ export class FirebaseServiceService {
   percentageCollection: AngularFirestoreCollection<number>;
 
   mots: Observable<Mot[]>;
-  percentage: Observable<number[]>;
 
   constructor(private firestore: AngularFirestore) {
-    this.motsCollection = firestore.collection<Mot>('mots');
+    this.motsCollection = firestore.collection<Mot>('mots1');
     this.mots = this.motsCollection.snapshotChanges().pipe(
       map((actions) =>
         actions.map((a) => {
@@ -29,26 +28,15 @@ export class FirebaseServiceService {
         })
       )
     );
-
-    this.percentageCollection = firestore.collection<number>('percentage');
-    this.percentage = this.percentageCollection.snapshotChanges().pipe(
-      map((actions) =>
-        actions.map((a) => {
-          const data = a.payload.doc.data() as number;
-          const probability = data['probability'];
-          return probability;
-        })
-      )
-    );
   }
 
   getDatabase(): Observable<any> {
-    return this.firestore.collection('mots').snapshotChanges();
+    return this.firestore.collection('mots1').get();
   }
 
   getMotId(id: string): Observable<Mot> {
     return this.firestore
-      .collection('mots')
+      .collection('mots1')
       .doc(id)
       .get()
       .pipe(
@@ -60,8 +48,14 @@ export class FirebaseServiceService {
         ),
         map((data) => {
           const newMot: Mot = {
+            id: data['id']['stringValue'],
             es: data['es']['stringValue'],
             fr: data['fr']['stringValue'],
+            percentage: data['percentage']['stringValue'],
+            attemps: data['attemps']['stringValue'],
+            success: data['success']['stringValue'],
+            errors: data['errors']['stringValue'],
+            streak: data['streak']['stringValue'],
           };
           return newMot;
         })

@@ -61,4 +61,23 @@ export class FirebaseServiceService {
         })
       );
   }
+
+  updateMot(word: Mot, success: boolean, id: string) {
+    let successUpdated: number = success ? word.success + 1 : word.success;
+    let errorsUpdated: number = success ? word.errors : word.errors + 1;
+    let streakUpdated: number = success ? word.streak + 1 : 0;
+
+    const wordUpdated: Mot = {
+      id: word.id,
+      es: word.es,
+      fr: word.fr,
+      percentage: word.percentage,
+      attemps: word.attemps + 1,
+      success: successUpdated,
+      errors: errorsUpdated,
+      streak: streakUpdated,
+    };
+
+    this.firestore.collection('mots1').doc(id).update(wordUpdated);
+  }
 }

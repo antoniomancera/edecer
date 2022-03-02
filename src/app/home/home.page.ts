@@ -2,6 +2,8 @@ import { transition, trigger, useAnimation } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 
 import { BOUNCE_IN_LEFT } from 'angular-bounce';
+import { first } from 'rxjs/operators';
+
 import { FirebaseServiceService } from '../shared/firebase-service.service';
 import { Mot } from '../shared/mot';
 
@@ -97,5 +99,27 @@ export class HomePage implements OnInit {
         this.foundWordPercentage(motArray, pivot + 1, right, randomNumber);
       }
     }
+  }
+
+  updateMot(word: Mot, tryWord: string) {
+    let success: boolean = false;
+    if (word.fr.trim() === tryWord.trim()) {
+      success = true;
+    }
+    this.prueba.updateMot(word, success, word.id.toString());
+    this.assignWordRandom();
+    this.try = '';
+  }
+
+  assignWordRandom() {
+    this.prueba.mots.pipe(first()).subscribe(
+      (data) => {
+        this.getRandomWordArray(data);
+      },
+      (error) => {
+        console.error(error);
+      },
+      () => {}
+    );
   }
 }

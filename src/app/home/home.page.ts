@@ -1,5 +1,7 @@
+import { transition, trigger, useAnimation } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 
+import { BOUNCE_IN_LEFT } from 'angular-bounce';
 import { FirebaseServiceService } from '../shared/firebase-service.service';
 import { Mot } from '../shared/mot';
 
@@ -7,22 +9,23 @@ import { Mot } from '../shared/mot';
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
+  animations: [
+    trigger('heroState', [
+      transition('* <=> void', [useAnimation(BOUNCE_IN_LEFT)]),
+    ]),
+    trigger('success', [
+      transition('* <=> success', [useAnimation(BOUNCE_IN_LEFT)]),
+    ]),
+  ],
 })
 export class HomePage implements OnInit {
   randomWord: Mot;
+  try: string = '';
 
   constructor(private prueba: FirebaseServiceService) {}
 
   ngOnInit(): void {
-    this.prueba.mots.subscribe(
-      (data) => {
-        this.getRandomWordArray(data);
-      },
-      (error) => {
-        console.error(error);
-      },
-      () => {}
-    );
+    this.assignWordRandom();
   }
 
   objectsAreSame(x, y) {

@@ -12,7 +12,7 @@ import { Mot } from './mot';
 @Injectable({
   providedIn: 'root',
 })
-export class FirebaseServiceService {
+export class FirebaseService {
   motsCollection: AngularFirestoreCollection<Mot>;
   percentageCollection: AngularFirestoreCollection<number>;
 

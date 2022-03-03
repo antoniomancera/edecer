@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { BOUNCE_IN_LEFT } from 'angular-bounce';
 import { first } from 'rxjs/operators';
 
-import { FirebaseServiceService } from '../shared/firebase-service.service';
+import { FirebaseService } from '../shared/firebase.service';
 import { Mot } from '../shared/mot';
 
 @Component({
@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
   randomWord: Mot;
   try: string = '';
 
-  constructor(private prueba: FirebaseServiceService) {}
+  constructor(private _firebaseService: FirebaseService) {}
 
   ngOnInit(): void {
     this.assignWordRandom();
@@ -106,13 +106,13 @@ export class HomePage implements OnInit {
     if (word.fr.trim() === tryWord.trim()) {
       success = true;
     }
-    this.prueba.updateMot(word, success, word.id.toString());
+    this._firebaseService.updateMot(word, success, word.id.toString());
     this.assignWordRandom();
     this.try = '';
   }
 
   assignWordRandom() {
-    this.prueba.mots.pipe(first()).subscribe(
+    this._firebaseService.mots.pipe(first()).subscribe(
       (data) => {
         this.getRandomWordArray(data);
       },

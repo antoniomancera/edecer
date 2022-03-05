@@ -15,10 +15,22 @@ import { Mot } from './mot';
 export class FirebaseService {
   motsCollection: AngularFirestoreCollection<Mot>;
   percentageCollection: AngularFirestoreCollection<number>;
+  probabilityCollection: AngularFirestoreCollection<string>;
 
+  probabilityJson: Observable<string[]>;
   mots: Observable<Mot[]>;
 
   constructor(private firestore: AngularFirestore) {
+    this.probabilityCollection = firestore.collection<string>('probability');
+    this.probabilityJson = this.probabilityCollection.snapshotChanges().pipe(
+      map((actions) =>
+        actions.map((a) => {
+          const data = a.payload.doc.data() as string;
+          return data;
+        })
+      )
+    );
+
     this.motsCollection = firestore.collection<Mot>('mots1');
     this.mots = this.motsCollection.snapshotChanges().pipe(
       map((actions) =>
@@ -48,14 +60,14 @@ export class FirebaseService {
         ),
         map((data) => {
           const newMot: Mot = {
-            id: data['id']['stringValue'],
+            id: parseInt(id),
             es: data['es']['stringValue'],
             fr: data['fr']['stringValue'],
-            percentage: data['percentage']['stringValue'],
-            attemps: data['attemps']['stringValue'],
-            success: data['success']['stringValue'],
-            errors: data['errors']['stringValue'],
-            streak: data['streak']['stringValue'],
+            percentage: data['percentage']['doubleValue'],
+            attemps: parseInt(data['attemps']['integerValue']),
+            success: parseInt(data['success']['integerValue']),
+            errors: parseInt(data['errors']['integerValue']),
+            streak: parseInt(data['streak']['integerValue']),
           };
           return newMot;
         })
@@ -77,6 +89,8 @@ export class FirebaseService {
       errors: errorsUpdated,
       streak: streakUpdated,
     };
+    console.log(word);
+    console.log(wordUpdated);
 
     this.firestore.collection('mots1').doc(id).update(wordUpdated);
   }

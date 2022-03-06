@@ -42,12 +42,6 @@ export class HomePage implements OnInit {
     return objectsAreSame;
   }
 
-  // sortArray(mots: Mot[]): Mot[] {
-  //   return mots.sort(function (a, b) {
-  //     return a.id - b.id || a.es.localeCompare(b.es);
-  //   });
-  // }
-
   getWordId() {
     this._firebaseService.getMotId(this.id.toString()).subscribe((data) => {
       this.randomWord = data;

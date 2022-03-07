@@ -91,7 +91,7 @@ export class HomePage implements OnInit {
       randomNumber = Math.random();
     }
     let pivot = parseInt(((right + left) / 2).toString());
-    if (right - left == 1) {
+    if (right - left == 0) {
       this.id = left;
     } else if (right - left == 1) {
       if (probabilityArray[left] > randomNumber) {
@@ -104,18 +104,13 @@ export class HomePage implements OnInit {
         if (probabilityArray[pivot - 1] < randomNumber) {
           this.id = pivot;
         } else {
-          this.foundPercentage(probabilityArray, left, pivot - 1, randomNumber);
+          this.foundPercentage(probabilityArray, left, pivot, randomNumber);
         }
       } else {
         if (probabilityArray[pivot + 1] > randomNumber) {
           this.id = pivot + 1;
         } else {
-          this.foundPercentage(
-            probabilityArray,
-            pivot + 1,
-            right,
-            randomNumber
-          );
+          this.foundPercentage(probabilityArray, pivot, right, randomNumber);
         }
       }
     }

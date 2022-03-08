@@ -91,7 +91,7 @@ export class HomePage implements OnInit {
       randomNumber = Math.random();
     }
     let pivot = parseInt(((right + left) / 2).toString());
-    if (right - left == 1) {
+    if (right - left == 0) {
       this.id = left;
     } else if (right - left == 1) {
       if (probabilityArray[left] > randomNumber) {

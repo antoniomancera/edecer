@@ -1,7 +1,12 @@
-import { transition, trigger, useAnimation } from '@angular/animations';
+import {
+  sequence,
+  transition,
+  trigger,
+  useAnimation,
+} from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 
-import { BOUNCE_IN_LEFT } from 'angular-bounce';
+import { BOUNCE_IN_LEFT, BOUNCE_OUT_DOWN, HINGE, TADA } from 'angular-bounce';
 import { first } from 'rxjs/operators';
 
 import { FirebaseService } from '../shared/firebase.service';
@@ -13,10 +18,9 @@ import { Mot } from '../shared/mot';
   styleUrls: ['home.page.scss'],
   animations: [
     trigger('heroState', [
-      transition('* <=> void', [useAnimation(BOUNCE_IN_LEFT)]),
-    ]),
-    trigger('success', [
-      transition('* <=> success', [useAnimation(BOUNCE_IN_LEFT)]),
+      transition('* => active', [useAnimation(BOUNCE_IN_LEFT)]),
+      transition('* => correct', [useAnimation(TADA)]),
+      transition('* => incorrect', [useAnimation(HINGE)]),
     ]),
   ],
 })
@@ -25,9 +29,13 @@ export class HomePage implements OnInit {
   try: string = '';
   probabilityArray: number[] = [];
   id: number;
+  state: string = '';
+  success: boolean;
+
   constructor(private _firebaseService: FirebaseService) {}
 
   ngOnInit(): void {
+    this.state = 'inactive';
     this.getRandomWord();
   }
 
@@ -44,7 +52,9 @@ export class HomePage implements OnInit {
 
   getWordId() {
     this._firebaseService.getMotId(this.id.toString()).subscribe((data) => {
+      this.state = 'active';
       this.randomWord = data;
+      console.log(this.randomWord);
     });
   }
 
@@ -91,7 +101,7 @@ export class HomePage implements OnInit {
       randomNumber = Math.random();
     }
     let pivot = parseInt(((right + left) / 2).toString());
-    if (right - left == 0) {
+    if (right - left == 1) {
       this.id = left;
     } else if (right - left == 1) {
       if (probabilityArray[left] > randomNumber) {
@@ -104,13 +114,18 @@ export class HomePage implements OnInit {
         if (probabilityArray[pivot - 1] < randomNumber) {
           this.id = pivot;
         } else {
-          this.foundPercentage(probabilityArray, left, pivot, randomNumber);
+          this.foundPercentage(probabilityArray, left, pivot - 1, randomNumber);
         }
       } else {
         if (probabilityArray[pivot + 1] > randomNumber) {
           this.id = pivot + 1;
         } else {
-          this.foundPercentage(probabilityArray, pivot, right, randomNumber);
+          this.foundPercentage(
+            probabilityArray,
+            pivot + 1,
+            right,
+            randomNumber
+          );
         }
       }
     }
@@ -149,14 +164,24 @@ export class HomePage implements OnInit {
   //   }
   // }
 
+  animationDone($event) {
+    console.log($event);
+    if (this.state === 'correct' || this.state === 'incorrect') {
+      this.state = 'inactive';
+      this.getRandomWord();
+    }
+  }
+
   updateMot(word: Mot, tryWord: string) {
-    let success: boolean = false;
     if (word.fr.trim() === tryWord.trim()) {
-      success = true;
+      this.success = true;
+      this.state = 'correct';
+    } else if (word.fr.trim() !== tryWord.trim()) {
+      this.success = false;
+      this.state = 'incorrect';
     }
     console.log(word);
-    this._firebaseService.updateMot(word, success, word.id.toString());
-    this.getRandomWord();
+    this._firebaseService.updateMot(word, this.success, word.id.toString());
     this.try = '';
   }
 

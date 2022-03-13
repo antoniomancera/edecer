@@ -39,17 +39,6 @@ export class HomePage implements OnInit {
     this.getRandomWord();
   }
 
-  objectsAreSame(x, y) {
-    var objectsAreSame = true;
-    for (var propertyName in x) {
-      if (x[propertyName] !== y[propertyName]) {
-        objectsAreSame = false;
-        break;
-      }
-    }
-    return objectsAreSame;
-  }
-
   getWordId() {
     this._firebaseService.getMotId(this.id.toString()).subscribe((data) => {
       this.state = 'active';
@@ -70,26 +59,6 @@ export class HomePage implements OnInit {
       this.getWordId();
     });
   }
-  // getRandomWordArray(motArray: Mot[]): Mot {
-  //   let motSorted: Mot[] = this.sortArray(motArray);
-  //   let mot: Mot = this.getRandomWordSortedArray(motSorted);
-  //   return mot;
-  // }
-
-  // getRandomWordSortedArray(motArray: Mot[]): Mot {
-  //   let word: Mot | undefined;
-  //   let randomNumber = Math.random();
-  //   if (motArray.length > 1) {
-  //     word = this.foundWordPercentage(
-  //       motArray,
-  //       0,
-  //       motArray.length - 1,
-  //       randomNumber
-  //     );
-  //   }
-
-  //   return word;
-  // }
 
   foundPercentage(
     probabilityArray: number[],
@@ -131,39 +100,6 @@ export class HomePage implements OnInit {
     }
   }
 
-  // foundWordPercentage(
-  //   motArray: Mot[],
-  //   left: number,
-  //   right: number,
-  //   randomNumber: number
-  // ): Mot {
-  //   let word = motArray[left];
-  //   let pivot = parseInt(((right + left) / 2).toString());
-  //   if (right - left == 1) {
-  //     this.randomWord = word;
-  //     return word;
-  //   }
-  //   if (right - left == 2) {
-  //     if (motArray[left].percentage < randomNumber) {
-  //       word = motArray[right];
-  //     }
-  //     this.randomWord = word;
-  //     return word;
-  //   } else if (right - left > 2) {
-  //     if (motArray[pivot].percentage >= randomNumber) {
-  //       if (motArray[pivot - 1].percentage < randomNumber) {
-  //         word = motArray[pivot];
-  //         this.randomWord = word;
-  //         return word;
-  //       } else {
-  //         this.foundWordPercentage(motArray, left, pivot - 1, randomNumber);
-  //       }
-  //     } else {
-  //       this.foundWordPercentage(motArray, pivot + 1, right, randomNumber);
-  //     }
-  //   }
-  // }
-
   animationDone($event) {
     console.log($event);
     if (this.state === 'correct' || this.state === 'incorrect') {
@@ -184,16 +120,4 @@ export class HomePage implements OnInit {
     this._firebaseService.updateMot(word, this.success, word.id.toString());
     this.try = '';
   }
-
-  // assignWordRandom() {
-  //   this._firebaseService.mots.pipe(first()).subscribe(
-  //     (data) => {
-  //       this.getRandomWordArray(data);
-  //     },
-  //     (error) => {
-  //       console.error(error);
-  //     },
-  //     () => {}
-  //   );
-  // }
 }

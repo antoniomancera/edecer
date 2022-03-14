@@ -75,9 +75,31 @@ export class FirebaseService {
   }
 
   updateMot(word: Mot, success: boolean, id: string) {
+    let wordUpdated: Mot = this.wordUpdate(word, success, id);
+
+    console.log(word);
+    console.log(wordUpdated);
+
+    this.firestore.collection('mots1').doc(id).update(wordUpdated);
+  }
+
+  wordUpdate(word: Mot, success: boolean, id: string): Mot {
     let successUpdated: number = success ? word.success + 1 : word.success;
     let errorsUpdated: number = success ? word.errors : word.errors + 1;
-    let streakUpdated: number = success ? word.streak + 1 : 0;
+    let streakUpdated: number;
+    if (success) {
+      if (word.streak >= 0) {
+        streakUpdated = word.streak + 1;
+      } else {
+        streakUpdated = 1;
+      }
+    } else {
+      if (word.streak <= 0) {
+        streakUpdated = word.streak - 1;
+      } else {
+        streakUpdated = -1;
+      }
+    }
 
     const wordUpdated: Mot = {
       id: word.id,
@@ -89,9 +111,44 @@ export class FirebaseService {
       errors: errorsUpdated,
       streak: streakUpdated,
     };
-    console.log(word);
-    console.log(wordUpdated);
+    return wordUpdated;
+  }
 
-    this.firestore.collection('mots1').doc(id).update(wordUpdated);
+  updateProbability(
+    arrayPercentages: number[],
+    word: Mot,
+    success: boolean,
+    id: string
+  ) {
+    let wordUpdated: Mot = this.wordUpdate(word, success, id);
+    let idInt: number = parseInt(id);
+    let arrayPercentagesUpdated: number[] = [];
+    let percentageUpdatedWord: number =
+      ((arrayPercentages[idInt] * (wordUpdated.errors + 1)) /
+        (wordUpdated.success + 1)) *
+      Math.pow(2, -wordUpdated.streak);
+    let differencePercentages: number =
+      arrayPercentages[idInt] - percentageUpdatedWord;
+
+    for (let i = 0; i < idInt; i++) {
+      arrayPercentagesUpdated.push(arrayPercentages[i]);
+    }
+    arrayPercentagesUpdated.push(percentageUpdatedWord);
+    console.log('idInt' + idInt);
+    console.log('arrayPercentages.length' + arrayPercentages.length);
+    console.log(idInt < arrayPercentages.length);
+    if (idInt < arrayPercentages.length) {
+      console.log('fsdfs');
+      for (let i = idInt + 1; i < arrayPercentages.length; i++) {
+        arrayPercentagesUpdated.push(
+          arrayPercentages[i] - differencePercentages
+        );
+      }
+    }
+    var arrayUpdatedJson = JSON.stringify(arrayPercentagesUpdated);
+    this.firestore
+      .collection('probability')
+      .doc('percentages')
+      .update({ 0: arrayUpdatedJson });
   }
 }

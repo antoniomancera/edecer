@@ -118,6 +118,12 @@ export class HomePage implements OnInit {
     }
     console.log(word);
     this._firebaseService.updateMot(word, this.success, word.id.toString());
+    this._firebaseService.updateProbability(
+      this.probabilityArray,
+      word,
+      this.success,
+      word.id.toString()
+    );
     this.try = '';
   }
 }

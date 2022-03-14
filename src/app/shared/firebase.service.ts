@@ -111,9 +111,44 @@ export class FirebaseService {
       errors: errorsUpdated,
       streak: streakUpdated,
     };
-    console.log(word);
-    console.log(wordUpdated);
+    return wordUpdated;
+  }
 
-    this.firestore.collection('mots1').doc(id).update(wordUpdated);
+  updateProbability(
+    arrayPercentages: number[],
+    word: Mot,
+    success: boolean,
+    id: string
+  ) {
+    let wordUpdated: Mot = this.wordUpdate(word, success, id);
+    let idInt: number = parseInt(id);
+    let arrayPercentagesUpdated: number[] = [];
+    let percentageUpdatedWord: number =
+      ((arrayPercentages[idInt] * (wordUpdated.errors + 1)) /
+        (wordUpdated.success + 1)) *
+      Math.pow(2, -wordUpdated.streak);
+    let differencePercentages: number =
+      arrayPercentages[idInt] - percentageUpdatedWord;
+
+    for (let i = 0; i < idInt; i++) {
+      arrayPercentagesUpdated.push(arrayPercentages[i]);
+    }
+    arrayPercentagesUpdated.push(percentageUpdatedWord);
+    console.log('idInt' + idInt);
+    console.log('arrayPercentages.length' + arrayPercentages.length);
+    console.log(idInt < arrayPercentages.length);
+    if (idInt < arrayPercentages.length) {
+      console.log('fsdfs');
+      for (let i = idInt + 1; i < arrayPercentages.length; i++) {
+        arrayPercentagesUpdated.push(
+          arrayPercentages[i] - differencePercentages
+        );
+      }
+    }
+    var arrayUpdatedJson = JSON.stringify(arrayPercentagesUpdated);
+    this.firestore
+      .collection('probability')
+      .doc('percentages')
+      .update({ 0: arrayUpdatedJson });
   }
 }

@@ -53,8 +53,7 @@ export class HomePage implements OnInit {
       this.foundPercentage(
         JSON.parse(data[0][0]),
         0,
-        JSON.parse(data[0][0]).length - 1,
-        1
+        JSON.parse(data[0][0]).length - 1
       );
       this.getWordId();
     });
@@ -64,13 +63,15 @@ export class HomePage implements OnInit {
     probabilityArray: number[],
     left: number,
     right: number,
-    randomNumber: number
+    randomNumber?: number
   ) {
-    if (randomNumber == 1) {
+    if (!randomNumber) {
       randomNumber = Math.random();
     }
-    let pivot = parseInt(((right + left) / 2).toString());
-    if (right - left == 1) {
+
+    let pivot = Math.round((right + left) / 2);
+
+    if (right - left == 0) {
       this.id = left;
     } else if (right - left == 1) {
       if (probabilityArray[left] > randomNumber) {
@@ -78,7 +79,7 @@ export class HomePage implements OnInit {
       } else {
         this.id = right;
       }
-    } else if (right - left > 1) {
+    } else {
       if (probabilityArray[pivot] > randomNumber) {
         if (probabilityArray[pivot - 1] < randomNumber) {
           this.id = pivot;

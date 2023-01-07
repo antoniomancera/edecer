@@ -12,4 +12,10 @@
       >OK</ion-button
     ></ion-card-content
   >
+
+  <ion-row *ngIf=!isFirst>
+    <ion-col>
+          <p>Last word: {{randomWord?.fr}} </p>
+    </ion-col>
+  </ion-row>
 </ion-card>

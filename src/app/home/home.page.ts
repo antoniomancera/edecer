@@ -31,6 +31,7 @@ export class HomePage implements OnInit {
   id: number;
   state: string = '';
   success: boolean;
+  isFirst: boolean = true; 
 
   constructor(private _firebaseService: FirebaseService) {}
 
@@ -110,6 +111,8 @@ export class HomePage implements OnInit {
   }
 
   updateMot(word: Mot, tryWord: string) {
+    this.isFirst = false;
+    
     if (word.fr.trim() === tryWord.trim()) {
       this.success = true;
       this.state = 'correct';

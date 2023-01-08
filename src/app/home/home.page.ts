@@ -41,7 +41,7 @@ export class HomePage implements OnInit {
   }
 
   getWordId() {
-    this._firebaseService.getMotId(this.id.toString()).subscribe((data) => {
+    this._firebaseService.getMotId(this.id.toString()).pipe(first()).subscribe((data) => {
       this.state = 'active';
       this.randomWord = data;
       console.log(this.randomWord);
@@ -49,7 +49,7 @@ export class HomePage implements OnInit {
   }
 
   getRandomWord() {
-    this._firebaseService.probabilityJson.subscribe((data) => {
+    this._firebaseService.probabilityJson.pipe(first()).subscribe((data) => {
       this.probabilityArray = JSON.parse(data[0][0]);
       this.foundPercentage(
         JSON.parse(data[0][0]),
@@ -103,9 +103,13 @@ export class HomePage implements OnInit {
   }
 
   animationDone($event) {
+    this.state = $event.toState;
+
     console.log($event);
     if (this.state === 'correct' || this.state === 'incorrect') {
       this.state = 'inactive';
+    }
+    if (this.state === 'inactive') {
       this.getRandomWord();
     }
   }

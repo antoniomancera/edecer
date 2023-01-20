@@ -44,7 +44,6 @@ export class HomePage implements OnInit {
     this._firebaseService.getMotId(this.id.toString()).pipe(first()).subscribe((data) => {
       this.state = 'active';
       this.randomWord = data;
-      console.log(this.randomWord);
     });
   }
 
@@ -105,7 +104,6 @@ export class HomePage implements OnInit {
   animationDone($event) {
     this.state = $event.toState;
 
-    console.log($event);
     if (this.state === 'correct' || this.state === 'incorrect') {
       this.state = 'inactive';
     }
@@ -124,7 +122,6 @@ export class HomePage implements OnInit {
       this.success = false;
       this.state = 'incorrect';
     }
-    console.log(word);
     this._firebaseService.updateMot(word, this.success, word.id.toString());
     this._firebaseService.updateProbability(
       this.probabilityArray,

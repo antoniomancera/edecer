@@ -77,9 +77,6 @@ export class FirebaseService {
   updateMot(word: Mot, success: boolean, id: string) {
     let wordUpdated: Mot = this.wordUpdate(word, success, id);
 
-    console.log(word);
-    console.log(wordUpdated);
-
     this.firestore.collection('mots1').doc(id).update(wordUpdated);
   }
 
@@ -134,11 +131,8 @@ export class FirebaseService {
       arrayPercentagesUpdated.push(arrayPercentages[i]);
     }
     arrayPercentagesUpdated.push(percentageUpdatedWord);
-    console.log('idInt' + idInt);
-    console.log('arrayPercentages.length' + arrayPercentages.length);
-    console.log(idInt < arrayPercentages.length);
+
     if (idInt < arrayPercentages.length) {
-      console.log('fsdfs');
       for (let i = idInt + 1; i < arrayPercentages.length; i++) {
         arrayPercentagesUpdated.push(
           arrayPercentages[i] - differencePercentages

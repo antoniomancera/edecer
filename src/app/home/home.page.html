@@ -1,21 +1,2 @@
-<ion-card
-  [@heroState]="state"
-  (@heroState.done)="animationDone($event)"
-  *ngIf="state !=='inactive' && state !=='void'"
->
-  <ion-card-header>
-    <ion-card-title>{{randomWord?.es}}</ion-card-title>
-  </ion-card-header>
-  <ion-card-content
-    ><ion-input placeholder="Enter Input" [(ngModel)]="try"></ion-input>
-    <ion-button (click)="updateMot(randomWord,try)"
-      >OK</ion-button
-    ></ion-card-content
-  >
-
-  <ion-row *ngIf=!isFirst>
-    <ion-col>
-          <p>Last word: {{randomWord?.fr}} </p>
-    </ion-col>
-  </ion-row>
-</ion-card>
+<app-quiz-card [motPalabra]="motPalabra">
+</app-quiz-card>

@@ -1,4 +1,4 @@
-<ion-card *ngIf="motPalabra" color="4c8dff">
+<ion-card *ngIf="wordTranslation" color="4c8dff">
   <ion-card-header>
     <ion-card-title>Card Title</ion-card-title>
     <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
@@ -9,7 +9,7 @@
       nothing less.
     </p>
     <pre>
-      {{ motPalabra | json }}
+      {{ wordTranslation | json }}
     </pre>
     <ion-button>OK</ion-button>
     >

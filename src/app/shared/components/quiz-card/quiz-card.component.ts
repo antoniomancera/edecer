@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { MotPalabra } from '../../models/MotPalabra.model';
+import { WordTranslation } from '../../models/WordTranslation.model';
 
 @Component({
   selector: 'app-quiz-card',
@@ -8,5 +8,5 @@ import { MotPalabra } from '../../models/MotPalabra.model';
   styleUrls: ['./quiz-card.component.scss'],
 })
 export class QuizCardComponent {
-  @Input() motPalabra: MotPalabra;
+  @Input() wordTranslation: WordTranslation;
 }

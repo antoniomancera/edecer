@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { MotPalabraService } from '../shared/services/mot-palabra.service';
-import { MotPalabra } from '../shared/models/MotPalabra.model';
+import { WordTranslation } from '../shared/models/WordTranslation.model';
+import { WordTranslationService } from '../shared/services/word-translation.service';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +9,13 @@ import { MotPalabra } from '../shared/models/MotPalabra.model';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  motPalabra: MotPalabra;
+  wordTranslation: WordTranslation;
 
-  constructor(private motPalabraService: MotPalabraService) {}
+  constructor(private wordTranslationService: WordTranslationService) {}
 
   ngOnInit(): void {
-    this.motPalabraService
-      .getRandomMotPalabra()
-      .subscribe((motPalabra) => (this.motPalabra = motPalabra));
+    this.wordTranslationService
+      .getRandomWordTranslation()
+      .subscribe((wordTranslation) => (this.wordTranslation = wordTranslation));
   }
 }

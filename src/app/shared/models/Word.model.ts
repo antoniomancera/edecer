@@ -1,4 +1,4 @@
-export interface Mot {
+export interface Word {
   id: number;
   name: string;
 }

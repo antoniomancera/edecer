@@ -4,15 +4,7 @@
 
 export const environment = {
   production: false,
-  firebase: {
-    apiKey: '',
-    authDomain: '',
-    projectId: '',
-    storageBucket: '',
-    messagingSenderId: '',
-    appId: '',
-    measurementId: '',
-  },
+  BASE_URL: 'http://localhost:8080',
 };
 
 /*

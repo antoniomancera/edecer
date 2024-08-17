@@ -1,19 +1,35 @@
 <ion-card *ngIf="wordTranslation" color="4c8dff">
   <ion-card-header>
-    <ion-card-title>Card Title</ion-card-title>
-    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+    <ion-card-title>Ensayo general</ion-card-title>
+    <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
   </ion-card-header>
   <ion-card-content>
-    <p>
-      Here's a small text description for the card content. Nothing more,
-      nothing less.
-    </p>
-    <pre>
-      {{ wordTranslation | json }}
-    </pre>
-    <ion-button>OK</ion-button>
+    <form
+      *ngIf="quizzForm"
+      (ngSubmit)="attemptsWordTranslation()"
+      [formGroup]="quizzForm"
     >
+      <ion-item>
+        <span class="inline-container">
+          <!-- minlength="4"
+            maxlength="8"
+            size="10" -->
+          {{ wordTranslation.wordFrFirstPart
+          }}<input
+            class="input-class"
+            type="text"
+            id="name"
+            name="name"
+            required
+            formControlName="attemptWord"
+          />{{ wordTranslation.wordFrSecondPart }}</span
+        >
+      </ion-item>
+      <ion-item>
+        {{ wordTranslation.phrase.phraseEs }}
+      </ion-item>
+
+      <ion-button fill="clear" type="submit">ok</ion-button>
+    </form>
   </ion-card-content>
-  <ion-button fill="clear">Action 1</ion-button>
-  <ion-button fill="clear">Action 2</ion-button>
 </ion-card>

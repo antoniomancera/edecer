@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+
+import { map, Observable } from 'rxjs';
+
 import { WordTranslation } from '../models/WordTranslation.model';
 import { environment } from 'src/environments/environment';
 
@@ -8,14 +10,58 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class WordTranslationService {
-  private MOT_PALABRA = '/wordTranslation';
-  private GET_RANDOM = '/getRandom';
+  private readonly MOT_PALABRA = '/wordTranslation';
+  private readonly GET_RANDOM = '/getRandom';
+  private readonly ATTEMPS = '/attempts';
 
   constructor(private http: HttpClient) {}
 
   getRandomWordTranslation(): Observable<WordTranslation> {
-    return this.http.get<WordTranslation>(
-      environment.BASE_URL + this.MOT_PALABRA + this.GET_RANDOM
+    return this.http
+      .get<WordTranslation>(
+        environment.BASE_URL + this.MOT_PALABRA + this.GET_RANDOM
+      )
+      .pipe(
+        map((wordTranslation) => {
+          return this.getWordTranslationWitParts(wordTranslation);
+        })
+      );
+  }
+
+  attemptsWordTranslation(
+    wordId: number,
+    phraseId: number,
+    success: boolean
+  ): Observable<WordTranslation> {
+    const params = new HttpParams()
+      .set('phraseId', phraseId.toString())
+      .set('success', success.toString());
+
+    return this.http
+      .put<WordTranslation>(
+        `${environment.BASE_URL}${this.MOT_PALABRA}${this.ATTEMPS}/${wordId}`,
+        null,
+        { params: params }
+      )
+      .pipe(
+        map((wordTranslation) => {
+          return this.getWordTranslationWitParts(wordTranslation);
+        })
+      );
+  }
+
+  private getWordTranslationWitParts(
+    wordTranslation: WordTranslation
+  ): WordTranslation {
+    const word = new WordTranslation(
+      wordTranslation.id,
+      wordTranslation.wordFr,
+      wordTranslation.wordSp,
+      wordTranslation.attempts,
+      wordTranslation.successes,
+      wordTranslation.phrase
     );
+
+    return word.getWordTranslationWitParts();
   }
 }

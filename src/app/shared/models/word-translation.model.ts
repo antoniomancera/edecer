@@ -1,5 +1,5 @@
-import { Phrase } from './Phrase.model';
-import { Word } from './Word.model';
+import { Phrase } from './phrase.interface';
+import { Word } from './word.interface';
 
 export class WordTranslation {
   id: number;

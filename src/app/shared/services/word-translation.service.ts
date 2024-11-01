@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { map, Observable } from 'rxjs';
 
-import { WordTranslation } from '../models/WordTranslation.model';
+import { WordTranslation } from '../models/word-translation.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -35,7 +35,7 @@ export class WordTranslationService {
   ): Observable<WordTranslation> {
     const params = new HttpParams()
       .set('phraseId', phraseId.toString())
-      .set('success', success.toString());
+      .set('success', success);
 
     return this.http
       .put<WordTranslation>(

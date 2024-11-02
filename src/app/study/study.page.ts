@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { WordTranslation } from '../shared/models/WordTranslation.model';
+import { WordTranslation } from '../shared/models/word-translation.model';
 import { WordTranslationService } from '../shared/services/word-translation.service';
 
 @Component({

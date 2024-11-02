@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-
-import { WordTranslation } from '../../models/WordTranslation.model';
-import { WordTranslationService } from '../../services/word-translation.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { WordTranslation } from '../../models/word-translation.model';
+import { WordTranslationService } from '../../services/word-translation.service';
 
 @Component({
   selector: 'app-quiz-card',
@@ -23,7 +23,6 @@ export class QuizCardComponent implements OnInit {
   }
 
   attemptsWordTranslation() {
-    console.log(this.quizzForm.controls.attemptWord.value);
     let success = false;
     if (
       this.quizzForm.controls.attemptWord.value ===

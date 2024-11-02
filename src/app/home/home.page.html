@@ -1,11 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar> home </ion-toolbar>
 </ion-header>
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-content class="horizontal-scroll">
+      <div style="display: block; width: 400px">
+        <canvas id="canvas" height="120">{{ chart }}</canvas>
+      </div>
+    </ion-card-content>
+  </ion-card>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-button id="open-modal" expand="block" (click)="openModal()"
+    >Open Modal</ion-button
+  >
 </ion-content>

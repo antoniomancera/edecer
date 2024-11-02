@@ -27,6 +27,7 @@
     "@capacitor/keyboard": "1.2.0",
     "@capacitor/status-bar": "1.0.6",
     "@ionic/angular": "^8.2.4",
+    "chart.js": "^4.4.5",
     "rxfire": "^6.0.0",
     "rxjs": "^7.5.0",
     "tslib": "^2.2.0",

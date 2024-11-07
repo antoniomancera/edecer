@@ -25,7 +25,9 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
 
-      <ion-title> {{home.userInfo.surname}} </ion-title>
+      <ion-title
+        ><span *ngIf="!isLoading"> {{home.userInfo.surname}}</span>
+      </ion-title>
 
       <ion-buttons slot="end">
         <ion-button>

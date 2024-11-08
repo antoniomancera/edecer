@@ -31,11 +31,13 @@ export class WordTranslationService {
   attemptsWordTranslation(
     wordId: number,
     phraseId: number,
-    success: boolean
+    success: boolean,
+    deckId: number
   ): Observable<WordTranslation> {
     const params = new HttpParams()
       .set('phraseId', phraseId.toString())
-      .set('success', success);
+      .set('success', success)
+      .set('deckId', deckId);
 
     return this.http
       .put<WordTranslation>(

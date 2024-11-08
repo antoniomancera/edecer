@@ -1,1 +1,6 @@
-{}
+{
+    "home":{
+        "statistics": "statistics",
+        "decks": "decks"
+    }
+}

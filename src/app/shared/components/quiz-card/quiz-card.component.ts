@@ -34,7 +34,8 @@ export class QuizCardComponent implements OnInit {
       .attemptsWordTranslation(
         this.wordTranslation.id,
         this.wordTranslation.phrase.id,
-        success
+        success,
+        1
       )
       .subscribe((word) => {
         this.wordTranslation = word;

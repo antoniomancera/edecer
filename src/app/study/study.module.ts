@@ -8,6 +8,7 @@ import { StudyPageRoutingModule } from './study-routing.module';
 
 import { StudyPage } from './study.page';
 import { SharedModule } from '../shared/shared.module';
+import { TranslocoModule } from '@jsverse/transloco';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { SharedModule } from '../shared/shared.module';
     IonicModule,
     StudyPageRoutingModule,
     SharedModule,
+    TranslocoModule,
   ],
   declarations: [StudyPage],
 })

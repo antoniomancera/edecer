@@ -1,6 +1,16 @@
 {
+    "shared": {
+        "loading": "loading",
+        "decks": "mazos"
+    },
     "home":{
         "statistics": "statistics",
         "decks": "decks"
+    },
+    "study": {
+        "select-deck": {
+            "selected-deck": "Mazo seleccionado",
+            "select-deck-to-practise": "Elige el mazo que deseas practicar"
+        }
     }
 }

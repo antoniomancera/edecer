@@ -38,7 +38,9 @@
   </ion-header>
 
   <ion-content class="ion-padding">
-    <ion-title size="large">{{'home.decks' | transloco | titlecase}}</ion-title>
+    <ion-title size="large"
+      >{{'shared.decks' | transloco | titlecase}}</ion-title
+    >
     <ion-list *ngIf="!isLoading">
       <ion-item *ngFor="let deck of home.decks">
         {{deck.name}}
@@ -89,3 +91,5 @@
     >
   </ion-content>
 </div>
+
+<app-loading [isLoading]="isLoading"></app-loading>

@@ -8,4 +8,5 @@ export interface Home {
   goal: Goal;
   userInfo: UserInfo;
   decks: Deck[];
+  lastDeckId: number;
 }

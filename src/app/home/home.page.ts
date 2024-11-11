@@ -9,7 +9,7 @@ import { HomeService } from './services/home.service';
 import { Home } from './models/home.interface';
 import { ModalAddGoalComponent } from './components/modal-add-goal/modal-add-goal.component';
 import { ToastService } from '../shared/services/toast.service';
-import { LoadingService } from '../shared/services/loading.service';
+import { MessagingService } from '../shared/services/messaging.service';
 
 @Component({
   selector: 'app-home',
@@ -25,22 +25,22 @@ export class HomePage implements OnInit {
   constructor(
     private homeService: HomeService,
     private modalController: ModalController,
-    private loadingService: LoadingService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private messagingService: MessagingService
   ) {}
 
   ngOnInit() {
-    this.loadingService.showLoading();
+    // this.loadingService.showLoading();
     this.homeService.getHome().subscribe({
       next: (home) => {
         this.home = home;
         this.getStatsCharts(home);
-        this.loadingService.dismissLoading();
+        this.messagingService.setHome(home);
         this.isLoading = false;
       },
       error: (err) => {
         this.toastService.showDangerToast(err.error.message);
-        this.loadingService.dismissLoading();
+        // this.loadingService.dismissLoading();
         this.isLoading = false;
       },
     });

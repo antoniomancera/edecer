@@ -1,6 +1,15 @@
 {
+    "shared": {
+        "loading": "Chargement",
+        "decks": "mazos"
+    },
     "home":{
-        "statistics": "statistiques",
-        "decks": "jeux"
+        "statistics": "statistiques"
+    },
+    "study": {
+        "select-deck": {
+            "selected-deck": "Mazo seleccionado",
+            "select-deck-to-practise": "Elige el mazo que deseas practicar"
+        }
     }
 }

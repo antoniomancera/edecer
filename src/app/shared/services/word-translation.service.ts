@@ -16,10 +16,10 @@ export class WordTranslationService {
 
   constructor(private http: HttpClient) {}
 
-  getRandomWordTranslation(): Observable<WordTranslation> {
+  getRandomWordTranslation(deckId?: number): Observable<WordTranslation> {
     return this.http
       .get<WordTranslation>(
-        environment.BASE_URL + this.MOT_PALABRA + this.GET_RANDOM
+        environment.BASE_URL + this.MOT_PALABRA + this.GET_RANDOM + '/' + deckId
       )
       .pipe(
         map((wordTranslation) => {

@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
+import { TranslocoService } from '@jsverse/transloco';
+
 import { WordTranslation } from '../shared/models/word-translation.model';
 import { WordTranslationService } from '../shared/services/word-translation.service';
+import { MessagingService } from '../shared/services/messaging.service';
+import { Deck } from '../shared/models/deck.interface';
+import { Goal } from '../home/models/goal.interface';
+import { switchMap } from 'rxjs';
+import { ToastService } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-study',
@@ -10,12 +17,61 @@ import { WordTranslationService } from '../shared/services/word-translation.serv
 })
 export class StudyPage implements OnInit {
   wordTranslation: WordTranslation;
+  decks: Deck[] = [];
+  lastDeck: Deck;
+  lastDeckId: number;
+  goal: Goal;
+  isLoading = true;
+  customActionSheetOptions = {
+    header: '',
+    subHeader: '',
+  };
 
-  constructor(private wordTranslationService: WordTranslationService) {}
+  constructor(
+    private wordTranslationService: WordTranslationService,
+    private messagingService: MessagingService,
+    private translocoService: TranslocoService,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
+    this.translocoService
+      .selectTranslateObject('study.select-deck')
+      .subscribe((translations) => {
+        this.customActionSheetOptions.header = translations['selected-deck'];
+        this.customActionSheetOptions.subHeader =
+          translations['select-deck-to-practise'];
+      });
+
+    this.messagingService
+      .getHome()
+      .pipe(
+        switchMap((home) => {
+          this.decks = home.decks;
+          this.goal = home.goal;
+          this.lastDeckId = home.lastDeckId;
+          this.lastDeck = this.decks.find(
+            (deck) => deck.id === this.lastDeckId
+          );
+          this.isLoading = false;
+          return this.wordTranslationService.getRandomWordTranslation(
+            this.lastDeckId
+          );
+        })
+      )
+      .subscribe({
+        next: (wordTranslation) => {
+          this.wordTranslation = wordTranslation;
+        },
+        error: (err) => this.toastService.showDangerToast(err.error.message),
+      });
+  }
+
+  onChangeDeck(deckId: number) {
     this.wordTranslationService
-      .getRandomWordTranslation()
-      .subscribe((wordTranslation) => (this.wordTranslation = wordTranslation));
+      .getRandomWordTranslation(deckId)
+      .subscribe((wordTranslation) => {
+        this.wordTranslation = wordTranslation;
+      });
   }
 }

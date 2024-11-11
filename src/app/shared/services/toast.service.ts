@@ -22,6 +22,8 @@ export class ToastService {
       color: color,
       message: message,
       translucent: true,
+      swipeGesture: 'vertical',
+      duration: 2000,
     });
     toast.present();
   }

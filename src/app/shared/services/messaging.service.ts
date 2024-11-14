@@ -2,38 +2,37 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
 
-import { Deck } from '../models/deck.interface';
 import { Home } from 'src/app/home/models/home.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessagingService {
-  // private decks = new BehaviorSubject<Deck[]>(null);
-  // private lastDeck = new BehaviorSubject<Deck>(null);
   private home = new BehaviorSubject<Home>(null);
+  private isDarkMode = new BehaviorSubject<boolean>(null);
+  private selectedLanguage = new BehaviorSubject<string>(null);
 
   getHome() {
     return this.home.asObservable();
+  }
+
+  getIsDarkMode() {
+    return this.isDarkMode.asObservable();
+  }
+
+  getSelectedLanguage() {
+    return this.selectedLanguage.asObservable();
   }
 
   setHome(home: Home) {
     this.home.next(home);
   }
 
-  // getLastDeck() {
-  //   return this.lastDeck.asObservable();
-  // }
+  setIsDarkMode(isDarkMode: boolean) {
+    this.isDarkMode.next(isDarkMode);
+  }
 
-  // setLastDeck(deck: Deck) {
-  //   this.lastDeck.next(deck);
-  // }
-
-  // getDecks() {
-  //   return this.decks.asObservable();
-  // }
-
-  // setDecks(decks: Deck[]) {
-  //   return this.decks.next(decks);
-  // }
+  setSelectedLanguage(selectedLanguage: string) {
+    this.selectedLanguage.next(selectedLanguage);
+  }
 }

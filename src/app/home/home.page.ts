@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ModalController } from '@ionic/angular';
 
+import { TranslocoService } from '@jsverse/transloco';
 import Chart from 'chart.js/auto';
 
 import { WordTranslation } from '../shared/models/word-translation.model';
@@ -10,6 +11,8 @@ import { Home } from './models/home.interface';
 import { ModalAddGoalComponent } from './components/modal-add-goal/modal-add-goal.component';
 import { ToastService } from '../shared/services/toast.service';
 import { MessagingService } from '../shared/services/messaging.service';
+import { applyTheme } from '../shared/utils/apply-theme.util';
+import { LANGUAGE_DEFAULT } from '../shared/constants/app.constants';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +20,7 @@ import { MessagingService } from '../shared/services/messaging.service';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  isDarkMode: boolean = false;
   wordTranslation: WordTranslation;
   home: Home;
   chart: Chart;
@@ -26,11 +30,31 @@ export class HomePage implements OnInit {
     private homeService: HomeService,
     private modalController: ModalController,
     private toastService: ToastService,
-    private messagingService: MessagingService
-  ) {}
+    private messagingService: MessagingService,
+    private translocoService: TranslocoService
+  ) {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    this.isDarkMode = prefersDark.matches;
+    applyTheme(this.isDarkMode);
+  }
 
   ngOnInit() {
-    // this.loadingService.showLoading();
+    const storedIsDarkModeTheme = localStorage.getItem('isDarkMode');
+    const storedLanguage = localStorage.getItem('language');
+    if (storedIsDarkModeTheme) {
+      console.log('storedIsDarkModeTheme', storedIsDarkModeTheme);
+      this.isDarkMode = JSON.parse(storedIsDarkModeTheme);
+      this.messagingService.setIsDarkMode(JSON.parse(storedIsDarkModeTheme));
+      applyTheme(this.isDarkMode);
+    }
+
+    if (storedLanguage) {
+      this.messagingService.setSelectedLanguage(storedLanguage);
+      this.translocoService.setActiveLang(storedLanguage);
+    } else {
+      this.messagingService.setSelectedLanguage(LANGUAGE_DEFAULT.code);
+    }
+
     this.homeService.getHome().subscribe({
       next: (home) => {
         this.home = home;

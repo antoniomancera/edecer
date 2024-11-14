@@ -6,6 +6,9 @@
     "home":{
         "statistics": "statistiques"
     },
+    "menu": {
+        "select-language": "Sélectionner la langue"
+    },
     "study": {
         "select-deck": {
             "selected-deck": "Mazo seleccionado",

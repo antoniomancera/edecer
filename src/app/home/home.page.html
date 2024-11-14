@@ -1,26 +1,7 @@
-<ion-menu contentId="main-content">
-  <!-- <ion-header>
-    <ion-toolbar class="home-header-toolbar">
-      <ion-title>Menu Content</ion-title>
-    </ion-toolbar>
-  </ion-header> -->
-  <ion-content class="ion-padding">
-    <ion-list lines="none">
-      <ion-item>
-        <ion-label>No Lines</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>No Lines</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>No Lines</ion-label>
-      </ion-item> </ion-list
-    >idioma, oscuro</ion-content
-  >
-</ion-menu>
+<app-menu></app-menu>
 <div class="ion-page" id="main-content">
-  <ion-header class="home-header">
-    <ion-toolbar class="home-header-toolbar">
+  <ion-header>
+    <ion-toolbar class="background-color">
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
@@ -78,7 +59,7 @@
     <ion-title size="large"
       >{{'home.statistics'| transloco | titlecase}}</ion-title
     >
-    <ion-card class="home-header">
+    <ion-card>
       <ion-card-content class="horizontal-scroll">
         <div style="display: block; width: 400px">
           <canvas id="canvas" height="120">{{ chart }}</canvas>

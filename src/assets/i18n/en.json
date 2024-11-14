@@ -7,6 +7,9 @@
         "statistics": "statistics",
         "decks": "decks"
     },
+    "menu": {
+        "select-language": "Select language"
+    },
     "study": {
         "select-deck": {
             "selected-deck": "Mazo seleccionado",

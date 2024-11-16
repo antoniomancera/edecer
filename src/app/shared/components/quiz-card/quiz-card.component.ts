@@ -7,7 +7,6 @@ import { WordTranslationService } from '../../services/word-translation.service'
 @Component({
   selector: 'app-quiz-card',
   templateUrl: './quiz-card.component.html',
-  styleUrls: ['./quiz-card.component.scss'],
 })
 export class QuizCardComponent implements OnInit {
   @Input() wordTranslation: WordTranslation;

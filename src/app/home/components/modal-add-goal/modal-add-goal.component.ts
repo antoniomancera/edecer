@@ -8,7 +8,6 @@ import { Goal } from '../../models/goal.interface';
 @Component({
   selector: 'app-modal-add-goal',
   templateUrl: './modal-add-goal.component.html',
-  styleUrls: ['./modal-add-goal.component.scss'],
 })
 export class ModalAddGoalComponent implements OnInit {
   addGoalForm!: FormGroup;

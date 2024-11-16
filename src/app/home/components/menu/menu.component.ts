@@ -9,7 +9,6 @@ import { applyTheme } from 'src/app/shared/utils/apply-theme.util';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
   isDarkMode: boolean = false;

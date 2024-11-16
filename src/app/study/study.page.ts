@@ -13,7 +13,6 @@ import { ToastService } from '../shared/services/toast.service';
 @Component({
   selector: 'app-study',
   templateUrl: './study.page.html',
-  styleUrls: ['./study.page.scss'],
 })
 export class StudyPage implements OnInit {
   wordTranslation: WordTranslation;

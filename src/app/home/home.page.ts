@@ -17,7 +17,6 @@ import { LANGUAGE_DEFAULT } from '../shared/constants/app.constants';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
   isDarkMode: boolean = false;

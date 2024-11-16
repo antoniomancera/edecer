@@ -34,10 +34,54 @@
  */
 
 //@import "@ionic/angular/css/palettes/dark.always.css"; 
-@import "@ionic/angular/css/palettes/dark.class.css"; 
+@import "@ionic/angular/css/palettes/dark.class.css";
 @import "@ionic/angular/css/palettes/dark.system.css";
 
 
+// Paddings general classes
+.p-0 {
+  padding: var(--spacing-0);
+}
+
+.p-1 {
+  padding: var(--spacing-1);
+}
+
+.p-2 {
+  padding: var(--spacing-2);
+}
+
+.p-3 {
+  padding: var(--spacing-3);
+}
+
+//mmargin general classes
+.m-0 {
+  margin: var(--spacing-0);
+}
+
+.m-1 {
+  margin: var(--spacing-1);
+}
+
+.m-2 {
+  margin: var(--spacing-2);
+}
+
+.m-3 {
+  margin: var(--spacing-3);
+}
+
+//General useful classes
+.background-primary-color {
+  --background: var(--ion-toolbar-background);
+  background-color: var(--ion-toolbar-background);
+}
+
+.horizontal-scroll {
+  overflow: auto;
+  white-space: nowrap;
+}
 
 .modal-add-goal {
   --height: 50%;
@@ -48,5 +92,3 @@
   align-items: center;
   justify-content: center;
 }
-
-

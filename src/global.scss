@@ -74,9 +74,14 @@
 
 //General useful classes
 .background-primary-color {
-  --background: var(--ion-toolbar-background);
-  background-color: var(--ion-toolbar-background);
+  --background: var(--global-primary-color);
 }
+
+body.dark .background-primary-color {
+  --background: var(--global-primary-color);
+}
+
+
 
 .horizontal-scroll {
   overflow: auto;
@@ -91,4 +96,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+ion-header ion-toolbar {
+  --ion-toolbar-background: var(--global-primary-color);
+}
+
+body.dark ion-header ion-toolbar {
+  --ion-toolbar-background: var(--global-primary-color);
 }

@@ -5,6 +5,7 @@ import { TranslocoService } from '@jsverse/transloco';
 import { LANGUAGES_SUPPORTED } from 'src/app/shared/constants/app.constants';
 import { MessagingService } from 'src/app/shared/services/messaging.service';
 import { applyTheme } from 'src/app/shared/utils/apply-theme.util';
+import { UserInfo } from '../../models/user-info.interface';
 
 @Component({
   selector: 'app-menu',
@@ -17,6 +18,7 @@ export class MenuComponent implements OnInit {
   };
   languages = LANGUAGES_SUPPORTED;
   selectedLanguage = '';
+  userInfo: UserInfo = null;
 
   constructor(
     private translocoService: TranslocoService,
@@ -32,6 +34,10 @@ export class MenuComponent implements OnInit {
       .subscribe((selectedLanguage) => {
         this.selectedLanguage = selectedLanguage;
       });
+
+    this.messagingService.getHome().subscribe((home) => {
+      if (home) this.userInfo = home.userInfo;
+    });
 
     this.translocoService
       .selectTranslate('menu.select-language')

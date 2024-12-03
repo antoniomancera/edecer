@@ -1,4 +1,8 @@
 {
+    "global": {
+        "email": "email",
+        "unknown-error": "unknown error"
+    },
     "shared": {
         "loading": "loading",
         "decks": "mazos"
@@ -8,7 +12,14 @@
         "decks": "decks"
     },
     "menu": {
-        "select-language": "Select language"
+        "select-language": "Select language",
+        "contact": {
+            "title": "contact with us",
+            "message": "message",
+            "subject": "objet",
+            "user-request-created": "Your request has been successfully received",
+            "user-request-last-week-not-answered": "There is a request made less than a week ago that has not yet been answered."
+        }
     },
     "study": {
         "select-deck": {

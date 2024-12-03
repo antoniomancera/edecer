@@ -1,4 +1,8 @@
 {
+    "global": {
+        "email": "email",
+        "unknown-error": "Erreur inconnue"
+    },
     "shared": {
         "loading": "Chargement",
         "decks": "mazos"
@@ -7,7 +11,14 @@
         "statistics": "statistiques"
     },
     "menu": {
-        "select-language": "Sélectionner la langue"
+        "select-language": "Sélectionner la langue",
+        "contact": {
+            "title": "contactez-nous",
+            "message": "message",
+            "subject": "objet",
+            "user-request-created": "Nous avons bien reçu votre demande",
+            "user-request-last-week-not-answered": "Il existe une demande effectuée il y a moins d'une semaine qui n'a pas encore été répondue."
+        }
     },
     "study": {
         "select-deck": {

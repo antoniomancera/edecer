@@ -1,4 +1,8 @@
 {
+    "global": {
+        "email": "email",
+        "unknown-error": "Error desconocido"
+    },
     "shared": {
         "loading": "cargando",
         "decks": "mazos"
@@ -7,7 +11,14 @@
         "statistics": "estadísticas"
     },
     "menu": {
-        "select-language": "Escoja el idioma"
+        "select-language": "Escoja el idioma",
+        "contact": {
+            "title": "contacta con nosotros",
+            "message": "mensaje",
+            "subject": "asunto",
+            "user-request-created": "Tu solicitud ha sido recibida",
+            "user-request-last-week-not-answered": "Existe una solicitud lanzada hace menos de una semana aún por responder."
+        }
     },
     "study": {
         "select-deck": {

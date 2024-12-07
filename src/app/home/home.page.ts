@@ -57,7 +57,7 @@ export class HomePage implements OnInit {
     this.homeService.getHome().subscribe({
       next: (home) => {
         this.home = home;
-        this.getStatsCharts(home);
+        // this.getStatsCharts(home);
         this.messagingService.setHome(home);
         this.isLoading = false;
       },
@@ -78,72 +78,5 @@ export class HomePage implements OnInit {
       cssClass: 'modal-add-goal',
     });
     await modal.present();
-  }
-
-  private getStatsCharts(home: Home) {
-    let dates: Date[] = [];
-    let totalAttempts: number[] = [];
-    let successesAccuracy: number[] = [];
-
-    home.weekStats.forEach((stat) => {
-      dates.push(stat.date);
-      totalAttempts.push(stat.totalAttempts);
-      successesAccuracy.push(
-        (stat.totalSuccesses * Math.max(...totalAttempts)) / stat.totalAttempts
-      );
-    });
-    this.chart = new Chart('canvas', {
-      type: 'bar',
-      data: {
-        labels: dates,
-        datasets: [
-          {
-            label: 'Total',
-            data: totalAttempts,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-            ],
-            borderWidth: 1,
-          },
-          {
-            label: 'porcentaje',
-            type: 'line',
-            data: successesAccuracy,
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)',
-            ],
-          },
-        ],
-      },
-      options: {
-        scales: {},
-      },
-    });
   }
 }

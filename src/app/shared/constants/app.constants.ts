@@ -4,3 +4,6 @@ export const LANGUAGES_SUPPORTED = [
   { code: 'en', iconRoute: 'assets/flags/gb.svg', title: 'English' },
 ];
 export const LANGUAGE_DEFAULT = LANGUAGES_SUPPORTED[0];
+
+export const SUCCESS_COLOR = '#24c224';
+export const DANGER_COLOR = '#c91d2b';

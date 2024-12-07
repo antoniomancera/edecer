@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>stats</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-title size="large"
+    >{{'home.statistics'| transloco | titlecase}}</ion-title
+  >
+  <ion-segment [(ngModel)]="segment" (ionChange)="onChangeChangeDataChart()">
+    <ion-segment-button value="attempts"> attempts </ion-segment-button>
+    <ion-segment-button value="successesAccuracy">
+      successesAccuracy
+    </ion-segment-button>
+  </ion-segment>
+  <ion-content>
+    <canvas id="canvas" height="120">{{ chart }}</canvas>
+  </ion-content>
+</ion-content>
+<app-loading [isLoading]="isLoading"></app-loading>

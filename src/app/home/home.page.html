@@ -56,17 +56,6 @@
       </ion-item>
     </ion-list>
 
-    <ion-title size="large"
-      >{{'home.statistics'| transloco | titlecase}}</ion-title
-    >
-    <ion-card>
-      <ion-card-content class="horizontal-scroll">
-        <div style="display: block; width: 400px">
-          <canvas id="canvas" height="120">{{ chart }}</canvas>
-        </div>
-      </ion-card-content>
-    </ion-card>
-
     <ion-button id="open-modal" expand="block" (click)="openModal()"
       >Open Modal</ion-button
     >

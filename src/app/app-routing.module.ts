@@ -11,11 +11,17 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
-  },  {
-    path: 'study',
-    loadChildren: () => import('./study/study.module').then( m => m.StudyPageModule)
   },
-
+  {
+    path: 'study',
+    loadChildren: () =>
+      import('./study/study.module').then((m) => m.StudyPageModule),
+  },
+  {
+    path: 'stats',
+    loadChildren: () =>
+      import('./stats/stats.module').then((m) => m.StatsPageModule),
+  },
 ];
 
 @NgModule({

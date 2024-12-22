@@ -3,7 +3,7 @@
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+        <ion-menu-button> A</ion-menu-button>
       </ion-buttons>
 
       <ion-title
@@ -18,7 +18,55 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content class="ion-padding">
+  <ion-content class="ion-padding" *ngIf="!isLoading">
+    <!-- <div *ngIf="home.weekStats">
+      <div *ngFor="let week of home.weekStats">{{week | json}}</div>
+    </div> -->
+    <ion-title size="large"
+      >Objetivos
+      <ion-button
+        class="icon-float-right"
+        (click)="openAddGoalModal()"
+        fill="clear"
+      >
+        <ion-icon name="settings"></ion-icon> </ion-button
+    ></ion-title>
+    <div class="p-2 m-2">
+      {{ 'home.current-goals' | transloco: { attempts: home.goal.attempts,
+      accuracy: home.goal.successesAccuracy } }}
+      <!-- Tus objetivos actuales son
+      {{home.goal.attempts}} (T) y {{home.goal.successesAccuracy}} (%) -->
+    </div>
+    <!-- <ion-title size="small">objetivos</ion-title> -->
+    <div class="horizontal-scroll">
+      <span *ngFor="let stat of home.weekStats">
+        <ion-card class="weekly-goal-tracing-card" color="secondary">
+          <ion-card-header>
+            <ion-card-title>{{ stat.monthDay }}</ion-card-title>
+            <ion-card-subtitle>
+              {{ stat.weekDay | weekday | transloco }}
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <span class="checkbox-container">
+              T
+              <ion-checkbox
+                class="p-1 custom-checkbox"
+                disabled="true"
+                [checked]="stat.isAttemptsGoalSuccess"
+              ></ion-checkbox>
+              %
+              <ion-checkbox
+                class="p-1 custom-checkbox"
+                disabled="true"
+                [checked]="stat.isSuccessesAccuracyGoalSuccess"
+              ></ion-checkbox>
+            </span>
+          </ion-card-content>
+        </ion-card>
+      </span>
+    </div>
+
     <ion-title size="large"
       >{{'shared.decks' | transloco | titlecase}}</ion-title
     >
@@ -55,10 +103,6 @@
         </ion-label>
       </ion-item>
     </ion-list>
-
-    <ion-button id="open-modal" expand="block" (click)="openModal()"
-      >Open Modal</ion-button
-    >
   </ion-content>
 </div>
 

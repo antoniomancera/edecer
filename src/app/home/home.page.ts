@@ -17,6 +17,7 @@ import { LANGUAGE_DEFAULT } from '../shared/constants/app.constants';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
+  styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
   isDarkMode: boolean = false;
@@ -56,8 +57,21 @@ export class HomePage implements OnInit {
 
     this.homeService.getHome().subscribe({
       next: (home) => {
+        console.log(home.weekStats);
         this.home = home;
-        // this.getStatsCharts(home);
+        this.home.weekStats.map((dailyStats) => {
+          const date: Date = new Date(dailyStats.date);
+          dailyStats.monthDay = date.getDate();
+          dailyStats.weekDay = date.getDay();
+          dailyStats.isAttemptsGoalSuccess =
+            dailyStats.totalAttempts >= home.goal.attempts;
+          dailyStats.isSuccessesAccuracyGoalSuccess =
+            dailyStats.totalSuccesses / dailyStats.totalAttempts >
+            home.goal.successesAccuracy;
+
+          return dailyStats;
+        });
+
         this.messagingService.setHome(home);
         this.isLoading = false;
       },
@@ -69,13 +83,12 @@ export class HomePage implements OnInit {
     });
   }
 
-  async openModal() {
+  async openAddGoalModal() {
     const modal = await this.modalController.create({
       component: ModalAddGoalComponent,
       componentProps: {
         goal: this.home.goal,
       },
-      cssClass: 'modal-add-goal',
     });
     await modal.present();
   }

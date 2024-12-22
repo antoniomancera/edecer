@@ -1,14 +1,24 @@
 {
     "global": {
         "email": "email",
-        "unknown-error": "Erreur inconnue"
+        "unknown-error": "Erreur inconnue",
+        "week-days": {
+            "monday": "Lundi",
+            "tuesday": "Mardi",
+            "wednesday": "Mercredi",
+            "thursday": "Jeudi",
+            "friday": "Vendredi",
+            "saturday": "Samedi",
+            "sunday": "Dimanche"
+        }
     },
     "shared": {
         "loading": "Chargement",
         "decks": "mazos"
     },
     "home":{
-        "statistics": "statistiques"
+        "statistics": "statistiques",
+        "current-goals": "Vos objectifs actuels sont {{attempts}} (T) et {{accuracy}} (%)"
     },
     "menu": {
         "select-language": "Sélectionner la langue",

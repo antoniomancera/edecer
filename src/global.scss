@@ -81,11 +81,20 @@ body.dark .background-primary-color {
   --background: var(--global-primary-color);
 }
 
-
-
 .horizontal-scroll {
-  overflow: auto;
-  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  padding: 10px;
+  scroll-behavior: smooth;
+}
+
+.horizontal-scroll span {
+  flex: 0 0 auto;
+}
+
+.icon-float-right {
+  float: right;
 }
 
 .modal-add-goal {

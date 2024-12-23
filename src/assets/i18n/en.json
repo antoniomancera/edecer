@@ -1,7 +1,16 @@
 {
     "global": {
         "email": "email",
-        "unknown-error": "unknown error"
+        "unknown-error": "unknown error",
+        "week-days": {
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday",
+            "sunday": "Sunday"
+        }
     },
     "shared": {
         "loading": "loading",
@@ -9,7 +18,8 @@
     },
     "home":{
         "statistics": "statistics",
-        "decks": "decks"
+        "decks": "decks",
+        "current-goals": "Your current goals are {{attempts}} (T) and {{accuracy}} (%)"
     },
     "menu": {
         "select-language": "Select language",

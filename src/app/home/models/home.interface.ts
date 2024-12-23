@@ -4,7 +4,7 @@ import { Goal } from './goal.interface';
 import { UserInfo } from './user-info.interface';
 
 export interface Home {
-  // weekStats: DailyStats[];
+  weekStats: DailyStats[];
   goal: Goal;
   userInfo: UserInfo;
   decks: Deck[];

@@ -14,7 +14,8 @@
     },
     "shared": {
         "loading": "cargando",
-        "decks": "mazos"
+        "decks": "mazos",
+        "goals": "objetivos"
     },
     "home": {
         "statistics": "estadísticas",

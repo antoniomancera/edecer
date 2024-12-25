@@ -14,7 +14,8 @@
     },
     "shared": {
         "loading": "Chargement",
-        "decks": "mazos"
+        "decks": "paquets",
+        "goals": "objectifs"
     },
     "home":{
         "statistics": "statistiques",

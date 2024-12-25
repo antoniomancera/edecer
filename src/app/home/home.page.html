@@ -23,21 +23,19 @@
       <div *ngFor="let week of home.weekStats">{{week | json}}</div>
     </div> -->
     <ion-title size="large"
-      >Objetivos
+      >{{'shared.goals' | transloco | titlecase}}
       <ion-button
         class="icon-float-right"
         (click)="openAddGoalModal()"
         fill="clear"
       >
-        <ion-icon name="settings"></ion-icon> </ion-button
-    ></ion-title>
+        <ion-icon name="settings"></ion-icon>
+      </ion-button>
+    </ion-title>
     <div class="p-2 m-2">
       {{ 'home.current-goals' | transloco: { attempts: home.goal.attempts,
       accuracy: home.goal.successesAccuracy } }}
-      <!-- Tus objetivos actuales son
-      {{home.goal.attempts}} (T) y {{home.goal.successesAccuracy}} (%) -->
     </div>
-    <!-- <ion-title size="small">objetivos</ion-title> -->
     <div class="horizontal-scroll">
       <span *ngFor="let stat of home.weekStats">
         <ion-card class="weekly-goal-tracing-card" color="secondary">
@@ -51,13 +49,13 @@
             <span class="checkbox-container">
               T
               <ion-checkbox
-                class="p-1 custom-checkbox"
+                class="p-1"
                 disabled="true"
                 [checked]="stat.isAttemptsGoalSuccess"
               ></ion-checkbox>
               %
               <ion-checkbox
-                class="p-1 custom-checkbox"
+                class="p-1"
                 disabled="true"
                 [checked]="stat.isSuccessesAccuracyGoalSuccess"
               ></ion-checkbox>
@@ -66,43 +64,19 @@
         </ion-card>
       </span>
     </div>
-
+    <br />
     <ion-title size="large"
       >{{'shared.decks' | transloco | titlecase}}</ion-title
     >
-    <ion-list *ngIf="!isLoading">
-      <ion-item *ngFor="let deck of home.decks">
+    <div *ngIf="!isLoading">
+      <ion-card
+        *ngFor="let deck of home.decks"
+        class="p-4 m-2"
+        [color]="deck.color?deck.color:'tertiary'"
+      >
         {{deck.name}}
-        <ion-avatar slot="start">
-          <!-- <img src="..." /> -->
-        </ion-avatar>
-        <ion-label>
-          <ion-grid>
-            <ion-row>
-              <ion-col size="12">
-                <!-- name -->
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="2">
-                <!-- icon -->
-              </ion-col>
-              <ion-col size="10">
-                <!-- calender -->
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size="2">
-                <!-- icon -->
-              </ion-col>
-              <ion-col size="10">
-                <!-- time -->
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-label>
-      </ion-item>
-    </ion-list>
+      </ion-card>
+    </div>
   </ion-content>
 </div>
 

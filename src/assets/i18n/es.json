@@ -17,6 +17,10 @@
         "decks": "mazos",
         "goals": "objetivos"
     },
+    "explore": {
+        "title": "explorar",
+        "manage-decks": "Gestiona tus mazos"
+    },
     "home": {
         "statistics": "estadísticas",
         "current-goals": "Tus objetivos actuales son {{attempts}} (T) y {{accuracy}} (%)"

@@ -17,6 +17,10 @@
         "decks": "decks",
         "goals": "goals"
     },
+    "explore": {
+        "title": "explore",
+        "manage-decks": "Manage your decks"
+    },
     "home":{
         "statistics": "statistics",
         "decks": "decks",

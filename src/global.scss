@@ -118,3 +118,14 @@ ion-header ion-toolbar {
 body.dark ion-header ion-toolbar {
   --ion-toolbar-background: var(--global-primary-color);
 }
+
+.deck-card {
+  cursor: pointer;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

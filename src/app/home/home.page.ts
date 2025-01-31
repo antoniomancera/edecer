@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
 import { TranslocoService } from '@jsverse/transloco';
+
 import Chart from 'chart.js/auto';
 
 import { WordTranslation } from '../shared/models/word-translation.model';
@@ -31,7 +33,8 @@ export class HomePage implements OnInit {
     private modalController: ModalController,
     private toastService: ToastService,
     private messagingService: MessagingService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private router: Router
   ) {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     this.isDarkMode = prefersDark.matches;
@@ -91,5 +94,11 @@ export class HomePage implements OnInit {
       },
     });
     await modal.present();
+  }
+
+  onClickNavigateDeck(deckId: number) {
+    this.router.navigate(['/explore/decks'], {
+      queryParams: { deckId: deckId },
+    });
   }
 }

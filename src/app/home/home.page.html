@@ -71,8 +71,9 @@
     <div *ngIf="!isLoading">
       <ion-card
         *ngFor="let deck of home.decks"
-        class="p-4 m-2"
+        class="p-4 m-2 deck-card"
         [color]="deck.color?deck.color:'tertiary'"
+        (click)="onClickNavigateDeck(deck.id)"
       >
         {{deck.name}}
       </ion-card>

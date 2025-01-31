@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 
 import { WordTranslation } from '../shared/models/word-translation.model';
-import { WordTranslationService } from '../shared/services/word-translation.service';
+
 import { MessagingService } from '../shared/services/messaging.service';
 import { Deck } from '../shared/models/deck.interface';
 import { Goal } from '../home/models/goal.interface';
 import { switchMap } from 'rxjs';
 import { ToastService } from '../shared/services/toast.service';
+import { WordTranslationService } from '../shared/services/word-translation.service';
 
 @Component({
   selector: 'app-study',

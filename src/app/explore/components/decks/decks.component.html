@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ "shared.decks" | transloco | titlecase }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="!isLoading && decks && decks.length > 0">
+    <ion-card
+      button
+      *ngFor="let deck of decks"
+      class="p-4 m-2 deck-card"
+      [color]="deck.color ? deck.color : 'tertiary'"
+      (click)="onClickSetSelected(deck)"
+    >
+      {{ deck.name }}
+    </ion-card>
+  </div>
+</ion-content>
+<app-edit-deck-modal
+  *ngIf="isEditDeckModalOpen"
+  [isEditDeckModalOpen]="isEditDeckModalOpen"
+  [selectedDeck]="selectedDeck"
+  (setIsEditDeckModalOpenFalse)="setIsEditDeckModalOpenFalse()"
+></app-edit-deck-modal>

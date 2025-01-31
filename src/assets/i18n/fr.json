@@ -17,6 +17,10 @@
         "decks": "paquets",
         "goals": "objectifs"
     },
+    "explore": {
+        "title": "explorer",
+        "manage-decks": "Gérez vos decks"
+    },
     "home":{
         "statistics": "statistiques",
         "current-goals": "Vos objectifs actuels sont {{attempts}} (T) et {{accuracy}} (%)"

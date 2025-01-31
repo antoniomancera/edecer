@@ -1,0 +1,35 @@
+<ion-modal
+  [isOpen]="isEditDeckModalOpen"
+  (ionModalDidDismiss)="onModalDismiss()"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{
+          "menu.contact.title" | transloco | titlecase
+        }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <div *ngIf="isLoading" class="spinner-container">
+      <ion-spinner></ion-spinner>
+    </div>
+    <ion-content class="ion-padding" *ngIf="!isLoading">
+      <ion-accordion-group
+        *ngFor="let phraseWithWords of phrasesWithWordTranslations"
+      >
+        <ion-accordion value="phraseWithWords">
+          <ion-item slot="header">
+            <ion-label>{{ phraseWithWords.phrase.phraseFr }}</ion-label>
+          </ion-item>
+          <div
+            *ngFor="let word of phraseWithWords.wordTranslations"
+            class="ion-padding"
+            slot="content"
+          >
+            {{ word.wordFr.name }}
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-content>
+  </ng-template>
+</ion-modal>

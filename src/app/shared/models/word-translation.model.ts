@@ -36,3 +36,8 @@ export class WordTranslation {
     return this;
   }
 }
+
+export interface WordTranslationWithPhrases {
+  wordTranslation: WordTranslation;
+  phrases: Phrase[];
+}

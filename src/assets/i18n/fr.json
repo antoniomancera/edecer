@@ -10,7 +10,10 @@
             "friday": "Vendredi",
             "saturday": "Samedi",
             "sunday": "Dimanche"
-        }
+        },
+        "words": "words",
+        "phrases": "phrases",
+        "info": "info"
     },
     "shared": {
         "loading": "Chargement",

@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 
 import { map, Observable } from 'rxjs';
 
-import { WordTranslation } from '../models/word-translation.model';
+import {
+  WordTranslation,
+  WordTranslationWithPhrases,
+} from '../models/word-translation.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -50,6 +53,20 @@ export class WordTranslationService {
           return this.getWordTranslationWitParts(wordTranslation);
         })
       );
+  }
+
+  /**
+   * Get All WordTranslation and their Phrases associated given a deck
+   *
+   * @param deckId
+   * @returns Observable<WordTranslationWithPhrases[]>
+   */
+  getAllWordTranslationWithPhrasesByDeck(
+    deckId: number
+  ): Observable<WordTranslationWithPhrases[]> {
+    return this.http.get<WordTranslationWithPhrases[]>(
+      environment.BASE_URL + this.MOT_PALABRA + '/' + deckId
+    );
   }
 
   private getWordTranslationWitParts(

@@ -10,7 +10,10 @@
             "friday": "Viernes",
             "saturday": "Sábado",
             "sunday": "Domingo"
-        }
+        },
+        "words": "palabra",
+        "phrases": "frases",
+        "info": "info"
     },
     "shared": {
         "loading": "cargando",

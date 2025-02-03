@@ -22,7 +22,9 @@
     },
     "explore": {
         "title": "explore",
-        "manage-decks": "Manage your decks"
+        "manage-decks": "Manage your decks",
+        "manage-words": "Manage your words",
+        "manage-phrases": "Manage your phrases"
     },
     "home":{
         "statistics": "statistics",

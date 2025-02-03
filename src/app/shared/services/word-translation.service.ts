@@ -16,6 +16,7 @@ export class WordTranslationService {
   private readonly MOT_PALABRA = '/wordTranslation';
   private readonly GET_RANDOM = '/getRandom';
   private readonly ATTEMPS = '/attempts';
+  private readonly PAGINATED = '/paginated';
 
   constructor(private http: HttpClient) {}
 
@@ -66,6 +67,28 @@ export class WordTranslationService {
   ): Observable<WordTranslationWithPhrases[]> {
     return this.http.get<WordTranslationWithPhrases[]>(
       environment.BASE_URL + this.MOT_PALABRA + '/' + deckId
+    );
+  }
+
+  /**
+   * Get the page pageNumber of WordTranslationDTO with pageSize elements
+   *
+   * @param pageNumber
+   * @param pageSize
+   * @returns Observable<WordTranslation[]>
+   */
+  getAllWordTranslations(
+    pageNumber?: number,
+    pageSize?: number
+  ): Observable<WordTranslation[]> {
+    return this.http.get<WordTranslation[]>(
+      environment.BASE_URL +
+        this.MOT_PALABRA +
+        this.PAGINATED +
+        '/' +
+        pageNumber +
+        '/' +
+        pageSize
     );
   }
 

@@ -11,7 +11,7 @@
             "saturday": "Sábado",
             "sunday": "Domingo"
         },
-        "words": "palabra",
+        "words": "palabras",
         "phrases": "frases",
         "info": "info"
     },
@@ -22,7 +22,9 @@
     },
     "explore": {
         "title": "explorar",
-        "manage-decks": "Gestiona tus mazos"
+        "manage-decks": "Gestiona tus mazos",
+        "manage-words": "Gestiona tus palabras",
+        "manage-phrases": "Gestiona tus frases"
     },
     "home": {
         "statistics": "estadísticas",

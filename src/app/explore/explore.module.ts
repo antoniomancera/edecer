@@ -11,6 +11,8 @@ import { ExplorePage } from './explore.page';
 import { SharedModule } from '../shared/shared.module';
 import { DecksComponent } from './components/decks/decks.component';
 import { EditDeckModalComponent } from './components/edit-deck-modal/edit-deck-modal.component';
+import { WordsComponent } from './components/words/words.component';
+import { PhrasesComponent } from './components/phrases/phrases.component';
 
 @NgModule({
   imports: [
@@ -21,6 +23,12 @@ import { EditDeckModalComponent } from './components/edit-deck-modal/edit-deck-m
     TranslocoModule,
     SharedModule,
   ],
-  declarations: [ExplorePage, DecksComponent, EditDeckModalComponent],
+  declarations: [
+    ExplorePage,
+    DecksComponent,
+    EditDeckModalComponent,
+    WordsComponent,
+    PhrasesComponent,
+  ],
 })
 export class ExplorePageModule {}

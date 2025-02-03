@@ -11,7 +11,7 @@
             "saturday": "Samedi",
             "sunday": "Dimanche"
         },
-        "words": "words",
+        "words": "mots",
         "phrases": "phrases",
         "info": "info"
     },
@@ -22,7 +22,9 @@
     },
     "explore": {
         "title": "explorer",
-        "manage-decks": "Gérez vos decks"
+        "manage-decks": "Gérez vos decks",
+        "manage-words": "Gérez vos mots",
+        "manage-phrases": "Gérez vos phrases"
     },
     "home":{
         "statistics": "statistiques",

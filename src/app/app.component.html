@@ -1,3 +1,37 @@
 <ion-app>
   <ion-router-outlet></ion-router-outlet>
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="home">
+        <ion-icon
+          [name]="selectedTab === 'home' ? 'home' : 'home-outline'"
+        ></ion-icon>
+        Home
+      </ion-tab-button>
+      <ion-tab-button tab="study">
+        <ion-icon
+          [name]="selectedTab === 'study' ? 'book' : 'book-outline'"
+        ></ion-icon>
+        Estudio
+      </ion-tab-button>
+      <ion-tab-button tab="stats">
+        <ion-icon
+          [name]="
+            selectedTab === 'stats' ? 'stats-chart' : 'stats-chart-outline'
+          "
+        ></ion-icon>
+        Stats
+      </ion-tab-button>
+      <ion-tab-button tab="explore">
+        <ion-icon
+          [name]="
+            selectedTab === 'decks'
+              ? 'search-circle-outline'
+              : 'search-circle-outline'
+          "
+        ></ion-icon>
+        Explorar
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-app>

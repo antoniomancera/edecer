@@ -1,0 +1,50 @@
+{
+    "global": {
+        "email": "email",
+        "unknown-error": "unknown error",
+        "week-days": {
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday",
+            "sunday": "Sunday"
+        },
+        "words": "words",
+        "phrases": "phrases",
+        "info": "info"
+    },
+    "shared": {
+        "loading": "loading",
+        "decks": "decks",
+        "goals": "goals"
+    },
+    "explore": {
+        "title": "explore",
+        "manage-decks": "Manage your decks",
+        "manage-words": "Manage your words",
+        "manage-phrases": "Manage your phrases"
+    },
+    "home":{
+        "statistics": "statistics",
+        "decks": "decks",
+        "current-goals": "Your current goals are {{attempts}} (T) and {{accuracy}} (%)"
+    },
+    "menu": {
+        "select-language": "Select language",
+        "contact": {
+            "title": "contact with us",
+            "message": "message",
+            "subject": "objet",
+            "user-request-created": "Your request has been successfully received",
+            "user-request-last-week-not-answered": "There is a request made less than a week ago that has not yet been answered."
+        }
+    },
+    "study": {
+        "select-deck": {
+            "selected-deck": "Mazo seleccionado",
+            "select-deck-to-practise": "Elige el mazo que deseas practicar"
+        }
+    }
+}

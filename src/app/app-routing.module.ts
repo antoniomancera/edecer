@@ -12,6 +12,21 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: 'study',
+    loadChildren: () =>
+      import('./study/study.module').then((m) => m.StudyPageModule),
+  },
+  {
+    path: 'stats',
+    loadChildren: () =>
+      import('./stats/stats.module').then((m) => m.StatsPageModule),
+  },
+  {
+    path: 'explore',
+    loadChildren: () =>
+      import('./explore/explore.module').then((m) => m.ExplorePageModule),
+  },
 ];
 
 @NgModule({

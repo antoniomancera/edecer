@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Header</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-item *ngIf="!isLoading && decks && decks.length > 0">
+    <ion-select
+      #selectDeck
+      [(ngModel)]="lastDeckId"
+      label="{{'study.select-deck.selected-deck' | transloco | titlecase}}"
+      [interfaceOptions]="customActionSheetOptions"
+      interface="action-sheet"
+      (ionChange)="onChangeDeck(selectDeck.value)"
+    >
+      <ion-select-option *ngFor="let deck of decks" [value]="deck.id">
+        {{ deck.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <app-quiz-card [wordTranslation]="wordTranslation"> </app-quiz-card>
+</ion-content>

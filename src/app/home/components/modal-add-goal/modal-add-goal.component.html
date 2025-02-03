@@ -1,0 +1,47 @@
+<ion-content>
+  <ion-toolbar>
+    <ion-title>Objetivos</ion-title>
+  </ion-toolbar>
+  <ion-item lines="none">
+    <ion-note color="secondary">
+      Elige tus objetivos diarios, podrás cambiarlos en cualquier momento
+    </ion-note></ion-item
+  >
+
+  <form (ngSubmit)="createGoal()" [formGroup]="addGoalForm">
+    <ion-item>
+      <ion-input
+        label="Número de intentos"
+        type="number"
+        placeholder="intentos deseados"
+        formControlName="attempts"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        label="Porcentaje de aciertos"
+        type="number"
+        placeholder="porcentaje deseado"
+        formControlName="successesAccuracy"
+      ></ion-input>
+    </ion-item>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button (click)="doRequest()">
+          <ion-spinner *ngIf="isLoading" fill="solid"></ion-spinner>
+        </ion-button>
+        <ion-button
+          *ngIf="!isLoading"
+          type="submit"
+          color="primary"
+          fill="solid"
+          >Aceptar</ion-button
+        >
+        <ion-button (click)="modal.dismiss()" color="danger" fill="solid"
+          >Cerrar</ion-button
+        >
+      </ion-buttons>
+    </ion-toolbar>
+  </form>
+</ion-content>

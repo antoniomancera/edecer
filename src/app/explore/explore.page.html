@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'explore.title' | transloco }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-card class="deck-card" color="tertiary" (click)="onClickNavigateDeck(1)">
+    <ion-card-header>
+      <ion-card-title
+        >{{ "shared.decks" | transloco | titlecase }}</ion-card-title
+      >
+      <ion-card-subtitle
+        >{{ 'explore.manage-decks' | transloco }}</ion-card-subtitle
+      >
+    </ion-card-header>
+  </ion-card>
+  <ion-card class="deck-card" color="tertiary" (click)="onClickNavigateWords()">
+    <ion-card-header>
+      <ion-card-title
+        >{{ "global.words" | transloco | titlecase }}</ion-card-title
+      >
+      <ion-card-subtitle
+        >{{ 'explore.manage-words' | transloco }}</ion-card-subtitle
+      >
+    </ion-card-header>
+  </ion-card>
+  <ion-card
+    class="deck-card"
+    color="tertiary"
+    (click)="onClickNavigatePhrases()"
+  >
+    <ion-card-header>
+      <ion-card-title
+        >{{ "global.phrases" | transloco | titlecase }}</ion-card-title
+      >
+      <ion-card-subtitle
+        >{{ 'explore.manage-phrases' | transloco }}</ion-card-subtitle
+      >
+    </ion-card-header>
+  </ion-card>
+</ion-content>

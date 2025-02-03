@@ -1,134 +1,104 @@
-import {
-  sequence,
-  transition,
-  trigger,
-  useAnimation,
-} from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { BOUNCE_IN_LEFT, BOUNCE_OUT_DOWN, HINGE, TADA } from 'angular-bounce';
-import { first } from 'rxjs/operators';
+import { ModalController } from '@ionic/angular';
 
-import { FirebaseService } from '../shared/firebase.service';
-import { Mot } from '../shared/mot';
+import { TranslocoService } from '@jsverse/transloco';
+
+import Chart from 'chart.js/auto';
+
+import { WordTranslation } from '../shared/models/word-translation.model';
+import { HomeService } from './services/home.service';
+import { Home } from './models/home.interface';
+import { ModalAddGoalComponent } from './components/modal-add-goal/modal-add-goal.component';
+import { ToastService } from '../shared/services/toast.service';
+import { MessagingService } from '../shared/services/messaging.service';
+import { applyTheme } from '../shared/utils/apply-theme.util';
+import { LANGUAGE_DEFAULT } from '../shared/constants/app.constants';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
-  animations: [
-    trigger('heroState', [
-      transition('* => active', [useAnimation(BOUNCE_IN_LEFT)]),
-      transition('* => correct', [useAnimation(TADA)]),
-      transition('* => incorrect', [useAnimation(HINGE)]),
-    ]),
-  ],
+  styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  randomWord: Mot;
-  try: string = '';
-  probabilityArray: number[] = [];
-  id: number;
-  state: string = '';
-  success: boolean;
-  isFirst: boolean = true; 
+  isDarkMode: boolean = false;
+  wordTranslation: WordTranslation;
+  home: Home;
+  chart: Chart;
+  isLoading = true;
 
-  constructor(private _firebaseService: FirebaseService) {}
-
-  ngOnInit(): void {
-    this.state = 'inactive';
-    this.getRandomWord();
-  }
-
-  getWordId() {
-    this._firebaseService.getMotId(this.id.toString()).pipe(first()).subscribe((data) => {
-      this.state = 'active';
-      this.randomWord = data;
-    });
-  }
-
-  getRandomWord() {
-    this._firebaseService.probabilityJson.pipe(first()).subscribe((data) => {
-      this.probabilityArray = JSON.parse(data[0][0]);
-      this.foundPercentage(
-        JSON.parse(data[0][0]),
-        0,
-        JSON.parse(data[0][0]).length - 1
-      );
-      this.getWordId();
-    });
-  }
-
-  foundPercentage(
-    probabilityArray: number[],
-    left: number,
-    right: number,
-    randomNumber?: number
+  constructor(
+    private homeService: HomeService,
+    private modalController: ModalController,
+    private toastService: ToastService,
+    private messagingService: MessagingService,
+    private translocoService: TranslocoService,
+    private router: Router
   ) {
-    if (!randomNumber) {
-      randomNumber = Math.random();
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    this.isDarkMode = prefersDark.matches;
+    applyTheme(this.isDarkMode);
+  }
+
+  ngOnInit() {
+    const storedIsDarkModeTheme = localStorage.getItem('isDarkMode');
+    const storedLanguage = localStorage.getItem('language');
+    if (storedIsDarkModeTheme) {
+      console.log('storedIsDarkModeTheme', storedIsDarkModeTheme);
+      this.isDarkMode = JSON.parse(storedIsDarkModeTheme);
+      this.messagingService.setIsDarkMode(JSON.parse(storedIsDarkModeTheme));
+      applyTheme(this.isDarkMode);
     }
 
-    let pivot = Math.round((right + left) / 2);
-
-    if (right - left == 0) {
-      this.id = left;
-    } else if (right - left == 1) {
-      if (probabilityArray[left] > randomNumber) {
-        this.id = left;
-      } else {
-        this.id = right;
-      }
+    if (storedLanguage) {
+      this.messagingService.setSelectedLanguage(storedLanguage);
+      this.translocoService.setActiveLang(storedLanguage);
     } else {
-      if (probabilityArray[pivot] > randomNumber) {
-        if (probabilityArray[pivot - 1] < randomNumber) {
-          this.id = pivot;
-        } else {
-          this.foundPercentage(probabilityArray, left, pivot - 1, randomNumber);
-        }
-      } else {
-        if (probabilityArray[pivot + 1] > randomNumber) {
-          this.id = pivot + 1;
-        } else {
-          this.foundPercentage(
-            probabilityArray,
-            pivot + 1,
-            right,
-            randomNumber
-          );
-        }
-      }
+      this.messagingService.setSelectedLanguage(LANGUAGE_DEFAULT.code);
     }
+
+    this.homeService.getHome().subscribe({
+      next: (home) => {
+        console.log(home.weekStats);
+        this.home = home;
+        this.home.weekStats.map((dailyStats) => {
+          const date: Date = new Date(dailyStats.date);
+          dailyStats.monthDay = date.getDate();
+          dailyStats.weekDay = date.getDay();
+          dailyStats.isAttemptsGoalSuccess =
+            dailyStats.totalAttempts >= home.goal.attempts;
+          dailyStats.isSuccessesAccuracyGoalSuccess =
+            dailyStats.totalSuccesses / dailyStats.totalAttempts >
+            home.goal.successesAccuracy;
+
+          return dailyStats;
+        });
+
+        this.messagingService.setHome(home);
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.toastService.showDangerToast(err.error.message);
+        // this.loadingService.dismissLoading();
+        this.isLoading = false;
+      },
+    });
   }
 
-  animationDone($event) {
-    this.state = $event.toState;
-
-    if (this.state === 'correct' || this.state === 'incorrect') {
-      this.state = 'inactive';
-    }
-    if (this.state === 'inactive') {
-      this.getRandomWord();
-    }
+  async openAddGoalModal() {
+    const modal = await this.modalController.create({
+      component: ModalAddGoalComponent,
+      componentProps: {
+        goal: this.home.goal,
+      },
+    });
+    await modal.present();
   }
 
-  updateMot(word: Mot, tryWord: string) {
-    this.isFirst = false;
-    
-    if (word.fr.trim() === tryWord.trim()) {
-      this.success = true;
-      this.state = 'correct';
-    } else if (word.fr.trim() !== tryWord.trim()) {
-      this.success = false;
-      this.state = 'incorrect';
-    }
-    this._firebaseService.updateMot(word, this.success, word.id.toString());
-    this._firebaseService.updateProbability(
-      this.probabilityArray,
-      word,
-      this.success,
-      word.id.toString()
-    );
-    this.try = '';
+  onClickNavigateDeck(deckId: number) {
+    this.router.navigate(['/explore/decks'], {
+      queryParams: { deckId: deckId },
+    });
   }
 }

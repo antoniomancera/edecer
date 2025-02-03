@@ -1,0 +1,59 @@
+<ion-modal
+  trigger="open-modal"
+  [initialBreakpoint]="0.5"
+  [breakpoints]="[0.5, 1]"
+  handleBehavior="cycle"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{
+          "menu.contact.title" | transloco | titlecase
+        }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <form
+        *ngIf="contactForm"
+        (ngSubmit)="addUserRequest()"
+        [formGroup]="contactForm"
+      >
+        <ion-item class="p-2">
+          <ion-input
+            formControlName="subject"
+            label="{{ 'menu.contact.subject' | transloco | titlecase }}"
+            type="text"
+            labelPlacement="floating"
+          ></ion-input>
+        </ion-item>
+        <ion-item class="p-2">
+          <ion-textarea
+            formControlName="message"
+            label="{{ 'menu.contact.message' | transloco | titlecase }}"
+            labelPlacement="floating"
+            [autoGrow]="true"
+          >
+          </ion-textarea>
+        </ion-item>
+        <ion-toolbar class="p-2">
+          <ion-buttons slot="end">
+            <ion-button (click)="doRequest()">
+              <ion-spinner *ngIf="isLoading" fill="solid"></ion-spinner>
+            </ion-button>
+            <ion-button
+              *ngIf="!isLoading"
+              type="submit"
+              color="primary"
+              fill="solid"
+              [disabled]="!contactForm.valid"
+              >Aceptar</ion-button
+            >
+            <ion-button (click)="closeModal()" color="medium" fill="solid"
+              >Cerrar</ion-button
+            >
+          </ion-buttons>
+        </ion-toolbar>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>

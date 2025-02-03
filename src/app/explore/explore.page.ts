@@ -17,4 +17,12 @@ export class ExplorePage implements OnInit {
       queryParams: { deckId: deckId },
     });
   }
+
+  onClickNavigateWords() {
+    this.router.navigate(['/explore/words']);
+  }
+
+  onClickNavigatePhrases() {
+    this.router.navigate(['/explore/phrases']);
+  }
 }

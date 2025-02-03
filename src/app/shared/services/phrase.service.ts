@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { PhraseWithWordTranslations } from '../models/phrase.interface';
+import { Phrase, PhraseWithWordTranslations } from '../models/phrase.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
 })
 export class PhraseService {
   private readonly PHRASE = '/phrase';
+  private readonly PAGINATED = '/paginated';
+
   constructor(private http: HttpClient) {}
 
   getAllPhrasesWithWordTranslationsByDeck(
@@ -18,6 +20,25 @@ export class PhraseService {
   ): Observable<PhraseWithWordTranslations[]> {
     return this.http.get<PhraseWithWordTranslations[]>(
       environment.BASE_URL + this.PHRASE + '/' + deckId
+    );
+  }
+
+  /**
+   * Get the page pageNumber of PhraseDTO with pageSize elements
+   *
+   * @param pageNumber
+   * @param pageSize
+   * @returns Phrase[]
+   */
+  getAllPhrases(pageNumber?: number, pageSize?: number): Observable<Phrase[]> {
+    return this.http.get<Phrase[]>(
+      environment.BASE_URL +
+        this.PHRASE +
+        this.PAGINATED +
+        '/' +
+        pageNumber +
+        '/' +
+        pageSize
     );
   }
 }

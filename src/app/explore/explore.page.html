@@ -14,4 +14,28 @@
       >
     </ion-card-header>
   </ion-card>
+  <ion-card class="deck-card" color="tertiary" (click)="onClickNavigateWords()">
+    <ion-card-header>
+      <ion-card-title
+        >{{ "global.words" | transloco | titlecase }}</ion-card-title
+      >
+      <ion-card-subtitle
+        >{{ 'explore.manage-words' | transloco }}</ion-card-subtitle
+      >
+    </ion-card-header>
+  </ion-card>
+  <ion-card
+    class="deck-card"
+    color="tertiary"
+    (click)="onClickNavigatePhrases()"
+  >
+    <ion-card-header>
+      <ion-card-title
+        >{{ "global.phrases" | transloco | titlecase }}</ion-card-title
+      >
+      <ion-card-subtitle
+        >{{ 'explore.manage-phrases' | transloco }}</ion-card-subtitle
+      >
+    </ion-card-header>
+  </ion-card>
 </ion-content>

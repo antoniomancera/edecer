@@ -5,10 +5,17 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-title size="large"
-    >{{'home.statistics'| transloco | titlecase}}</ion-title
+  <div class="p-2">
+    <span *ngFor="let deck of decks"><ion-chip>{{deck.name}}</ion-chip></span>
+  </div>
+  <div class="p-2">
+    La relación con los objetivos la última semana ha sido la siguiente
+  </div>
+  <ion-segment
+    class="p-2"
+    [(ngModel)]="segment"
+    (ionChange)="onChangeChangeDataChart()"
   >
-  <ion-segment [(ngModel)]="segment" (ionChange)="onChangeChangeDataChart()">
     <ion-segment-button value="attempts"> attempts </ion-segment-button>
     <ion-segment-button value="successesAccuracy">
       successesAccuracy

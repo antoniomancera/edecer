@@ -5,5 +5,11 @@ import { Component } from '@angular/core';
   templateUrl: 'app.component.html',
 })
 export class AppComponent {
+  selectedTab: string = 'home'; // Inicializa con la pestaña por defecto
+
   constructor() {}
+
+  setToggleSelectedTabOutline(event) {
+    this.selectedTab = event.tab;
+  }
 }

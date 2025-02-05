@@ -5,25 +5,19 @@
       <ion-buttons slot="start">
         <ion-menu-button> A</ion-menu-button>
       </ion-buttons>
-
       <ion-title
         ><span *ngIf="!isLoading"> {{home.userInfo.surname}}</span>
       </ion-title>
-
-      <ion-buttons slot="end">
-        <ion-button>
-          <ion-icon name="chatbox-ellipses-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
   <ion-content class="ion-padding" *ngIf="!isLoading">
-    <!-- <div *ngIf="home.weekStats">
-      <div *ngFor="let week of home.weekStats">{{week | json}}</div>
-    </div> -->
     <ion-title size="large"
       >{{'shared.goals' | transloco | titlecase}}
+    </ion-title>
+    <div class="p-2 m-2 align-vertical-icon-container">
+      {{ 'home.current-goals' | transloco: { attempts: home.goal.attempts,
+      accuracy: home.goal.successesAccuracy } }}
       <ion-button
         class="icon-float-right"
         (click)="openAddGoalModal()"
@@ -31,10 +25,6 @@
       >
         <ion-icon name="settings"></ion-icon>
       </ion-button>
-    </ion-title>
-    <div class="p-2 m-2">
-      {{ 'home.current-goals' | transloco: { attempts: home.goal.attempts,
-      accuracy: home.goal.successesAccuracy } }}
     </div>
     <div class="horizontal-scroll">
       <span *ngFor="let stat of home.weekStats">
@@ -46,7 +36,7 @@
             </ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            <span class="checkbox-container">
+            <span class="align-vertical-icon-container">
               T
               <ion-checkbox
                 class="p-1"

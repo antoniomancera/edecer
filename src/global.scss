@@ -37,6 +37,60 @@
 @import "@ionic/angular/css/palettes/dark.class.css";
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+//Color class from quaternary to nonary
+.ion-color-quaternary {
+  --ion-color-base: var(--ion-color-quaternary);
+  --ion-color-base-rgb: var(--ion-color-quaternary-rgb);
+  --ion-color-contrast: var(--ion-color-quaternary-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-quaternary-contrast-rgb);
+  --ion-color-shade: var(--ion-color-quaternary-shade);
+  --ion-color-tint: var(--ion-color-quaternary-tint);
+}
+
+.ion-color-quinary {
+  --ion-color-base: var(--ion-color-quinary);
+  --ion-color-base-rgb: var(--ion-color-quinary-rgb);
+  --ion-color-contrast: var(--ion-color-quinary-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-quinary-contrast-rgb);
+  --ion-color-shade: var(--ion-color-quinary-shade);
+  --ion-color-tint: var(--ion-color-quinary-tint);
+}
+
+.ion-color-senary {
+  --ion-color-base: var(--ion-color-senary);
+  --ion-color-base-rgb: var(--ion-color-senary-rgb);
+  --ion-color-contrast: var(--ion-color-senary-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-senary-contrast-rgb);
+  --ion-color-shade: var(--ion-color-senary-shade);
+  --ion-color-tint: var(--ion-color-senary-tint);
+}
+
+.ion-color-septenary {
+  --ion-color-base: var(--ion-color-septenary);
+  --ion-color-base-rgb: var(--ion-color-septenary-rgb);
+  --ion-color-contrast: var(--ion-color-septenary-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-septenary-contrast-rgb);
+  --ion-color-shade: var(--ion-color-septenary-shade);
+  --ion-color-tint: var(--ion-color-septenary-tint);
+}
+
+.ion-color-octonary {
+  --ion-color-base: var(--ion-color-octonary);
+  --ion-color-base-rgb: var(--ion-color-octonary-rgb);
+  --ion-color-contrast: var(--ion-color-octonary-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-octonary-contrast-rgb);
+  --ion-color-shade: var(--ion-color-octonary-shade);
+  --ion-color-tint: var(--ion-color-octonary-tint);
+}
+
+.ion-color-nonary {
+  --ion-color-base: var(--ion-color-nonary);
+  --ion-color-base-rgb: var(--ion-color-nonary-rgb);
+  --ion-color-contrast: var(--ion-color-nonary-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-nonary-contrast-rgb);
+  --ion-color-shade: var(--ion-color-nonary-shade);
+  --ion-color-tint: var(--ion-color-nonary-tint);
+}
 
 // Paddings general classes
 .p-0 {
@@ -76,13 +130,31 @@
   margin: var(--spacing-3);
 }
 
+//Styling ionic classes
+ion-header {
+  box-shadow: none !important;
+}
+
+ion-toolbar {
+  --border-width: 0 0 2px 0 !important;
+  --border-color: var(--ion-color-primary);
+}
+
+ion-header ion-toolbar {
+  --ion-toolbar-background: var(--ion-background-color-step-750);
+}
+
+body.dark ion-header ion-toolbar {
+  --ion-toolbar-background: var(--global-primary-color);
+}
+
 //General useful classes
 .background-primary-color {
-  --background: var(--global-primary-color);
+  --background: var(--ion-color-primary);
 }
 
 body.dark .background-primary-color {
-  --background: var(--global-primary-color);
+  --background: var(--ion-color-primary);
 }
 
 .horizontal-scroll {
@@ -101,24 +173,6 @@ body.dark .background-primary-color {
   float: right;
 }
 
-.modal-add-goal {
-  --height: 50%;
-  --max-height: 30vh;
-  --border-radius: 16px;
-  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-ion-header ion-toolbar {
-  --ion-toolbar-background: var(--global-primary-color);
-}
-
-body.dark ion-header ion-toolbar {
-  --ion-toolbar-background: var(--global-primary-color);
-}
-
 .deck-card {
   cursor: pointer;
 }
@@ -128,4 +182,9 @@ body.dark ion-header ion-toolbar {
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.align-vertical-icon-container {
+  display: flex;
+  align-items: center;
 }

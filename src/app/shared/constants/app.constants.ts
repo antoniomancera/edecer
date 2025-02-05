@@ -5,7 +5,7 @@ export const LANGUAGES_SUPPORTED = [
 ];
 export const LANGUAGE_DEFAULT = LANGUAGES_SUPPORTED[0];
 
-export const SUCCESS_COLOR = '#24c224';
-export const DANGER_COLOR = '#c91d2b';
+export const SUCCESS_COLOR = '#A1F9A1';
+export const DANGER_COLOR = '#F9A1A1';
 
 export const ONE_DAY_MILLIS = 24 * 60 * 60 * 1000;

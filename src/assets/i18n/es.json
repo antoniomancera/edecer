@@ -1,5 +1,8 @@
 {
     "global": {
+        "error": {
+            "DECK_WORD_TRANSLATION_HISTORIAL_NOT_FOUND": "No hay ningún historial el día {{date}}"
+        },
         "email": "email",
         "unknown-error": "Error desconocido",
         "week-days": {
@@ -13,7 +16,11 @@
         },
         "words": "palabras",
         "phrases": "frases",
-        "info": "info"
+        "info": "info",
+        "characters-remaining": "carácteres restantes",
+        "accept": "aceptar",
+        "cancel": "cancelar",
+        "close": "cerrar"
     },
     "shared": {
         "loading": "cargando",
@@ -28,17 +35,32 @@
     },
     "home": {
         "statistics": "estadísticas",
-        "current-goals": "Tus objetivos actuales son {{attempts}} (T) y {{accuracy}} (%)"
+        "current-goals": "Tus objetivos actuales son {{attempts}} (T) y {{accuracy}} (%)",
+        "add-goal-modal":{
+            "title": "objectivos diarios",
+            "choose-goal": "elija sus objetivos diarios, podrá cambiarlos en cualquier momento",
+            "number-attempts": "number de intentos",
+            "target-daily-attemps": "objetivo de intentos diario",
+            "percentage-success": "porcentaje de aciertos"
+        },
+        "study-journal-modal":{
+            "title": "diario del día"
+        }
     },
     "menu": {
         "select-language": "Escoja el idioma",
-        "contact": {
+        "contact-modal": {
             "title": "contacta con nosotros",
             "message": "mensaje",
             "subject": "asunto",
             "user-request-created": "Tu solicitud ha sido recibida",
             "user-request-last-week-not-answered": "Existe una solicitud lanzada hace menos de una semana aún por responder."
-        }
+        },
+        "log-out": "desconectar",
+        "contact": "contacto",
+        "dark-mode": "modo oscuro",
+        "language": "idioma",
+        "about": "información"
     },
     "study": {
         "select-deck": {

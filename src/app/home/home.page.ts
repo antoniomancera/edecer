@@ -15,6 +15,7 @@ import { ToastService } from '../shared/services/toast.service';
 import { MessagingService } from '../shared/services/messaging.service';
 import { applyTheme } from '../shared/utils/apply-theme.util';
 import { LANGUAGE_DEFAULT } from '../shared/constants/app.constants';
+import { StudyJournalModalComponent } from './components/study-journal-modal/study-journal-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -80,7 +81,6 @@ export class HomePage implements OnInit {
       },
       error: (err) => {
         this.toastService.showDangerToast(err.error.message);
-        // this.loadingService.dismissLoading();
         this.isLoading = false;
       },
     });
@@ -91,6 +91,17 @@ export class HomePage implements OnInit {
       component: ModalAddGoalComponent,
       componentProps: {
         goal: this.home.goal,
+      },
+    });
+    await modal.present();
+  }
+
+  async openStudyJournalModal(date) {
+    const modal = await this.modalController.create({
+      component: StudyJournalModalComponent,
+      componentProps: {
+        date: date,
+        decks: this.home.decks,
       },
     });
     await modal.present();

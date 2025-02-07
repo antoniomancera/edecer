@@ -1,32 +1,44 @@
-<ion-content>
+<ion-header>
   <ion-toolbar>
-    <ion-title>Objetivos</ion-title>
+    <ion-title>
+      {{ "home.add-goal-modal.title" | transloco | titlecase }}</ion-title
+    >
   </ion-toolbar>
-  <ion-item lines="none">
-    <ion-note color="secondary">
-      Elige tus objetivos diarios, podrás cambiarlos en cualquier momento
-    </ion-note></ion-item
-  >
+</ion-header>
+<ion-content>
+  <div class="p-2">
+    {{ "home.add-goal-modal.choose-goal" | transloco | firstChartUpper }}
+  </div>
 
   <form (ngSubmit)="createGoal()" [formGroup]="addGoalForm">
-    <ion-item>
+    <ion-item class="p-2">
       <ion-input
-        label="Número de intentos"
+        label="{{
+          'home.add-goal-modal.number-attempts' | transloco | firstChartUpper
+        }}"
         type="number"
-        placeholder="intentos deseados"
+        placeholder="{{
+          'home.add-goal-modal.target-daily-attemps'
+            | transloco
+            | firstChartUpper
+        }}"
         formControlName="attempts"
       ></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-input
-        label="Porcentaje de aciertos"
-        type="number"
-        placeholder="porcentaje deseado"
+    <ion-item class="p-2">
+      <ion-range
+        labelPlacement="start"
+        label="{{
+          'home.add-goal-modal.percentage-success' | transloco | firstChartUpper
+        }}"
         formControlName="successesAccuracy"
-      ></ion-input>
+        [pin]="true"
+        [ticks]="true"
+        [snaps]="true"
+      ></ion-range>
     </ion-item>
-    <ion-toolbar>
+    <ion-toolbar class="p-2 ion-toolbar-footer">
       <ion-buttons slot="end">
         <ion-button (click)="doRequest()">
           <ion-spinner *ngIf="isLoading" fill="solid"></ion-spinner>
@@ -36,11 +48,11 @@
           type="submit"
           color="primary"
           fill="solid"
-          >Aceptar</ion-button
+          >{{ "global.accept" | transloco | titlecase }}</ion-button
         >
-        <ion-button (click)="modal.dismiss()" color="danger" fill="solid"
-          >Cerrar</ion-button
-        >
+        <ion-button (click)="modal.dismiss()" color="medium" fill="solid">{{
+          "global.cancel" | transloco | titlecase
+        }}</ion-button>
       </ion-buttons>
     </ion-toolbar>
   </form>

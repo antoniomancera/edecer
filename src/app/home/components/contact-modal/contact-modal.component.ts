@@ -21,6 +21,7 @@ export class ContactModalComponent implements OnInit {
 
   contactForm!: FormGroup;
   isLoading = false;
+  customCharactersRemaining = '';
 
   constructor(
     private menuService: MenuService,
@@ -29,6 +30,12 @@ export class ContactModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.translocoService
+      .selectTranslate('global.characters-remaining')
+      .subscribe((translation) => {
+        this.customCharactersRemaining = translation;
+      });
+
     this.contactForm = new FormGroup({
       subject: new FormControl<string>(null, [
         Validators.required,
@@ -70,11 +77,18 @@ export class ContactModalComponent implements OnInit {
             );
           } else {
             this.toastService.showDangerToast(
-              this.translocoService.translate('gloal.unknown-error')
+              this.translocoService.translate('global.unknown-error')
             );
           }
         },
       });
     }
   }
+
+  customCharactersRemainingFormatter = (
+    inputLength: number,
+    maxLength: number
+  ) => {
+    return `${maxLength - inputLength} ` + this.customCharactersRemaining;
+  };
 }

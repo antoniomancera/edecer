@@ -7,7 +7,7 @@
   <ion-item *ngIf="!isLoading && decks && decks.length > 0">
     <ion-select
       #selectDeck
-      [(ngModel)]="lastDeckId"
+      [(ngModel)]="selectedDeckId"
       label="{{'study.select-deck.selected-deck' | transloco | titlecase}}"
       [interfaceOptions]="customActionSheetOptions"
       interface="action-sheet"
@@ -19,5 +19,9 @@
     </ion-select>
   </ion-item>
 
-  <app-quiz-card [wordTranslation]="wordTranslation"> </app-quiz-card>
+  <app-quiz-card
+    [wordTranslation]="wordTranslation"
+    [selectedDeckId]="selectedDeckId"
+  >
+  </app-quiz-card>
 </ion-content>

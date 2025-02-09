@@ -20,6 +20,7 @@
       accuracy: home.goal.successesAccuracy } }}
       <ion-button
         class="icon-float-right"
+        id="open-add-goal-modal"
         (click)="openAddGoalModal()"
         fill="clear"
       >
@@ -28,7 +29,11 @@
     </div>
     <div class="horizontal-scroll">
       <span *ngFor="let stat of home.weekStats">
-        <ion-card class="weekly-goal-tracing-card" color="secondary">
+        <ion-card
+          class="weekly-goal-tracing-card deck-card"
+          color="secondary"
+          (click)="openStudyJournalModal(stat.date)"
+        >
           <ion-card-header>
             <ion-card-title>{{ stat.monthDay }}</ion-card-title>
             <ion-card-subtitle>

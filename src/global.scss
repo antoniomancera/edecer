@@ -131,16 +131,30 @@
 }
 
 //Styling ionic classes
+ion-textarea {
+  --border-width: 0 !important;
+  background-color: var(--ion-background-color-step-800);
+}
+
+ion-input {
+  background-color: var(--ion-background-color-step-800);
+}
+
+ion-range {
+  background-color: var(--ion-background-color-step-800);
+}
+
+ion-toolbar {
+  --border-width: 0;
+}
+
 ion-header {
   box-shadow: none !important;
 }
 
-ion-toolbar {
+ion-header ion-toolbar {
   --border-width: 0 0 2px 0 !important;
   --border-color: var(--ion-color-primary);
-}
-
-ion-header ion-toolbar {
   --ion-toolbar-background: var(--ion-background-color-step-750);
 }
 
@@ -187,4 +201,8 @@ body.dark .background-primary-color {
 .align-vertical-icon-container {
   display: flex;
   align-items: center;
+}
+
+.icon-float-right {
+  margin-left: auto;
 }

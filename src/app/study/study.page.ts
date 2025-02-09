@@ -19,7 +19,7 @@ export class StudyPage implements OnInit {
   wordTranslation: WordTranslation;
   decks: Deck[] = [];
   lastDeck: Deck;
-  lastDeckId: number;
+  selectedDeckId: number;
   goal: Goal;
   isLoading = true;
   customActionSheetOptions = {
@@ -49,13 +49,13 @@ export class StudyPage implements OnInit {
         switchMap((home) => {
           this.decks = home.decks;
           this.goal = home.goal;
-          this.lastDeckId = home.lastDeckId;
+          this.selectedDeckId = home.lastDeckId;
           this.lastDeck = this.decks.find(
-            (deck) => deck.id === this.lastDeckId
+            (deck) => deck.id === this.selectedDeckId
           );
           this.isLoading = false;
           return this.wordTranslationService.getRandomWordTranslation(
-            this.lastDeckId
+            this.selectedDeckId
           );
         })
       )

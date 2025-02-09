@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { WordTranslation } from '../../models/word-translation.model';
 import { WordTranslationService } from '../../services/word-translation.service';
+import { Deck } from '../../models/deck.interface';
 
 @Component({
   selector: 'app-quiz-card',
@@ -10,6 +11,7 @@ import { WordTranslationService } from '../../services/word-translation.service'
 })
 export class QuizCardComponent implements OnInit {
   @Input() wordTranslation: WordTranslation;
+  @Input() selectedDeckId: number = 0;
 
   quizzForm!: FormGroup;
 
@@ -34,7 +36,7 @@ export class QuizCardComponent implements OnInit {
         this.wordTranslation.id,
         this.wordTranslation.phrase.id,
         success,
-        1
+        this.selectedDeckId
       )
       .subscribe((word) => {
         this.wordTranslation = word;

@@ -35,9 +35,9 @@
         <ion-icon class="p-3" name="chatbox-ellipses-sharp"></ion-icon
         ><ion-label>{{ "menu.contact" | transloco | titlecase }}</ion-label>
       </ion-item>
-      <ion-item class="background-primary-color">
+      <ion-item button id="open-about-modal" class="background-primary-color">
         <ion-icon class="p-3" name="information-circle-sharp"></ion-icon
-        ><ion-label>{{ "menu.about" | transloco | titlecase }}</ion-label>
+        ><ion-label>{{ "menu.about.title" | transloco | titlecase }}</ion-label>
       </ion-item>
       <ion-item class="background-primary-color">
         <ion-icon class="p-3" name="log-out-sharp"></ion-icon
@@ -46,9 +46,8 @@
     </ion-list>
   </ion-content>
   <ion-footer>
-    <ion-toolbar class="background-primary-color">
-      Antonio Manuel Manceras Hevilla
-    </ion-toolbar>
+    <ion-toolbar class="background-primary-color"> v0.3.0 </ion-toolbar>
   </ion-footer>
 </ion-menu>
 <app-contact-modal [userInfo]="userInfo"></app-contact-modal>
+<app-about-modal></app-about-modal>

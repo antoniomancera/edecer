@@ -61,7 +61,10 @@
         "contact": "contact",
         "dark-mode": "dark mode",
         "language": "language",
-        "about": "about"
+        "about": {
+            "title":"à propos",
+            "message": "This application has been created by Antonio Manuel Manceras Hevilla with the aim of providing a program to learn French based on Spanish, being free, easy to use, but at the same time adaptable according to the user's needs."
+        }
     },
     "study": {
         "select-deck": {

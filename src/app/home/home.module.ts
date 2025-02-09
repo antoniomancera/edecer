@@ -13,6 +13,7 @@ import { ModalAddGoalComponent } from './components/modal-add-goal/modal-add-goa
 import { MenuComponent } from './components/menu/menu.component';
 import { ContactModalComponent } from './components/contact-modal/contact-modal.component';
 import { StudyJournalModalComponent } from './components/study-journal-modal/study-journal-modal.component';
+import { AboutModalComponent } from './components/about-modal/about-modal.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { StudyJournalModalComponent } from './components/study-journal-modal/stu
     MenuComponent,
     ContactModalComponent,
     StudyJournalModalComponent,
+    AboutModalComponent,
   ],
 })
 export class HomePageModule {}

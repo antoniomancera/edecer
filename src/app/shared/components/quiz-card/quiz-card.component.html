@@ -1,35 +1,37 @@
-<ion-card *ngIf="wordTranslation" color="4c8dff">
-  <ion-card-header>
-    <ion-card-title>Ensayo general</ion-card-title>
-    <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
-  </ion-card-header>
-  <ion-card-content>
-    <form
-      *ngIf="quizzForm"
-      (ngSubmit)="attemptsWordTranslation()"
-      [formGroup]="quizzForm"
-    >
-      <ion-item>
-        <span>
-          <!-- minlength="4"
-            maxlength="8"
-            size="10" -->
-          {{ wordTranslation.wordFrFirstPart
-          }}<input
-            class="background-primary-color"
-            type="text"
-            id="name"
-            name="name"
-            required
-            formControlName="attemptWord"
-          />{{ wordTranslation.wordFrSecondPart }}</span
-        >
-      </ion-item>
-      <ion-item>
-        {{ wordTranslation.phrase.phraseEs }}
-      </ion-item>
+<form
+  *ngIf="wordTranslation && quizzForm"
+  (ngSubmit)="attemptsWordTranslation()"
+  [formGroup]="quizzForm"
+>
+  <ion-card>
+    <ion-card-content>
+      <!-- <ion-item> -->
 
-      <ion-button fill="clear" type="submit">ok</ion-button>
-    </form>
-  </ion-card-content>
-</ion-card>
+      {{ wordTranslation.wordFrFirstPart
+      }}<input
+        class="background-primary-color"
+        type="text"
+        id="name"
+        name="name"
+        required
+        formControlName="attemptWord"
+      />{{ wordTranslation.wordFrSecondPart }}
+      <!-- </ion-item> -->
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      {{ wordTranslation.phrase.phraseEs }}
+    </ion-card-content>
+  </ion-card>
+  <ion-toolbar class="p-2 ion-toolbar-footer">
+    <ion-buttons slot="end">
+      <ion-button (click)="doRequest()">
+        <ion-spinner *ngIf="isLoading" fill="solid"></ion-spinner>
+      </ion-button>
+      <ion-button type="submit" color="primary" fill="solid" expand="full">{{
+        "global.accept" | transloco | titlecase
+      }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</form>

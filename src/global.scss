@@ -158,6 +158,11 @@ ion-header ion-toolbar {
   --ion-toolbar-background: var(--ion-background-color-step-750);
 }
 
+ion-item {
+  --border-width: 0;
+  --inner-border-width: 0;
+}
+
 body.dark ion-header ion-toolbar {
   --ion-toolbar-background: var(--global-primary-color);
 }

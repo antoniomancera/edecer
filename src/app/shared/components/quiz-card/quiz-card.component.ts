@@ -14,6 +14,7 @@ export class QuizCardComponent implements OnInit {
   @Input() selectedDeckId: number = 0;
 
   quizzForm!: FormGroup;
+  isLoading = false;
 
   constructor(private wordTranslationService: WordTranslationService) {}
 
@@ -25,6 +26,7 @@ export class QuizCardComponent implements OnInit {
 
   attemptsWordTranslation() {
     let success = false;
+    this.isLoading = true;
     if (
       this.quizzForm.controls.attemptWord.value ===
       this.wordTranslation.wordFr.name
@@ -38,8 +40,14 @@ export class QuizCardComponent implements OnInit {
         success,
         this.selectedDeckId
       )
-      .subscribe((word) => {
-        this.wordTranslation = word;
+      .subscribe({
+        next: (word) => {
+          this.wordTranslation = word;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.isLoading = false;
+        },
       });
   }
 }

@@ -68,8 +68,8 @@
     },
     "study": {
         "select-deck": {
-            "selected-deck": "Mazo seleccionado",
-            "select-deck-to-practise": "Elige el mazo que deseas practicar"
+            "selected-deck": "Selected deck",
+            "select-deck-to-practise": "Select the deck you want to practice"
         }
     }
 }

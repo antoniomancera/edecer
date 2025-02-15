@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Header</ion-title>
+    <ion-progress-bar class="m-2" [value]=".25"></ion-progress-bar>hola
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
@@ -18,7 +18,6 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
-
   <app-quiz-card
     [wordTranslation]="wordTranslation"
     [selectedDeckId]="selectedDeckId"

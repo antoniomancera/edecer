@@ -1,0 +1,40 @@
+@if(wordTranslation && quizzForm){
+<form
+  [@attemptsCorrect]="isAttemptCorrect ? 'tada' : 'null'"
+  [@attemptsIncorrect]="isAttemptIncorrect ? 'hinge' : 'null'"
+  [@changeDeck]="hasChangedDeck ? 'zoomIn' : 'null'"
+  (ngSubmit)="attemptsWordTranslation()"
+  [formGroup]="quizzForm"
+>
+  <ion-card>
+    <ion-card-content>
+      {{ wordTranslation.wordFrFirstPart
+      }}<input
+        class="background-primary-color"
+        type="text"
+        id="name"
+        name="name"
+        required
+        formControlName="attemptWord"
+      />{{ wordTranslation.wordFrSecondPart }}
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      {{ wordTranslation.phrase.phraseEs }}
+    </ion-card-content>
+  </ion-card>
+  <ion-toolbar class="p-2 ion-toolbar-footer">
+    <ion-buttons slot="end">
+      <ion-button (click)="doRequest()">
+        @if(isLoading){
+        <ion-spinner fill="solid"></ion-spinner>
+        }
+      </ion-button>
+      <ion-button type="submit" color="primary" fill="solid" expand="full">{{
+        "global.accept" | transloco | titlecase
+      }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</form>
+}

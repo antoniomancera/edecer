@@ -1,0 +1,17 @@
+.container {
+    width: 100%;
+}
+
+.segment {
+    width: 16%;
+    background-color: lightgray;
+    border-radius: 3px;
+    margin: var(--spacing-1);
+    float: left;
+    display: block;
+    height: 10px;
+}
+
+.filled {
+    background-color: var(--ion-color-success) !important;
+}

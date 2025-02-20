@@ -1,6 +1,23 @@
 <ion-header>
   <ion-toolbar>
-    <ion-progress-bar class="m-2" [value]=".25"></ion-progress-bar>hola
+    <div class="container">
+      <div
+        [ngClass]="(stat.totalAttempts / goal.attempts > 0.2) ? 'segment filled' : 'segment'"
+      ></div>
+      <div
+        [ngClass]="(stat.totalAttempts / goal.attempts > 0.4) ? 'segment filled' : 'segment'"
+      ></div>
+      <div
+        [ngClass]="(stat.totalAttempts / goal.attempts > 0.6) ? 'segment filled' : 'segment'"
+      ></div>
+      <div
+        [ngClass]="(stat.totalAttempts / goal.attempts > 0.8) ? 'segment filled' : 'segment'"
+      ></div>
+      <div
+        [ngClass]="(stat.totalAttempts / goal.attempts > 1) ? 'segment filled' : 'segment'"
+      ></div>
+      <div>{{stat.totalAttempts}}T ({{stat.totalSuccesses}}%)</div>
+    </div>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
@@ -18,9 +35,5 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
-  <app-quiz-card
-    [wordTranslation]="wordTranslation"
-    [selectedDeckId]="selectedDeckId"
-  >
-  </app-quiz-card>
+  <app-quiz-card [selectedDeckId]="selectedDeckId"> </app-quiz-card>
 </ion-content>

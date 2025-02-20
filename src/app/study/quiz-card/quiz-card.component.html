@@ -1,12 +1,13 @@
+@if(wordTranslation && quizzForm){
 <form
-  *ngIf="wordTranslation && quizzForm"
+  [@attemptsCorrect]="isAttemptCorrect ? 'tada' : 'null'"
+  [@attemptsIncorrect]="isAttemptIncorrect ? 'hinge' : 'null'"
+  [@changeDeck]="hasChangedDeck ? 'zoomIn' : 'null'"
   (ngSubmit)="attemptsWordTranslation()"
   [formGroup]="quizzForm"
 >
   <ion-card>
     <ion-card-content>
-      <!-- <ion-item> -->
-
       {{ wordTranslation.wordFrFirstPart
       }}<input
         class="background-primary-color"
@@ -16,7 +17,6 @@
         required
         formControlName="attemptWord"
       />{{ wordTranslation.wordFrSecondPart }}
-      <!-- </ion-item> -->
     </ion-card-content>
   </ion-card>
   <ion-card>
@@ -27,7 +27,9 @@
   <ion-toolbar class="p-2 ion-toolbar-footer">
     <ion-buttons slot="end">
       <ion-button (click)="doRequest()">
-        <ion-spinner *ngIf="isLoading" fill="solid"></ion-spinner>
+        @if(isLoading){
+        <ion-spinner fill="solid"></ion-spinner>
+        }
       </ion-button>
       <ion-button type="submit" color="primary" fill="solid" expand="full">{{
         "global.accept" | transloco | titlecase
@@ -35,3 +37,4 @@
     </ion-buttons>
   </ion-toolbar>
 </form>
+}

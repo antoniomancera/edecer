@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { StudyPageRoutingModule } from './study-routing.module';
+import { TranslocoModule } from '@jsverse/transloco';
 
+import { StudyPageRoutingModule } from './study-routing.module';
 import { StudyPage } from './study.page';
 import { SharedModule } from '../shared/shared.module';
-import { TranslocoModule } from '@jsverse/transloco';
+import { QuizCardComponent } from './quiz-card/quiz-card.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { TranslocoModule } from '@jsverse/transloco';
     StudyPageRoutingModule,
     SharedModule,
     TranslocoModule,
+    ReactiveFormsModule,
   ],
-  declarations: [StudyPage],
+  declarations: [StudyPage, QuizCardComponent],
 })
 export class StudyPageModule {}

@@ -20,7 +20,9 @@
         "characters-remaining": "characters remaining",
         "accept": "accept",
         "cancel": "cancel",
-        "close": "close"
+        "close": "close",
+        "total": "total",
+        "percentage": "percentage"
     },
     "shared": {
         "loading": "loading",

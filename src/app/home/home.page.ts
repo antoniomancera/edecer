@@ -102,6 +102,16 @@ export class HomePage implements OnInit {
       componentProps: {
         date: date,
         decks: this.home.decks,
+        goal: this.home.goal,
+        stat: this.home.weekStats.find((stat) => {
+          let statDate =
+            typeof stat.date === 'string' ? new Date(stat.date) : stat.date;
+          let today = new Date();
+          today.setHours(0, 0, 0, 0);
+          statDate.setHours(0, 0, 0, 0);
+
+          return statDate.getTime() === today.getTime();
+        }),
       },
     });
     await modal.present();

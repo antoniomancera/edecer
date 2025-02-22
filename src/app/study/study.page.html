@@ -1,23 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <div class="container">
-      <div
-        [ngClass]="(stat.totalAttempts / goal.attempts > 0.2) ? 'segment filled' : 'segment'"
-      ></div>
-      <div
-        [ngClass]="(stat.totalAttempts / goal.attempts > 0.4) ? 'segment filled' : 'segment'"
-      ></div>
-      <div
-        [ngClass]="(stat.totalAttempts / goal.attempts > 0.6) ? 'segment filled' : 'segment'"
-      ></div>
-      <div
-        [ngClass]="(stat.totalAttempts / goal.attempts > 0.8) ? 'segment filled' : 'segment'"
-      ></div>
-      <div
-        [ngClass]="(stat.totalAttempts / goal.attempts > 1) ? 'segment filled' : 'segment'"
-      ></div>
-      <div>{{stat.totalAttempts}}T ({{stat.totalSuccesses}}%)</div>
-    </div>
+    <app-track-progress-total-percentage
+      [stat]="stat"
+      [goal]="goal"
+    ></app-track-progress-total-percentage>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">

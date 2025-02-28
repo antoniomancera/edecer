@@ -6,7 +6,11 @@
   (ngSubmit)="attemptsWordTranslation()"
   [formGroup]="quizzForm"
 >
-  <ion-card>
+  <ion-card class="quiz-card p-2"> </ion-card>
+  <ion-card class="quiz-card p-2"> </ion-card>
+  <ion-card class="quiz-card p-2"> </ion-card>
+  <ion-card class="quiz-card p-2"> </ion-card>
+  <ion-card class="quiz-card p-2">
     <ion-card-content>
       {{ wordTranslation.wordFrFirstPart
       }}<input
@@ -17,10 +21,7 @@
         required
         formControlName="attemptWord"
       />{{ wordTranslation.wordFrSecondPart }}
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-content>
+      <br />
       {{ wordTranslation.phrase.phraseEs }}
     </ion-card-content>
   </ion-card>
@@ -31,9 +32,14 @@
         <ion-spinner fill="solid"></ion-spinner>
         }
       </ion-button>
-      <ion-button type="submit" color="primary" fill="solid" expand="full">{{
-        "global.accept" | transloco | titlecase
-      }}</ion-button>
+      <ion-button
+        type="submit"
+        color="primary"
+        fill="solid"
+        expand="full"
+        disabled="{{ !quizzForm.valid }}"
+        >{{ "global.accept" | transloco | titlecase }}</ion-button
+      >
     </ion-buttons>
   </ion-toolbar>
 </form>

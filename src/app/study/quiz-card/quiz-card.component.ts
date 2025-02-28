@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { transition, trigger, useAnimation } from '@angular/animations';
 
@@ -14,6 +14,7 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 @Component({
   selector: 'app-quiz-card',
   templateUrl: './quiz-card.component.html',
+  styleUrls: ['./quiz-card.component.scss'],
   animations: [
     trigger('attemptsCorrect', [
       transition('tada => null', [useAnimation(TADA)]),
@@ -42,7 +43,10 @@ export class QuizCardComponent implements OnChanges {
     private toastService: ToastService
   ) {
     this.quizzForm = new FormGroup({
-      attemptWord: new FormControl(null, [Validators.required]),
+      attemptWord: new FormControl(null, [
+        Validators.required,
+        this.noWhitespaceValidator,
+      ]),
     });
   }
 
@@ -97,5 +101,9 @@ export class QuizCardComponent implements OnChanges {
           this.toastService.showDangerToast(err.error.message);
         },
       });
+  }
+
+  private noWhitespaceValidator(control: FormControl) {
+    return (control.value || '').trim().length ? null : { whitespace: true };
   }
 }

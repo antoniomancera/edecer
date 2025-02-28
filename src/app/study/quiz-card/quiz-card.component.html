@@ -31,9 +31,14 @@
         <ion-spinner fill="solid"></ion-spinner>
         }
       </ion-button>
-      <ion-button type="submit" color="primary" fill="solid" expand="full">{{
-        "global.accept" | transloco | titlecase
-      }}</ion-button>
+      <ion-button
+        type="submit"
+        color="primary"
+        fill="solid"
+        expand="full"
+        disabled="{{ !quizzForm.valid }}"
+        >{{ "global.accept" | transloco | titlecase }}</ion-button
+      >
     </ion-buttons>
   </ion-toolbar>
 </form>

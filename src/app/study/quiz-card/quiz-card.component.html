@@ -6,7 +6,11 @@
   (ngSubmit)="attemptsWordTranslation()"
   [formGroup]="quizzForm"
 >
-  <ion-card>
+  <ion-card class="quiz-card p-2"> </ion-card>
+  <ion-card class="quiz-card p-2"> </ion-card>
+  <ion-card class="quiz-card p-2"> </ion-card>
+  <ion-card class="quiz-card p-2"> </ion-card>
+  <ion-card class="quiz-card p-2">
     <ion-card-content>
       {{ wordTranslation.wordFrFirstPart
       }}<input
@@ -17,10 +21,7 @@
         required
         formControlName="attemptWord"
       />{{ wordTranslation.wordFrSecondPart }}
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-content>
+      <br />
       {{ wordTranslation.phrase.phraseEs }}
     </ion-card-content>
   </ion-card>

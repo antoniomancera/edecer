@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
+
 import { TranslocoModule } from '@jsverse/transloco';
 
 import { LoadingComponent } from './components/loading/loading.component';
@@ -15,7 +17,7 @@ import { TrackProgressTotalPercentageComponent } from './components/track-progre
     FirstChartUpperPipe,
     TrackProgressTotalPercentageComponent,
   ],
-  imports: [CommonModule, TranslocoModule, BoldPipe],
+  imports: [CommonModule, TranslocoModule, BoldPipe, IonicModule],
   exports: [
     LoadingComponent,
     WeekdayPipe,

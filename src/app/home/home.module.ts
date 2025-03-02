@@ -12,6 +12,8 @@ import { SharedModule } from '../shared/shared.module';
 import { ModalAddGoalComponent } from './components/modal-add-goal/modal-add-goal.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ContactModalComponent } from './components/contact-modal/contact-modal.component';
+import { StudyJournalModalComponent } from './components/study-journal-modal/study-journal-modal.component';
+import { AboutModalComponent } from './components/about-modal/about-modal.component';
 
 @NgModule({
   imports: [
@@ -28,6 +30,8 @@ import { ContactModalComponent } from './components/contact-modal/contact-modal.
     ModalAddGoalComponent,
     MenuComponent,
     ContactModalComponent,
+    StudyJournalModalComponent,
+    AboutModalComponent,
   ],
 })
 export class HomePageModule {}

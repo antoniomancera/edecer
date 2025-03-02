@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+
 import Chart from 'chart.js/auto';
+
 import { StatsService } from './services/stats.service';
 import { Stats } from './models/stats.interface';
 import { MessagingService } from '../shared/services/messaging.service';
 import { Goal } from '../home/models/goal.interface';
 import { interpolateColours } from '../shared/utils/interpolate-colours.util';
 import { DANGER_COLOR, SUCCESS_COLOR } from '../shared/constants/app.constants';
+import { Deck } from '../shared/models/deck.interface';
 
 @Component({
   selector: 'app-stats',
@@ -18,6 +21,7 @@ export class StatsPage implements OnInit {
   stats: Stats;
   segment = 'attempts';
   goal: Goal;
+  decks: Deck[] = [];
 
   dates: Date[] = [];
   totalAttempts: number[] = [];
@@ -34,15 +38,14 @@ export class StatsPage implements OnInit {
 
   ngOnInit() {
     this.messagingService.getHome().subscribe((home) => {
-      if (home.goal) {
-        this.goal = home.goal;
-      }
+      this.goal = home.goal;
+      this.decks = home.decks;
     });
     this.statsService.getStatsPageInitial().subscribe((stats) => {
       this.isLoading = false;
-      this.dates = stats.weekStats.map((stat) => stat.date);
+      this.dates = stats.map((stat) => stat.date);
 
-      this.totalAttempts = stats.weekStats.map((stat) => stat.totalAttempts);
+      this.totalAttempts = stats.map((stat) => stat.totalAttempts);
       this.totalAttemptsDailyEvolution = this.getDailyEvolutionStat(
         this.totalAttempts
       );
@@ -51,7 +54,7 @@ export class StatsPage implements OnInit {
         this.goal.attempts
       );
 
-      this.successesAccuracy = stats.weekStats.map((stat) => {
+      this.successesAccuracy = stats.map((stat) => {
         if (!stat.totalAttempts || stat.totalAttempts === 0) {
           return 0;
         } else

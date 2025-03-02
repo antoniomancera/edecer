@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ModalController, ToastController } from '@ionic/angular';
+
+import { ModalController } from '@ionic/angular';
+
 import { HomeService } from '../../services/home.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { Goal } from '../../models/goal.interface';
@@ -10,23 +12,23 @@ import { Goal } from '../../models/goal.interface';
   templateUrl: './modal-add-goal.component.html',
 })
 export class ModalAddGoalComponent implements OnInit {
+  @Input() goal: Goal;
+
   addGoalForm!: FormGroup;
-  goal: Goal;
   isLoading = false;
 
   constructor(
     private modalCtrl: ModalController,
     private homeService: HomeService,
     private toastService: ToastService
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.addGoalForm = new FormGroup({
       attempts: new FormControl(null, [Validators.required]),
       successesAccuracy: new FormControl(null, [Validators.required]),
     });
-    this;
+  }
 
+  ngOnInit() {
     if (this.goal != null) {
       if (this.goal.attempts != null) {
         this.addGoalForm.controls.attempts.setValue(this.goal.attempts);

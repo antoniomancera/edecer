@@ -1,5 +1,8 @@
 {
     "global": {
+        "error": {
+            "DECK_WORD_TRANSLATION_HISTORIAL_NOT_FOUND": "Aucun historique trouvé pour la journée {{date}}"
+        },
         "email": "email",
         "unknown-error": "Erreur inconnue",
         "week-days": {
@@ -13,7 +16,13 @@
         },
         "words": "mots",
         "phrases": "phrases",
-        "info": "info"
+        "info": "info",
+        "characters-remaining": "caractères restants",
+        "accept": "accepter",
+        "cancel": "annuler",
+        "close": "fermer",
+        "total": "total",
+        "percentage": "pourcentage"
     },
     "shared": {
         "loading": "Chargement",
@@ -28,22 +37,40 @@
     },
     "home":{
         "statistics": "statistiques",
-        "current-goals": "Vos objectifs actuels sont {{attempts}} (T) et {{accuracy}} (%)"
+        "current-goals": "Vos objectifs actuels sont {{attempts}} (T) et {{accuracy}} (%)",
+        "add-goal-modal":{
+            "title": "objectifs quotidiens",
+            "choose-goal": "choisissez vos objectifs quotidiens, vous pouvez les modifier à tout moment",
+            "number-attempts": "nombre de tentatives",
+            "target-daily-attemps": "cibler les tentatives quotidiennes",
+            "percentage-success": "pourcentage de hits"
+        },
+        "study-journal-modal":{
+            "title": "journal du jour"
+        }
     },
     "menu": {
         "select-language": "Sélectionner la langue",
-        "contact": {
+        "contact-modal": {
             "title": "contactez-nous",
             "message": "message",
             "subject": "objet",
             "user-request-created": "Nous avons bien reçu votre demande",
             "user-request-last-week-not-answered": "Il existe une demande effectuée il y a moins d'une semaine qui n'a pas encore été répondue."
-        }
+        },
+        "log-out": "Déconnexion",
+        "contact": "contact",
+        "dark-mode": "mode sombre",
+        "language": "langue",
+        "about": {
+            "title":"à propos",
+            "message": "Cette application a été créée par Antonio Manuel Manceras Hevilla dans le but de fournir un programme pour apprendre le français basé sur l'espagnol, gratuit, facile à utiliser, mais en même temps adaptable selon les besoins de l'utilisateur."
+        } 
     },
     "study": {
         "select-deck": {
-            "selected-deck": "Mazo seleccionado",
-            "select-deck-to-practise": "Elige el mazo que deseas practicar"
+            "selected-deck": "Deck sélectionné",
+            "select-deck-to-practise": "Choisissez le deck que vous souhaitez pratiquer"
         }
     }
 }

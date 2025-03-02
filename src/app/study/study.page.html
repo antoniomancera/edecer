@@ -1,13 +1,16 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Header</ion-title>
+    <app-track-progress-total-percentage
+      [stat]="stat"
+      [goal]="goal"
+    ></app-track-progress-total-percentage>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
   <ion-item *ngIf="!isLoading && decks && decks.length > 0">
     <ion-select
       #selectDeck
-      [(ngModel)]="lastDeckId"
+      [(ngModel)]="selectedDeckId"
       label="{{'study.select-deck.selected-deck' | transloco | titlecase}}"
       [interfaceOptions]="customActionSheetOptions"
       interface="action-sheet"
@@ -18,6 +21,5 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
-
-  <app-quiz-card [wordTranslation]="wordTranslation"> </app-quiz-card>
+  <app-quiz-card [selectedDeckId]="selectedDeckId"> </app-quiz-card>
 </ion-content>

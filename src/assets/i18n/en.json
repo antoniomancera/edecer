@@ -1,5 +1,8 @@
 {
     "global": {
+        "error": {
+            "DECK_WORD_TRANSLATION_HISTORIAL_NOT_FOUND": "Not found any historial for the day {{date}}"
+        },
         "email": "email",
         "unknown-error": "unknown error",
         "week-days": {
@@ -13,7 +16,13 @@
         },
         "words": "words",
         "phrases": "phrases",
-        "info": "info"
+        "info": "info",
+        "characters-remaining": "characters remaining",
+        "accept": "accept",
+        "cancel": "cancel",
+        "close": "close",
+        "total": "total",
+        "percentage": "percentage"
     },
     "shared": {
         "loading": "loading",
@@ -29,22 +38,40 @@
     "home":{
         "statistics": "statistics",
         "decks": "decks",
-        "current-goals": "Your current goals are {{attempts}} (T) and {{accuracy}} (%)"
+        "current-goals": "Your current goals are {{attempts}} (T) and {{accuracy}} (%)",
+        "add-goal-modal":{
+            "title": "daily goals",
+            "choose-goal": "choose your daily goals, you can change them at any time",
+            "number-attempts": "number of attemps",
+            "target-daily-attemps": "target daily attemps",
+            "percentage-success": "percentage of success"
+        },
+        "study-journal-modal":{
+            "title": "diary of the day"
+        }
     },
     "menu": {
         "select-language": "Select language",
-        "contact": {
+        "contact-modal": {
             "title": "contact with us",
             "message": "message",
             "subject": "objet",
             "user-request-created": "Your request has been successfully received",
             "user-request-last-week-not-answered": "There is a request made less than a week ago that has not yet been answered."
+        },
+        "log-out": "logout",
+        "contact": "contact",
+        "dark-mode": "dark mode",
+        "language": "language",
+        "about": {
+            "title":"à propos",
+            "message": "This application has been created by Antonio Manuel Manceras Hevilla with the aim of providing a program to learn French based on Spanish, being free, easy to use, but at the same time adaptable according to the user's needs."
         }
     },
     "study": {
         "select-deck": {
-            "selected-deck": "Mazo seleccionado",
-            "select-deck-to-practise": "Elige el mazo que deseas practicar"
+            "selected-deck": "Selected deck",
+            "select-deck-to-practise": "Select the deck you want to practice"
         }
     }
 }

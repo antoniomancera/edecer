@@ -1,5 +1,5 @@
 <ion-modal
-  trigger="open-modal"
+  trigger="open-contact-modal"
   [initialBreakpoint]="0.5"
   [breakpoints]="[0.5, 1]"
   handleBehavior="cycle"
@@ -8,7 +8,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>{{
-          "menu.contact.title" | transloco | titlecase
+          "menu.contact-modal.title" | transloco | titlecase
         }}</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -21,7 +21,7 @@
         <ion-item class="p-2">
           <ion-input
             formControlName="subject"
-            label="{{ 'menu.contact.subject' | transloco | titlecase }}"
+            label="{{ 'menu.contact-modal.subject' | transloco | titlecase }}"
             type="text"
             labelPlacement="floating"
           ></ion-input>
@@ -29,13 +29,16 @@
         <ion-item class="p-2">
           <ion-textarea
             formControlName="message"
-            label="{{ 'menu.contact.message' | transloco | titlecase }}"
+            label="{{ 'menu.contact-modal.message' | transloco | titlecase }}"
             labelPlacement="floating"
             [autoGrow]="true"
+            [counter]="true"
+            maxlength="250"
+            [counterFormatter]="customCharactersRemainingFormatter"
           >
           </ion-textarea>
         </ion-item>
-        <ion-toolbar class="p-2">
+        <ion-toolbar class="p-2 ion-toolbar-footer">
           <ion-buttons slot="end">
             <ion-button (click)="doRequest()">
               <ion-spinner *ngIf="isLoading" fill="solid"></ion-spinner>
@@ -46,11 +49,11 @@
               color="primary"
               fill="solid"
               [disabled]="!contactForm.valid"
-              >Aceptar</ion-button
+              >{{ "global.accept" | transloco | titlecase }}</ion-button
             >
-            <ion-button (click)="closeModal()" color="medium" fill="solid"
-              >Cerrar</ion-button
-            >
+            <ion-button (click)="closeModal()" color="medium" fill="solid">{{
+              "global.cancel" | transloco | titlecase
+            }}</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </form>

@@ -2,16 +2,17 @@ import { Component, OnInit } from '@angular/core';
 
 import { TranslocoService } from '@jsverse/transloco';
 
-import { LANGUAGES_SUPPORTED } from 'src/app/shared/constants/app.constants';
-import { MessagingService } from 'src/app/shared/services/messaging.service';
-import { applyTheme } from 'src/app/shared/utils/apply-theme.util';
-import { UserInfo } from '../../models/user-info.interface';
+import { LANGUAGES_SUPPORTED } from '../shared/constants/app.constants';
+import { UserInfo } from '../home/models/user-info.interface';
+import { MessagingService } from '../shared/services/messaging.service';
+import { applyTheme } from '../shared/utils/apply-theme.util';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
+  selector: 'app-settings',
+  templateUrl: './settings.page.html',
+  styleUrls: ['./settings.page.scss'],
 })
-export class MenuComponent implements OnInit {
+export class SettingsPage implements OnInit {
   isDarkMode: boolean = false;
   customActionSheetOptions = {
     header: '',
@@ -42,7 +43,6 @@ export class MenuComponent implements OnInit {
     this.translocoService
       .selectTranslate('menu.select-language')
       .subscribe((translation) => {
-        console.log('trans', translation);
         this.customActionSheetOptions.header = translation;
       });
   }
@@ -54,7 +54,6 @@ export class MenuComponent implements OnInit {
   }
 
   onChangeLanguage(language) {
-    console.log(language);
     this.translocoService.setActiveLang(language);
     localStorage.setItem('language', language);
   }

@@ -4,10 +4,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonModal } from '@ionic/angular';
 
 import { TranslocoService } from '@jsverse/transloco';
-
-import { MenuService } from '../../services/menu.service';
-import { UserInfo } from '../../models/user-info.interface';
-import { UserRequest } from '../../models/user-request.interface';
+import { UserInfo } from 'src/app/home/models/user-info.interface';
+import { UserRequest } from 'src/app/home/models/user-request.interface';
+import { MenuService } from 'src/app/home/services/menu.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({

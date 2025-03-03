@@ -26,7 +26,11 @@ const routes: Routes = [
     path: 'explore',
     loadChildren: () =>
       import('./explore/explore.module').then((m) => m.ExplorePageModule),
+  },  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then( m => m.SettingsPageModule)
   },
+
 ];
 
 @NgModule({

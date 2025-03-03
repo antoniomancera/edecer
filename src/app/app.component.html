@@ -32,6 +32,12 @@
         ></ion-icon>
         Explorar
       </ion-tab-button>
+      <ion-tab-button tab="settings">
+        <ion-icon
+          [name]="selectedTab === 'settings' ? 'cog-outline' : 'cog'"
+        ></ion-icon>
+        Settings
+      </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
 </ion-app>

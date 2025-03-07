@@ -42,7 +42,6 @@
       </ion-input>
     </ion-item>
     <ion-button
-      *ngIf="!isLoading"
       type="submit"
       color="primary"
       class="pl-4 pr-4 pb-1 rounded-button"
@@ -50,13 +49,9 @@
       [disabled]="!signupForm.valid"
       >{{ "login.register" | transloco }}</ion-button
     >
-    <ion-button
-      *ngIf="!isLoading"
-      color="primary"
-      class="p-4 rounded-button"
-      fill="solid"
-      >{{ "login.register-google" | transloco }}</ion-button
-    >
+    <ion-button color="primary" class="p-4 rounded-button" fill="solid">{{
+      "login.register-google" | transloco
+    }}</ion-button>
     <div class="p-1 link-signup">
       {{ "login.have-account" | transloco }}
       <a routerLink=".." routerLinkActive="active">{{

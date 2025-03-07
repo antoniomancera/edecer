@@ -22,6 +22,8 @@ export class AuthenticationService {
   private currentUser: BehaviorSubject<User | null> = new BehaviorSubject(null);
 
   constructor(private router: Router) {
+    console.log('environment.SUPABASE_URL', environment.SUPABASE_URL);
+    console.log('environment.SUPABASE_KEY', environment.SUPABASE_KEY);
     this.supabase = createClient(
       environment.SUPABASE_URL,
       environment.SUPABASE_KEY

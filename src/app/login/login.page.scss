@@ -1,0 +1,43 @@
+.login-options {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.link-signup {
+    text-align: center;
+}
+
+.rounded-button {
+    --border-radius: 50px !important;
+    width: 100%;
+}
+
+.wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 0;
+}
+
+.row {
+    display: table-row;
+    height: 50%;
+}
+
+.title-container {
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    --background: none;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--ion-color-dark);
+    text-align: center;
+}

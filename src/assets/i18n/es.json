@@ -24,6 +24,22 @@
         "total": "total",
         "percentage": "porcentaje"
     },
+    "login": {
+        "password": "contraseña",
+        "remember-me": "recordar mis datos",
+        "forget-password": "¿olvidaste tu contraseña?",
+        "login": "iniciar sesión",
+        "login-google": "Iniciar sesión con Google",
+        "not-member": "¿No eres miembro?",
+        "join-now": "únete ahora",
+        "name": "nombre",
+        "confirm-password": "confirmar contraseña",
+        "have-account": "¿Ya tienes una cuenta?",
+        "login-now": "inicia sesión ahora",
+        "register": "registrarse",
+        "register-google": "registrarse con Google",
+        "username": "nombre de usuario"
+    },
     "shared": {
         "loading": "cargando",
         "decks": "mazos",
@@ -72,5 +88,12 @@
             "selected-deck": "Mazo seleccionado",
             "select-deck-to-practise": "Elige el mazo que deseas practicar"
         }
+    },
+    "tabs": {
+        "home": "inicio",
+        "study": "estudiar",
+        "progress": "progreso",
+        "explore": "explorar",
+        "settings": "configuración"
     }
 }

@@ -1,75 +1,64 @@
-<div class="ion-page" id="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title
-        ><span *ngIf="!isLoading"> {{home.userInfo.surname}}</span>
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-content class="ion-padding" *ngIf="!isLoading">
-    <ion-title size="large"
-      >{{'shared.goals' | transloco | titlecase}}
-    </ion-title>
-    <div class="p-2 m-2 align-vertical-icon-container">
-      {{ 'home.current-goals' | transloco: { attempts: home.goal.attempts,
-      accuracy: home.goal.successesAccuracy } }}
-      <ion-button
-        class="icon-float-right"
-        id="open-add-goal-modal"
-        (click)="openAddGoalModal()"
-        fill="clear"
-      >
-        <ion-icon name="settings"></ion-icon>
-      </ion-button>
-    </div>
-    <div class="horizontal-scroll">
-      <span *ngFor="let stat of home.weekStats">
-        <ion-card
-          class="weekly-goal-tracing-card deck-card"
-          color="secondary"
-          (click)="openStudyJournalModal(stat.date)"
-        >
-          <ion-card-header>
-            <ion-card-title>{{ stat.monthDay }}</ion-card-title>
-            <ion-card-subtitle>
-              {{ stat.weekDay | weekday | transloco }}
-            </ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            <span class="align-vertical-icon-container">
-              T
-              <ion-checkbox
-                class="p-1"
-                disabled="true"
-                [checked]="stat.isAttemptsGoalSuccess"
-              ></ion-checkbox>
-              %
-              <ion-checkbox
-                class="p-1"
-                disabled="true"
-                [checked]="stat.isSuccessesAccuracyGoalSuccess"
-              ></ion-checkbox>
-            </span>
-          </ion-card-content>
-        </ion-card>
-      </span>
-    </div>
-    <br />
-    <ion-title size="large"
-      >{{'shared.decks' | transloco | titlecase}}</ion-title
+<ion-content class="ion-padding" *ngIf="!isLoading">
+  <ion-title size="large"
+    >{{'shared.goals' | transloco | titlecase}}
+  </ion-title>
+  <div class="p-2 m-2 align-vertical-icon-container">
+    {{ 'home.current-goals' | transloco: { attempts: home.goal.attempts,
+    accuracy: home.goal.successesAccuracy } }}
+    <ion-button
+      class="icon-float-right"
+      id="open-add-goal-modal"
+      (click)="openAddGoalModal()"
+      fill="clear"
     >
-    <div *ngIf="!isLoading">
+      <ion-icon name="settings"></ion-icon>
+    </ion-button>
+  </div>
+  <div class="horizontal-scroll">
+    <span *ngFor="let stat of home.weekStats">
       <ion-card
-        *ngFor="let deck of home.decks"
-        class="p-4 m-2 deck-card"
-        [color]="deck.color?deck.color:'tertiary'"
-        (click)="onClickNavigateDeck(deck.id)"
+        class="weekly-goal-tracing-card deck-card"
+        color="secondary"
+        (click)="openStudyJournalModal(stat.date)"
       >
-        {{deck.name}}
+        <ion-card-header>
+          <ion-card-title>{{ stat.monthDay }}</ion-card-title>
+          <ion-card-subtitle>
+            {{ stat.weekDay | weekday | transloco }}
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <span class="align-vertical-icon-container">
+            T
+            <ion-checkbox
+              class="p-1"
+              disabled="true"
+              [checked]="stat.isAttemptsGoalSuccess"
+            ></ion-checkbox>
+            %
+            <ion-checkbox
+              class="p-1"
+              disabled="true"
+              [checked]="stat.isSuccessesAccuracyGoalSuccess"
+            ></ion-checkbox>
+          </span>
+        </ion-card-content>
       </ion-card>
-    </div>
-  </ion-content>
-</div>
+    </span>
+  </div>
+  <br />
+  <ion-title size="large">{{'shared.decks' | transloco | titlecase}}</ion-title>
+  <div *ngIf="!isLoading">
+    <ion-card
+      *ngFor="let deck of home.decks"
+      class="p-4 m-2 deck-card"
+      [color]="deck.color?deck.color:'tertiary'"
+      (click)="onClickNavigateDeck(deck.id)"
+    >
+      {{deck.name}}
+    </ion-card>
+  </div>
+</ion-content>
+<!-- </div> -->
 
 <app-loading [isLoading]="isLoading"></app-loading>

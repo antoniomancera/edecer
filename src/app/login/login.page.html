@@ -1,0 +1,61 @@
+<div class="row">
+  <img src="assets/images/login-background.svg" alt="Wave" class="wave" />
+  <ion-toolbar class="title-container">
+    <ion-title class="title">Bonjour!</ion-title></ion-toolbar
+  >
+</div>
+
+<div class="row">
+  <form *ngIf="loginForm" (ngSubmit)="onSubmitLogin()" [formGroup]="loginForm">
+    <ion-item class="p-2">
+      <ion-input
+        formControlName="email"
+        placeholder="{{ 'global.email' | transloco }}"
+        type="text"
+      ></ion-input>
+    </ion-item>
+    <ion-item class="p-2">
+      <ion-input
+        formControlName="password"
+        placeholder="{{ 'login.password' | transloco }}"
+        type="password"
+      >
+        <ion-input-password-toggle slot="end"></ion-input-password-toggle
+      ></ion-input>
+    </ion-item>
+
+    <div class="p-4 login-options">
+      <span>
+        <ion-checkbox disabled="true" labelPlacement="end"
+          >{{'login.remember-me'|transloco }}</ion-checkbox
+        ></span
+      >
+      <span class="align-vertical-icon-container"
+        >{{'login.forget-password'|transloco }}?</span
+      >
+    </div>
+
+    <ion-button
+      *ngIf="!isLoading"
+      type="submit"
+      class="pl-4 pr-4 pb-1 rounded-button"
+      color="primary"
+      fill="solid"
+      [disabled]="!loginForm.valid"
+      >{{'login.login'|transloco }}</ion-button
+    >
+
+    <ion-button type="submit" class="p-4 rounded-button"
+      >{{'login.login-google'|transloco }}<ion-icon
+        slot="end"
+        name="logo-google"
+      ></ion-icon>
+    </ion-button>
+    <div class="p-1 link-signup">
+      {{'login.not-member'|transloco }}
+      <a routerLink="signup" routerLinkActive="active"
+        >{{'login.join-now'|transloco }}</a
+      >
+    </div>
+  </form>
+</div>

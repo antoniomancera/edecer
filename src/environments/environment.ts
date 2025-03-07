@@ -5,6 +5,9 @@
 export const environment = {
   production: false,
   BASE_URL: 'http://localhost:8080',
+  SUPABASE_URL: 'https://ihhzsjjaiulbnpvswjzs.supabase.co',
+  SUPABASE_KEY:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloaHpzamphaXVsYm5wdnN3anpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA3NzE1NDYsImV4cCI6MjA1NjM0NzU0Nn0.VL3WU1EjAjzvVMVa7dSiV6jLtU7wV994ur7ysdFCcEw',
 };
 
 /*

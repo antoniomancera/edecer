@@ -10,8 +10,6 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { ModalAddGoalComponent } from './components/modal-add-goal/modal-add-goal.component';
-import { MenuComponent } from './components/menu/menu.component';
-import { ContactModalComponent } from './components/contact-modal/contact-modal.component';
 import { StudyJournalModalComponent } from './components/study-journal-modal/study-journal-modal.component';
 
 @NgModule({
@@ -24,12 +22,6 @@ import { StudyJournalModalComponent } from './components/study-journal-modal/stu
     SharedModule,
     TranslocoModule,
   ],
-  declarations: [
-    HomePage,
-    ModalAddGoalComponent,
-    MenuComponent,
-    ContactModalComponent,
-    StudyJournalModalComponent,
-  ],
+  declarations: [HomePage, ModalAddGoalComponent, StudyJournalModalComponent],
 })
 export class HomePageModule {}

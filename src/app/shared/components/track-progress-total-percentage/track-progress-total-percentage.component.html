@@ -1,0 +1,72 @@
+<div>
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size="3">
+        <span style="padding-left: 0.5rem">
+          @if ( stat.totalAttempts && stat.totalAttempts >0) {
+          {{ (stat.totalSuccesses * 100) / stat.totalAttempts }} } @else { 0 } %
+          (O {{ goal.successesAccuracy }})
+        </span></ion-col
+      >
+      <ion-col size="9">
+        <div class="container-progress-bar">
+          <div
+            class="progress-bar-filled"
+            [style.width.%]="
+              stat.totalAttempts && stat.totalAttempts > 0
+                ? (stat.totalSuccesses / stat.totalAttempts) * 100
+                : 0
+            "
+          ></div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="3">
+        <span class="p-2">
+          {{ stat.totalAttempts }} T (O {{ goal.attempts }})</span
+        >
+      </ion-col>
+      <ion-col size="9">
+        <div class="container-segment">
+          <div
+            [ngClass]="
+              stat.totalAttempts / goal.attempts > 0.2
+                ? 'segment segment-filled'
+                : 'segment'
+            "
+          ></div>
+          <div
+            [ngClass]="
+              stat.totalAttempts / goal.attempts > 0.4
+                ? 'segment segment-filled'
+                : 'segment'
+            "
+          ></div>
+          <div
+            [ngClass]="
+              stat.totalAttempts / goal.attempts > 0.6
+                ? 'segment segment-filled'
+                : 'segment'
+            "
+          ></div>
+          <div
+            [ngClass]="
+              stat.totalAttempts / goal.attempts > 0.8
+                ? 'segment segment-filled'
+                : 'segment'
+            "
+          ></div>
+          <div
+            [ngClass]="
+              stat.totalAttempts / goal.attempts > 1
+                ? 'segment segment-filled'
+                : 'segment'
+            "
+          ></div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

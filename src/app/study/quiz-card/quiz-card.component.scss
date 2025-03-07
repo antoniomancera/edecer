@@ -1,0 +1,19 @@
+.quiz-card {
+    position: absolute;
+    height: 225px;
+    width: calc(100% - var(--spacing-7));
+    margin-bottom: 60px;
+    border: 1px solid var(--ion-color-primary);
+    text-align: center;
+
+    &:first-child {
+        position: relative;
+        top: 0;
+    }
+
+    @for $i from 2 through 10 {
+        &:nth-child(#{$i}) {
+            top: ($i + 1) * 20px;
+        }
+    }
+}

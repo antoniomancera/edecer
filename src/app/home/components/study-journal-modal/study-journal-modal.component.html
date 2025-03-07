@@ -7,6 +7,10 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <app-track-progress-total-percentage
+    [stat]="stat"
+    [goal]="goal"
+  ></app-track-progress-total-percentage>
   <div class="p-2">
     <ion-chip>Todo</ion-chip>
     <span *ngFor="let deck of decks"

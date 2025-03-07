@@ -3,18 +3,12 @@ import { Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
-import { TranslocoService } from '@jsverse/transloco';
-
 import Chart from 'chart.js/auto';
 
 import { WordTranslation } from '../shared/models/word-translation.model';
-import { HomeService } from './services/home.service';
 import { Home } from './models/home.interface';
 import { ModalAddGoalComponent } from './components/modal-add-goal/modal-add-goal.component';
-import { ToastService } from '../shared/services/toast.service';
 import { MessagingService } from '../shared/services/messaging.service';
-import { applyTheme } from '../shared/utils/apply-theme.util';
-import { LANGUAGE_DEFAULT } from '../shared/constants/app.constants';
 import { StudyJournalModalComponent } from './components/study-journal-modal/study-journal-modal.component';
 
 @Component({
@@ -30,59 +24,27 @@ export class HomePage implements OnInit {
   isLoading = true;
 
   constructor(
-    private homeService: HomeService,
     private modalController: ModalController,
-    private toastService: ToastService,
     private messagingService: MessagingService,
-    private translocoService: TranslocoService,
     private router: Router
-  ) {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    this.isDarkMode = prefersDark.matches;
-    applyTheme(this.isDarkMode);
-  }
+  ) {}
 
   ngOnInit() {
-    const storedIsDarkModeTheme = localStorage.getItem('isDarkMode');
-    const storedLanguage = localStorage.getItem('language');
-    if (storedIsDarkModeTheme) {
-      console.log('storedIsDarkModeTheme', storedIsDarkModeTheme);
-      this.isDarkMode = JSON.parse(storedIsDarkModeTheme);
-      this.messagingService.setIsDarkMode(JSON.parse(storedIsDarkModeTheme));
-      applyTheme(this.isDarkMode);
-    }
+    this.messagingService.getHome().subscribe((home) => {
+      this.home = home;
+      this.home.weekStats.map((dailyStats) => {
+        const date: Date = new Date(dailyStats.date);
+        dailyStats.monthDay = date.getDate();
+        dailyStats.weekDay = date.getDay();
+        dailyStats.isAttemptsGoalSuccess =
+          dailyStats.totalAttempts >= home.goal.attempts;
+        dailyStats.isSuccessesAccuracyGoalSuccess =
+          dailyStats.totalSuccesses / dailyStats.totalAttempts >
+          home.goal.successesAccuracy;
 
-    if (storedLanguage) {
-      this.messagingService.setSelectedLanguage(storedLanguage);
-      this.translocoService.setActiveLang(storedLanguage);
-    } else {
-      this.messagingService.setSelectedLanguage(LANGUAGE_DEFAULT.code);
-    }
-
-    this.homeService.getHome().subscribe({
-      next: (home) => {
-        console.log(home.weekStats);
-        this.home = home;
-        this.home.weekStats.map((dailyStats) => {
-          const date: Date = new Date(dailyStats.date);
-          dailyStats.monthDay = date.getDate();
-          dailyStats.weekDay = date.getDay();
-          dailyStats.isAttemptsGoalSuccess =
-            dailyStats.totalAttempts >= home.goal.attempts;
-          dailyStats.isSuccessesAccuracyGoalSuccess =
-            dailyStats.totalSuccesses / dailyStats.totalAttempts >
-            home.goal.successesAccuracy;
-
-          return dailyStats;
-        });
-
-        this.messagingService.setHome(home);
-        this.isLoading = false;
-      },
-      error: (err) => {
-        this.toastService.showDangerToast(err.error.message);
-        this.isLoading = false;
-      },
+        return dailyStats;
+      });
+      this.isLoading = false;
     });
   }
 
@@ -102,6 +64,16 @@ export class HomePage implements OnInit {
       componentProps: {
         date: date,
         decks: this.home.decks,
+        goal: this.home.goal,
+        stat: this.home.weekStats.find((stat) => {
+          let statDate =
+            typeof stat.date === 'string' ? new Date(stat.date) : stat.date;
+          let today = new Date();
+          today.setHours(0, 0, 0, 0);
+          statDate.setHours(0, 0, 0, 0);
+
+          return statDate.getTime() === today.getTime();
+        }),
       },
     });
     await modal.present();

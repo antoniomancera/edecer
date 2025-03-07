@@ -107,7 +107,7 @@ export class StatsPage implements OnInit {
     });
   }
 
-  private onChangeChangeDataChart() {
+  onChangeChangeDataChart() {
     console.log('segment', this.segment);
     if (this.segment === 'attempts') {
       console.log('this.backgroundColorAttemps', this.backgroundColorAttemps);

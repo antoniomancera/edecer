@@ -5,7 +5,9 @@ import { TranslocoService } from '@jsverse/transloco';
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { DeckWordTranslationHistorialService } from 'src/app/shared/services/deck-word-translation-historial.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { DailyStats } from 'src/app/stats/models/daily-stats.interface';
 import { DeckWordTranslationHistorial } from 'src/app/stats/models/deck-word-translation-historial.interface';
+import { Goal } from '../../models/goal.interface';
 
 @Component({
   selector: 'app-study-journal-modal',
@@ -15,6 +17,8 @@ import { DeckWordTranslationHistorial } from 'src/app/stats/models/deck-word-tra
 export class StudyJournalModalComponent implements OnInit {
   @Input() date: string = '';
   @Input() decks: Deck[] = [];
+  @Input() goal: Goal;
+  @Input() stat: DailyStats;
 
   historialList: DeckWordTranslationHistorial[] = [];
   constructor(

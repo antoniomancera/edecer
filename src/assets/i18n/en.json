@@ -20,7 +20,25 @@
         "characters-remaining": "characters remaining",
         "accept": "accept",
         "cancel": "cancel",
-        "close": "close"
+        "close": "close",
+        "total": "total",
+        "percentage": "percentage"
+    },
+    "login": {
+        "password": "password",
+        "remember-me": "remember me",
+        "forget-password": "forget password?",
+        "login": "login",
+        "login-google": "login with Google",
+        "not-member": "Not a member",
+        "join-now": "join now",
+        "name": "name",
+        "confirm-paswword": "confirm password",
+        "have-account": "Already have an account?",
+        "login-now": "login now",
+        "register": "register",
+        "register-google": "register with google",
+        "username": "username"
     },
     "shared": {
         "loading": "loading",
@@ -61,12 +79,22 @@
         "contact": "contact",
         "dark-mode": "dark mode",
         "language": "language",
-        "about": "about"
+        "about": {
+            "title":"à propos",
+            "message": "This application has been created by Antonio Manuel Manceras Hevilla with the aim of providing a program to learn French based on Spanish, being free, easy to use, but at the same time adaptable according to the user's needs."
+        }
     },
     "study": {
         "select-deck": {
-            "selected-deck": "Mazo seleccionado",
-            "select-deck-to-practise": "Elige el mazo que deseas practicar"
+            "selected-deck": "Selected deck",
+            "select-deck-to-practise": "Select the deck you want to practice"
         }
+    },
+    "tabs": {
+        "home": "home",
+        "study": "study",
+        "progress": "progreso",
+        "explore": "explore",
+        "settings": "settings"
     }
 }

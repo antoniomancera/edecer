@@ -20,7 +20,25 @@
         "characters-remaining": "caractères restants",
         "accept": "accepter",
         "cancel": "annuler",
-        "close": "fermer"
+        "close": "fermer",
+        "total": "total",
+        "percentage": "pourcentage"
+    },
+    "login": {
+        "password": "mot de passe",
+        "remember-me": "se souvenir de moi",
+        "forget-password": "mot de passe oublié ?",
+        "login": "se connecter",
+        "login-google": "Se connecter avec Google",
+        "not-member": "Pas encore membre ?",
+        "join-now": "inscrivez-vous maintenant",
+        "name": "nom",
+        "confirm-password": "confirmer le mot de passe",
+        "have-account": "Vous avez déjà un compte ?",
+        "login-now": "connectez-vous maintenant",
+        "register": "s'inscrire",
+        "register-google": "s'inscrire avec Google",
+        "username": "nom d'utilisateur"
     },
     "shared": {
         "loading": "Chargement",
@@ -60,12 +78,22 @@
         "contact": "contact",
         "dark-mode": "mode sombre",
         "language": "langue",
-        "about": "à propos"
+        "about": {
+            "title":"à propos",
+            "message": "Cette application a été créée par Antonio Manuel Manceras Hevilla dans le but de fournir un programme pour apprendre le français basé sur l'espagnol, gratuit, facile à utiliser, mais en même temps adaptable selon les besoins de l'utilisateur."
+        } 
     },
     "study": {
         "select-deck": {
-            "selected-deck": "Mazo seleccionado",
-            "select-deck-to-practise": "Elige el mazo que deseas practicar"
+            "selected-deck": "Deck sélectionné",
+            "select-deck-to-practise": "Choisissez le deck que vous souhaitez pratiquer"
         }
-    }
+    },
+    "tabs": {
+    "home": "accueil",
+    "study": "étudier",
+    "progress": "progrès",
+    "explore": "explorer",
+    "settings": "paramètres"
+  }
 }

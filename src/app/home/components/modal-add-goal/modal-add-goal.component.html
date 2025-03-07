@@ -40,7 +40,7 @@
     </ion-item>
     <ion-toolbar class="p-2 ion-toolbar-footer">
       <ion-buttons slot="end">
-        <ion-button (click)="doRequest()">
+        <ion-button>
           <ion-spinner *ngIf="isLoading" fill="solid"></ion-spinner>
         </ion-button>
         <ion-button
@@ -50,7 +50,7 @@
           fill="solid"
           >{{ "global.accept" | transloco | titlecase }}</ion-button
         >
-        <ion-button (click)="modal.dismiss()" color="medium" fill="solid">{{
+        <ion-button (click)="cancel()" color="medium" fill="solid">{{
           "global.cancel" | transloco | titlecase
         }}</ion-button>
       </ion-buttons>

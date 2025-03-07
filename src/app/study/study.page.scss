@@ -1,0 +1,35 @@
+.container-segment {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-1);
+    margin: var(--spacing-1) var(--spacing-2);
+    padding: 0;
+    width: calc(100% - var(--spacing-4));
+}
+
+.segment {
+    flex: 1;
+    background-color: lightgray;
+    border-radius: 3px;
+    height: 10px;
+}
+
+.segment-filled {
+    background-color: var(--ion-color-success) !important;
+    transition: width 500ms ease-in-out;
+}
+
+.container-progress-bar {
+    width: calc(100% - var(--spacing-4));
+    background-color: lightgray;
+    border-radius: 3px;
+    margin: var(--spacing-1) var(--spacing-2);
+    height: 10px;
+}
+
+.progress-bar-filled {
+    height: 10px;
+    background-color: var(--ion-color-success) !important;
+    transition: width 500ms ease-in-out;
+    border-radius: 3px;
+}

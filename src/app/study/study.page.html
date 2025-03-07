@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Header</ion-title>
+    <app-track-progress-total-percentage
+      [stat]="stat"
+      [goal]="goal"
+    ></app-track-progress-total-percentage>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
@@ -18,10 +21,5 @@
       </ion-select-option>
     </ion-select>
   </ion-item>
-
-  <app-quiz-card
-    [wordTranslation]="wordTranslation"
-    [selectedDeckId]="selectedDeckId"
-  >
-  </app-quiz-card>
+  <app-quiz-card [selectedDeckId]="selectedDeckId"> </app-quiz-card>
 </ion-content>

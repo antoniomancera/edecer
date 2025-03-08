@@ -5,13 +5,13 @@ require('dotenv').config();
 const targetPath = './src/environments/environment.prod.ts';
 
 // Contenido del archivo environment.prod.ts
-const environment = `export const environment = {
-  production: true,
-  BASE_URL: 'https://apprendre-backend.onrender.com',
-  SUPABASE_URL: '${process.env.SUPABASE_URL || ''}',
-  SUPABASE_KEY: '${process.env.SUPABASE_KEY || ''}'
-};
-`;
+const envConfigFile = `export const environment = {
+    production: true,
+    BASE_URL: 'https://apprendre-backend.onrender.com',
+    SUPABASE_URL: '${process.env.SUPABASE_URL || ''}',
+    SUPABASE_KEY: '${process.env.SUPABASE_KEY || ''}'
+  };
+  `;
 
 console.log(colors.magenta('Generando archivo environment con variables de entorno...'));
 

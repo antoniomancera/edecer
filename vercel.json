@@ -1,17 +1,9 @@
 {
-    "build": {
-      "env": {
-        "SUPABASE_URL": "${SUPABASE_URL}",
-        "SUPABASE_KEY": "${SUPABASE_KEY}"
-      }
-    },
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/$1",
-        "headers": {
-          "cache-control": "public, max-age=0, must-revalidate"
-        }
-      }
-    ]
+  "routes": [
+    {
+      "src": "/assets/env.js",
+      "headers": { "Content-Type": "application/javascript" },
+      "dest": "/assets/env.js"
+    }
+  ]
 }

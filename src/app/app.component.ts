@@ -8,6 +8,7 @@ import { applyTheme } from './shared/utils/apply-theme.util';
 import { HomeService } from './home/services/home.service';
 import { Home } from './home/models/home.interface';
 import { ToastService } from './shared/services/toast.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
   selectedTab: string = 'home';
   isDarkMode: boolean = false;
   home: Home;
-
+  prueba: any;
   constructor(
     private homeService: HomeService,
     private toastService: ToastService,
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
     applyTheme(this.isDarkMode);
   }
   ngOnInit(): void {
+    this.prueba = environment.PRUEBA;
     const storedIsDarkModeTheme = localStorage.getItem('isDarkMode');
     const storedLanguage = localStorage.getItem('language');
     if (storedIsDarkModeTheme) {

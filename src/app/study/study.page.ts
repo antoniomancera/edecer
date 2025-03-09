@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TranslocoService } from '@jsverse/transloco';
-
 import { WordTranslation } from '../shared/models/word-translation.model';
 import { MessagingService } from '../shared/services/messaging.service';
 import { Deck } from '../shared/models/deck.interface';
 import { Goal } from '../home/models/goal.interface';
-import { ToastService } from '../shared/services/toast.service';
 import { WordTranslationService } from '../shared/services/word-translation.service';
 import { DailyStats } from '../stats/models/daily-stats.interface';
 
@@ -23,27 +20,13 @@ export class StudyPage implements OnInit {
   goal: Goal;
   stat: DailyStats;
   isLoading = true;
-  customActionSheetOptions = {
-    header: '',
-    subHeader: '',
-  };
 
   constructor(
     private wordTranslationService: WordTranslationService,
-    private messagingService: MessagingService,
-    private translocoService: TranslocoService,
-    private toastService: ToastService
+    private messagingService: MessagingService
   ) {}
 
   ngOnInit(): void {
-    this.translocoService
-      .selectTranslateObject('study.select-deck')
-      .subscribe((translations) => {
-        this.customActionSheetOptions.header = translations['selected-deck'];
-        this.customActionSheetOptions.subHeader =
-          translations['select-deck-to-practise'];
-      });
-
     this.messagingService.getHome().subscribe((home) => {
       this.decks = home.decks;
       this.goal = home.goal;
@@ -66,6 +49,7 @@ export class StudyPage implements OnInit {
   }
 
   onChangeDeck(deckId: number) {
+    this.selectedDeckId = deckId;
     this.wordTranslationService
       .getRandomWordTranslation(deckId)
       .subscribe((wordTranslation) => {

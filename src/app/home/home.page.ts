@@ -29,18 +29,20 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.messagingService.getHome().subscribe((home) => {
       this.home = home;
-      this.home.weekStats.map((dailyStats) => {
-        const date: Date = new Date(dailyStats.date);
-        dailyStats.monthDay = date.getDate();
-        dailyStats.weekDay = date.getDay();
-        dailyStats.isAttemptsGoalSuccess =
-          dailyStats.totalAttempts >= home.goal.attempts;
-        dailyStats.isSuccessesAccuracyGoalSuccess =
-          dailyStats.totalSuccesses / dailyStats.totalAttempts >
-          home.goal.successesAccuracy;
+      if (this.home && this.home.weekStats) {
+        this.home.weekStats.map((dailyStats) => {
+          const date: Date = new Date(dailyStats.date);
+          dailyStats.monthDay = date.getDate();
+          dailyStats.weekDay = date.getDay();
+          dailyStats.isAttemptsGoalSuccess =
+            dailyStats.totalAttempts >= home.goal.attempts;
+          dailyStats.isSuccessesAccuracyGoalSuccess =
+            dailyStats.totalSuccesses / dailyStats.totalAttempts >
+            home.goal.successesAccuracy;
 
-        return dailyStats;
-      });
+          return dailyStats;
+        });
+      }
       this.isLoading = false;
     });
   }

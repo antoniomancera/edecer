@@ -4,8 +4,8 @@
       <ion-col size="3">
         <span style="padding-left: 0.5rem">
           @if ( stat.totalAttempts && stat.totalAttempts >0) {
-          {{ (stat.totalSuccesses * 100) / stat.totalAttempts }} } @else { 0 } %
-          (O {{ goal.successesAccuracy }})
+          {{ ((stat.totalSuccesses * 100) / stat.totalAttempts).toFixed(2) }} }
+          @else { 0 } % (O {{ goal.successesAccuracy }})
         </span></ion-col
       >
       <ion-col size="9">

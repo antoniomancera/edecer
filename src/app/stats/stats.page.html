@@ -25,4 +25,6 @@
     <canvas id="canvas" height="120">{{ chart }}</canvas>
   </ion-content>
 </ion-content>
-<app-loading [isLoading]="isLoading"></app-loading>
+@if(isLoading){
+<app-loading></app-loading>
+}

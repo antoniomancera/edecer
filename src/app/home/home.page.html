@@ -2,22 +2,33 @@
   <ion-title size="large"
     >{{'shared.goals' | transloco | titlecase}}
   </ion-title>
-  <div class="p-2 m-2 align-vertical-icon-container">
-    {{ 'home.current-goals' | transloco: { attempts: home.goal.attempts,
-    accuracy: home.goal.successesAccuracy } }}
+  <div class="pl-4 align-vertical-icon-container">
+    @if(home && home.goal){
+    <span>
+      {{ 'home.current-goals' | transloco: { attempts: home.goal.attempts,
+      accuracy: home.goal.successesAccuracy } }}</span
+    >
+    }@else{
+    <span class="explanation"
+      >{{'home.no-goal' | transloco | firstChartUpper }}</span
+    >
+    }
     <ion-button
       class="icon-float-right"
       id="open-add-goal-modal"
       (click)="openAddGoalModal()"
       fill="clear"
+      color="dark"
     >
       <ion-icon name="settings"></ion-icon>
     </ion-button>
   </div>
   <div class="horizontal-scroll">
-    <span *ngFor="let stat of home.weekStats">
+    @if(home && home.weekStats){ @for ( stat of home.weekStats; track
+    stat.weekDay) {
+    <span>
       <ion-card
-        class="weekly-goal-tracing-card deck-card"
+        class="weekly-goal-tracing-card"
         color="secondary"
         (click)="openStudyJournalModal(stat.date)"
       >
@@ -45,20 +56,39 @@
         </ion-card-content>
       </ion-card>
     </span>
+    }}@else{<span class="pl-3 explanation"
+      >{{'home.no-stat-week' | transloco | firstChartUpper }}</span
+    >
+    }
   </div>
   <br />
   <ion-title size="large">{{'shared.decks' | transloco | titlecase}}</ion-title>
-  <div *ngIf="!isLoading">
+  <div class="p-2">
+    @if(home && home.decks){
     <ion-card
       *ngFor="let deck of home.decks"
-      class="p-4 m-2 deck-card"
-      [color]="deck.color?deck.color:'tertiary'"
-      (click)="onClickNavigateDeck(deck.id)"
+      class="p-2 deck-card"
+      [color]="deck.color?deck.color:'quaternary'"
     >
-      {{deck.name}}
+      <div class="align-vertical-icon-container">
+        <span>{{deck.name}}</span>
+        <span class="icon-float-right">
+          <ion-button (click)="onClickNavigateDeck(deck.id)" fill="clear">
+            <ion-icon name="search-circle" color="dark"></ion-icon>
+          </ion-button>
+          <ion-button (click)="onClickNavigateStudy()" fill="clear">
+            <ion-icon name="book" color="dark"></ion-icon>
+          </ion-button>
+        </span>
+      </div>
     </ion-card>
+    }@else{
+    <span class="pl-3 explanation"
+      >{{'home.no-deck' | transloco | firstChartUpper }}</span
+    >
+    }
   </div>
 </ion-content>
-<!-- </div> -->
-
-<app-loading [isLoading]="isLoading"></app-loading>
+@if(isLoading){
+<app-loading></app-loading>
+}

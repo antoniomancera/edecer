@@ -4,13 +4,13 @@
       <ion-icon
         [name]="selectedTab === 'home' ? 'home' : 'home-outline'"
       ></ion-icon>
-      {{ 'tabs.home' | transloco }}
+      {{ 'tabs.home' | transloco | titlecase }}
     </ion-tab-button>
     <ion-tab-button tab="study">
       <ion-icon
         [name]="selectedTab === 'study' ? 'book' : 'book-outline'"
       ></ion-icon>
-      {{ 'tabs.study' | transloco }}
+      {{ 'tabs.study' | transloco | titlecase }}
     </ion-tab-button>
     <ion-tab-button tab="stats">
       <ion-icon
@@ -18,7 +18,7 @@
           selectedTab === 'stats' ? 'stats-chart' : 'stats-chart-outline'
         "
       ></ion-icon>
-      {{ 'tabs.progress' | transloco }}
+      {{ 'tabs.progress' | transloco | titlecase}}
     </ion-tab-button>
     <ion-tab-button tab="explore">
       <ion-icon
@@ -28,13 +28,13 @@
             : 'search-circle-outline'
         "
       ></ion-icon>
-      {{ 'tabs.explore' | transloco }}
+      {{ 'tabs.explore' | transloco | titlecase }}
     </ion-tab-button>
     <ion-tab-button tab="settings">
       <ion-icon
         [name]="selectedTab === 'settings' ? 'cog-outline' : 'cog'"
       ></ion-icon>
-      {{ 'tabs.settings' | transloco }}
+      {{ 'tabs.settings' | transloco | titlecase }}
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

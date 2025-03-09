@@ -13,16 +13,16 @@ export class ExplorePage implements OnInit {
   ngOnInit() {}
 
   onClickNavigateDeck(deckId: number) {
-    this.router.navigate(['/explore/decks'], {
+    this.router.navigate(['tabs/explore/decks'], {
       queryParams: { deckId: deckId },
     });
   }
 
   onClickNavigateWords() {
-    this.router.navigate(['/explore/words']);
+    this.router.navigate(['tabs/explore/words']);
   }
 
   onClickNavigatePhrases() {
-    this.router.navigate(['/explore/phrases']);
+    this.router.navigate(['tabs/explore/phrases']);
   }
 }

@@ -51,6 +51,10 @@ export class QuizCardComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
+    this.getRandomWordTranslation();
+  }
+
+  getRandomWordTranslation() {
     this.wordTranslationService
       .getRandomWordTranslation(this.selectedDeckId)
       .subscribe({

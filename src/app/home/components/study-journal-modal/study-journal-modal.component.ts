@@ -21,6 +21,9 @@ export class StudyJournalModalComponent implements OnInit {
   @Input() stat: DailyStats;
 
   historialList: DeckWordTranslationHistorial[] = [];
+  errorMessage = '';
+  selectedDeck = 0;
+
   constructor(
     private deckWordTranslationHistorialService: DeckWordTranslationHistorialService,
     private toastService: ToastService,
@@ -33,13 +36,20 @@ export class StudyJournalModalComponent implements OnInit {
       .subscribe({
         next: (historialList) => (this.historialList = historialList),
         error: (err) => {
-          this.toastService.showDangerToast(
-            this.translocoService.translate(
-              'global.error.' + err.error.errorCode,
-              { date: this.date }
-            )
+          this.errorMessage = this.translocoService.translate(
+            'global.error.' + err.error.errorCode,
+            { date: this.date }
           );
+          this.toastService.showDangerToast(this.errorMessage);
         },
       });
+  }
+
+  setSelectedDeck(deckId?: number) {
+    if (deckId) {
+      this.selectedDeck = deckId;
+    } else {
+      this.selectedDeck = 0;
+    }
   }
 }

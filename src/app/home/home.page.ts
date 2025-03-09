@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
-import Chart from 'chart.js/auto';
-
 import { WordTranslation } from '../shared/models/word-translation.model';
 import { Home } from './models/home.interface';
 import { ModalAddGoalComponent } from './components/modal-add-goal/modal-add-goal.component';
@@ -20,7 +18,6 @@ export class HomePage implements OnInit {
   isDarkMode: boolean = false;
   wordTranslation: WordTranslation;
   home: Home;
-  chart: Chart;
   isLoading = true;
 
   constructor(
@@ -80,8 +77,12 @@ export class HomePage implements OnInit {
   }
 
   onClickNavigateDeck(deckId: number) {
-    this.router.navigate(['/explore/decks'], {
+    this.router.navigate(['tabs/explore/decks'], {
       queryParams: { deckId: deckId },
     });
+  }
+
+  onClickNavigateStudy() {
+    this.router.navigate(['tabs/study']);
   }
 }

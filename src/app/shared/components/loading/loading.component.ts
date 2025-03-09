@@ -4,6 +4,4 @@ import { Component, Input } from '@angular/core';
   selector: 'app-loading',
   templateUrl: './loading.component.html',
 })
-export class LoadingComponent {
-  @Input() isLoading: boolean = false;
-}
+export class LoadingComponent {}

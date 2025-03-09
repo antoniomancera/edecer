@@ -7,25 +7,38 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  @if(historialList && historialList.length>0){
   <app-track-progress-total-percentage
     [stat]="stat"
     [goal]="goal"
   ></app-track-progress-total-percentage>
   <div class="p-2">
-    <ion-chip>Todo</ion-chip>
+    <ion-chip
+      (click)="setSelectedDeck()"
+      [color]="selectedDeck == 0 ? 'primary' : 'default'"
+      >Todo</ion-chip
+    >
     <span *ngFor="let deck of decks"
-      ><ion-chip>{{ deck.name }}</ion-chip></span
+      ><ion-chip
+        (click)="setSelectedDeck(deck.id)"
+        [color]="deck.id == selectedDeck ? 'primary' : 'default'"
+        >{{ deck.name }}</ion-chip
+      ></span
     >
   </div>
   <ion-list>
-    <ion-item
-      class="flex flex-space-between"
-      *ngFor="let historial of historialList"
-    >
+    @for(historial of historialList; track historial.wordTranslation){
+    <ion-item class="flex flex-space-between">
       <span>{{ historial.wordTranslation.wordFr.name }}</span>
       <span class="icon-float-right"
         >{{ historial.success }}/{{ historial.attempts }}</span
       >
     </ion-item>
+    }
   </ion-list>
+  }@else {
+  <div class="pl-3 explanation">
+    {{ errorMessage }}
+  </div>
+  }
 </ion-content>

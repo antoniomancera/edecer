@@ -209,19 +209,17 @@ ion-header {
   box-shadow: none !important;
 }
 
-ion-header ion-toolbar {
-  --border-width: 0 0 2px 0 !important;
-  --border-color: var(--ion-color-primary);
-  --ion-toolbar-background: var(--ion-background-color-step-750);
+ion-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--ion-color-dark);
 }
 
 ion-item {
   --border-width: 0;
 }
 
-body.dark ion-header ion-toolbar {
-  --ion-toolbar-background: var(--global-primary-color);
-}
+
 
 a {
   text-decoration: none;
@@ -250,6 +248,7 @@ body.dark .background-primary-color {
 
 .icon-float-right {
   float: right;
+  margin-left: auto;
 }
 
 .deck-card {
@@ -268,6 +267,6 @@ body.dark .background-primary-color {
   align-items: center;
 }
 
-.icon-float-right {
-  margin-left: auto;
+.explanation {
+  font-style: italic;
 }

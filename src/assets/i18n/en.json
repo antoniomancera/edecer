@@ -55,6 +55,9 @@
         "statistics": "statistics",
         "decks": "decks",
         "current-goals": "Your current goals are {{attempts}} (T) and {{accuracy}} (%)",
+        "no-goal": "no daily goal has been set, you can choose one yourself",
+        "no-stat-week": "there is no data this week",
+        "no-deck": "no deck has been found",
         "add-goal-modal":{
             "title": "daily goals",
             "choose-goal": "choose your daily goals, you can change them at any time",

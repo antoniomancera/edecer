@@ -54,6 +54,9 @@
     "home":{
         "statistics": "statistiques",
         "current-goals": "Vos objectifs actuels sont {{attempts}} (T) et {{accuracy}} (%)",
+        "no-goal": "aucun objectif quotidien n'a été défini, vous pouvez en choisir un vous-même",
+        "no-stat-week": "il n'y a aucune donnée cette semaine",
+        "no-deck": "aucun deck n'a été trouvé",
         "add-goal-modal":{
             "title": "objectifs quotidiens",
             "choose-goal": "choisissez vos objectifs quotidiens, vous pouvez les modifier à tout moment",

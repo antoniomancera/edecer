@@ -69,7 +69,7 @@ export class AuthenticationService {
 
   async signOut() {
     await this.supabase.auth.signOut();
-    this.router.navigateByUrl('/', { replaceUrl: true });
+    this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 
   getCurrentUser(): Observable<User | boolean> {

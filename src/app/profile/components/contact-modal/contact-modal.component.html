@@ -8,7 +8,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>{{
-          "menu.contact-modal.title" | transloco | titlecase
+          "profile.settings.contact-modal.title" | transloco | titlecase
         }}</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -21,7 +21,9 @@
         <ion-item class="p-2">
           <ion-input
             formControlName="subject"
-            label="{{ 'menu.contact-modal.subject' | transloco | titlecase }}"
+            label="{{
+              'profile.settings.contact-modal.subject' | transloco | titlecase
+            }}"
             type="text"
             labelPlacement="floating"
           ></ion-input>
@@ -29,7 +31,9 @@
         <ion-item class="p-2">
           <ion-textarea
             formControlName="message"
-            label="{{ 'menu.contact-modal.message' | transloco | titlecase }}"
+            label="{{
+              'profile.settings.contact-modal.message' | transloco | titlecase
+            }}"
             labelPlacement="floating"
             [autoGrow]="true"
             [counter]="true"

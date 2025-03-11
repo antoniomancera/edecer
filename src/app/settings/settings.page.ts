@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { TranslocoService } from '@jsverse/transloco';
 
@@ -6,6 +7,7 @@ import { LANGUAGES_SUPPORTED } from '../shared/constants/app.constants';
 import { UserInfo } from '../home/models/user-info.interface';
 import { MessagingService } from '../shared/services/messaging.service';
 import { applyTheme } from '../shared/utils/apply-theme.util';
+import { AuthenticationService } from '../shared/services/authentication.service';
 
 @Component({
   selector: 'app-settings',
@@ -23,7 +25,9 @@ export class SettingsPage implements OnInit {
 
   constructor(
     private translocoService: TranslocoService,
-    private messagingService: MessagingService
+    private messagingService: MessagingService,
+    private router: Router,
+    private authenticationService: AuthenticationService
   ) {}
   ngOnInit() {
     this.messagingService.getIsDarkMode().subscribe((isDarkMode) => {
@@ -41,7 +45,7 @@ export class SettingsPage implements OnInit {
     });
 
     this.translocoService
-      .selectTranslate('menu.select-language')
+      .selectTranslate('profile.settings.select-language')
       .subscribe((translation) => {
         this.customActionSheetOptions.header = translation;
       });
@@ -56,5 +60,13 @@ export class SettingsPage implements OnInit {
   onChangeLanguage(language) {
     this.translocoService.setActiveLang(language);
     localStorage.setItem('language', language);
+  }
+
+  onClickNavigateProfile() {
+    this.router.navigate(['tabs/profile']);
+  }
+
+  onClickLogOut() {
+    this.authenticationService.signOut();
   }
 }

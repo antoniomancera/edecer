@@ -4,10 +4,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonModal } from '@ionic/angular';
 
 import { TranslocoService } from '@jsverse/transloco';
+
 import { UserInfo } from 'src/app/home/models/user-info.interface';
 import { UserRequest } from 'src/app/home/models/user-request.interface';
-import { MenuService } from 'src/app/home/services/menu.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-contact-modal',
@@ -23,7 +24,7 @@ export class ContactModalComponent implements OnInit {
   customCharactersRemaining = '';
 
   constructor(
-    private menuService: MenuService,
+    private profileService: ProfileService,
     private translocoService: TranslocoService,
     private toastService: ToastService
   ) {}
@@ -59,10 +60,12 @@ export class ContactModalComponent implements OnInit {
     let userRequest: UserRequest = this.contactForm.getRawValue();
     userRequest.email = this.userInfo.email;
     if (this.contactForm.valid) {
-      this.menuService.addUserRequest(userRequest).subscribe({
+      this.profileService.addUserRequest(userRequest).subscribe({
         next: (userRequest) => {
           this.toastService.showSuccessToast(
-            this.translocoService.translate('menu.contact.user-request-created')
+            this.translocoService.translate(
+              'profile.settings.contact.user-request-created'
+            )
           );
           console.log(userRequest);
           this.closeModal();
@@ -71,7 +74,7 @@ export class ContactModalComponent implements OnInit {
           if (err.error.errorCode === 'USER_REQUEST_LAST_WEEK_NOT_ANSWERED') {
             this.toastService.showDangerToast(
               this.translocoService.translate(
-                'menu.contact.user-request-last-week-not-answered'
+                'profile.settings.contact.user-request-last-week-not-answered'
               )
             );
           } else {

@@ -22,7 +22,8 @@
         "cancel": "cancel",
         "close": "close",
         "total": "total",
-        "percentage": "percentage"
+        "percentage": "percentage",
+        "back": "back"
     },
     "login": {
         "password": "password",
@@ -69,28 +70,32 @@
             "title": "diary of the day"
         }
     },
-    "menu": {
-        "select-language": "Select language",
-        "contact-modal": {
-            "title": "contact with us",
-            "message": "message",
-            "subject": "objet",
-            "user-request-created": "Your request has been successfully received",
-            "user-request-last-week-not-answered": "There is a request made less than a week ago that has not yet been answered."
+    "profile": {
+        "edit-profile": "edit profile",
+        "settings": {
+            "title": "settings",
+            "select-language": "Select language",
+            "contact-modal": {
+                "title": "contact with us",
+                "message": "message",
+                "subject": "objet",
+                "user-request-created": "Your request has been successfully received",
+                "user-request-last-week-not-answered": "There is a request made less than a week ago that has not yet been answered."
+            },
+            "log-out": "logout",
+            "contact": "contact",
+            "dark-mode": "dark mode",
+            "language": "language",
+            "about": {
+                "title":"à propos",
+                "message": "This application has been created by Antonio Manuel Manceras Hevilla with the aim of providing a program to learn French based on Spanish, being free, easy to use, but at the same time adaptable according to the user's needs."
+            }
         },
-        "log-out": "logout",
-        "contact": "contact",
-        "dark-mode": "dark mode",
-        "language": "language",
-        "about": {
-            "title":"à propos",
-            "message": "This application has been created by Antonio Manuel Manceras Hevilla with the aim of providing a program to learn French based on Spanish, being free, easy to use, but at the same time adaptable according to the user's needs."
-        }
-    },
-    "study": {
-        "select-deck": {
-            "selected-deck": "Selected deck",
-            "select-deck-to-practise": "Select the deck you want to practice"
+        "study": {
+            "select-deck": {
+                "selected-deck": "Selected deck",
+                "select-deck-to-practise": "Select the deck you want to practice"
+            }
         }
     },
     "tabs": {
@@ -98,6 +103,6 @@
         "study": "study",
         "progress": "progreso",
         "explore": "explore",
-        "settings": "settings"
+        "profile": "profile"
     }
 }

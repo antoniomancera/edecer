@@ -23,12 +23,12 @@
         "close": "cerrar",
         "total": "total",
         "percentage": "porcentaje",
-        "back": "atrás"
+        "back": "atrás",
+        "send": "enviar"
     },
     "login": {
         "password": "contraseña",
         "remember-me": "recordar mis datos",
-        "forget-password": "¿olvidaste tu contraseña?",
         "login": "iniciar sesión",
         "login-google": "Iniciar sesión con Google",
         "not-member": "¿No eres miembro?",
@@ -39,7 +39,23 @@
         "login-now": "inicia sesión ahora",
         "register": "registrarse",
         "register-google": "registrarse con Google",
-        "username": "nombre de usuario"
+        "username": "nombre de usuario",
+        "forgot-password": "olvidó su contraseña?",
+        "reset-password": "restaurar contraseña",
+        "back-login": "volver al Inicio de sesión",
+        "new-password": "nueva contraseña",
+        "change-password": "cambiar contraseña",
+        "signup": {
+            "welcome": "¡Bienvenido!"
+        },
+        "signup-completed": {
+            "verify-mail": "verificar email",
+            "sent-email-verify-account": "hemos enviado un email a {{email}} para verificar tu cuenta"
+        },
+        "reset-password-completed": {
+            "password-updated": "Contraseña actualizada",
+            "go-login": "volver a inicio sesión"
+        }
     },
     "shared": {
         "loading": "cargando",

@@ -1,0 +1,19 @@
+<app-login-title [title]="'Bienvenue!'"></app-login-title>
+
+<div class="row">
+  <div class="p-4 explanation">
+    {{
+      "login.signup-completed.sent-email-verify-account"
+        | transloco: { email: email }
+    }}
+  </div>
+  <ion-button
+    color="primary"
+    class="pl-4 pr-4 pb-1 rounded-button"
+    fill="solid"
+    (click)="onClickGoLogin()"
+    >{{
+      "login.reset-password-completed.go-login" | transloco | firstChartUpper
+    }}</ion-button
+  >
+</div>

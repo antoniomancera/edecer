@@ -23,8 +23,8 @@
 }
 
 .row {
-    display: table-row;
     height: 50%;
+    z-index: 1;
 }
 
 .title-container {
@@ -36,8 +36,9 @@
 }
 
 .title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
+    padding: 0 !important;
     color: var(--ion-color-dark);
     text-align: center;
 }

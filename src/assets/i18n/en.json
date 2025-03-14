@@ -23,23 +23,40 @@
         "close": "close",
         "total": "total",
         "percentage": "percentage",
-        "back": "back"
+        "back": "back",
+        "send": "send",
+        "welcome": "welcome"
     },
     "login": {
         "password": "password",
         "remember-me": "remember me",
-        "forget-password": "forget password?",
         "login": "login",
         "login-google": "login with Google",
         "not-member": "Not a member",
         "join-now": "join now",
         "name": "name",
-        "confirm-paswword": "confirm password",
+        "confirm-password": "confirm password",
         "have-account": "Already have an account?",
         "login-now": "login now",
         "register": "register",
         "register-google": "register with google",
-        "username": "username"
+        "username": "username",
+        "forgot-password": "forgot your password?",
+        "reset-password": "reset password",
+        "back-login": "back to login",
+        "new-password": "new password",
+        "change-password": "change password",
+        "signup": {
+            "welcome": "Welcome!"
+        },
+        "signup-completed": {
+            "verify-mail": "verify email",
+            "sent-email-verify-account": "We sent and email to {{email}} to verify your account"
+        },
+        "reset-password-completed": {
+            "password-updated": "updated password",
+            "go-login": "go login"
+        }
     },
     "shared": {
         "loading": "loading",

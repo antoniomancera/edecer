@@ -41,16 +41,16 @@
         ><ion-input-password-toggle slot="end"></ion-input-password-toggle>
       </ion-input>
     </ion-item>
-    <!-- [disabled]="!signupForm.valid" -->
     <ion-button
       type="submit"
       color="primary"
       class="pl-4 pr-4 pb-1 rounded-button"
       fill="solid"
-      >{{ "login.register" | transloco | titlecase }}</ion-button
+      [disabled]="!signupForm.valid"
+      >{{ "login.signup.register" | transloco | titlecase }}</ion-button
     >
     <ion-button color="primary" class="p-4 rounded-button" fill="solid">{{
-      "login.register-google" | transloco | titlecase
+      "login.signup.register-google" | transloco | titlecase
     }}</ion-button>
     <div class="p-1 link-signup">
       {{ "login.have-account" | transloco }}

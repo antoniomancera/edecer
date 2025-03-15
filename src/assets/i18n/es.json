@@ -37,24 +37,24 @@
         "confirm-password": "confirmar contraseña",
         "have-account": "¿Ya tienes una cuenta?",
         "login-now": "inicia sesión ahora",
-        "register": "registrarse",
-        "register-google": "registrarse con Google",
         "username": "nombre de usuario",
-        "forgot-password": "olvidó su contraseña?",
+        "forgot-password": "¿olvidó su contraseña?",
         "reset-password": "restaurar contraseña",
         "back-login": "volver al Inicio de sesión",
         "new-password": "nueva contraseña",
         "change-password": "cambiar contraseña",
+        "go-login": "volver a inicio sesión",
         "signup": {
-            "welcome": "¡Bienvenido!"
+            "welcome": "¡Bienvenido!",
+            "register": "registrarse",
+            "register-google": "registrarse con Google"
         },
         "signup-completed": {
             "verify-mail": "verificar email",
             "sent-email-verify-account": "hemos enviado un email a {{email}} para verificar tu cuenta"
         },
         "reset-password-completed": {
-            "password-updated": "Contraseña actualizada",
-            "go-login": "volver a inicio sesión"
+            "password-updated": "Contraseña actualizada"
         }
     },
     "shared": {

@@ -38,24 +38,24 @@
         "confirm-password": "confirm password",
         "have-account": "Already have an account?",
         "login-now": "login now",
-        "register": "register",
-        "register-google": "register with google",
         "username": "username",
         "forgot-password": "forgot your password?",
         "reset-password": "reset password",
         "back-login": "back to login",
         "new-password": "new password",
         "change-password": "change password",
+        "go-login": "go login",
         "signup": {
-            "welcome": "Welcome!"
+            "welcome": "Welcome!",       
+            "register": "register",
+            "register-google": "register with google"
         },
         "signup-completed": {
             "verify-mail": "verify email",
             "sent-email-verify-account": "We sent and email to {{email}} to verify your account"
         },
         "reset-password-completed": {
-            "password-updated": "updated password",
-            "go-login": "go login"
+            "password-updated": "updated password"
         }
     },
     "shared": {

@@ -33,28 +33,28 @@
         "login-google": "Se connecter avec Google",
         "not-member": "Pas encore membre ?",
         "join-now": "inscrivez-vous maintenant",
-        "name": "nom",
-        "confirm-password": "confirmer le mot de passe",
+        "name": "nom",  
+        "confirm-password": "confirmer le mot de passe", 
         "have-account": "Vous avez déjà un compte ?",
         "login-now": "connectez-vous maintenant",
-        "register": "s'inscrire",
-        "register-google": "s'inscrire avec Google",
         "username": "nom d'utilisateur",
         "forgot-password": "mot de passe oublié?",
         "reset-password": "réinitialiser le mot de passe",
         "back-login": "retour à la connexion",
         "new-password": "nouveau mot de passe",
         "change-password": "changer le mot de passe",
+        "go-login": "revenir à la connexion",
         "signup": {
-            "welcome": "Bienvenue!"
+            "welcome": "Bienvenue!",         
+            "register": "s'inscrire",
+            "register-google": "s'inscrire avec Google"
         },
         "signup-completed": {
             "verify-mail": "Vérifiez l'adresse e-mail ",
             "sent-email-verify-account": "Nous avons envoyé un e-mail à {{email}} pour vérifier votre compte"
         },
         "reset-password-completed": {
-            "password-updated": "Mot de passe mis à jour",
-            "go-login": "revenir à la connexion"
+            "password-updated": "Mot de passe mis à jour"
         }
     },
     "shared": {

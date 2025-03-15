@@ -23,23 +23,39 @@
         "close": "fermer",
         "total": "total",
         "percentage": "pourcentage",
-        "back": "revenir"
+        "back": "revenir",
+        "send": "envoyer"
     },
     "login": {
         "password": "mot de passe",
         "remember-me": "se souvenir de moi",
-        "forget-password": "mot de passe oublié ?",
         "login": "se connecter",
         "login-google": "Se connecter avec Google",
         "not-member": "Pas encore membre ?",
         "join-now": "inscrivez-vous maintenant",
-        "name": "nom",
-        "confirm-password": "confirmer le mot de passe",
+        "name": "nom",  
+        "confirm-password": "confirmer le mot de passe", 
         "have-account": "Vous avez déjà un compte ?",
         "login-now": "connectez-vous maintenant",
-        "register": "s'inscrire",
-        "register-google": "s'inscrire avec Google",
-        "username": "nom d'utilisateur"
+        "username": "nom d'utilisateur",
+        "forgot-password": "mot de passe oublié?",
+        "reset-password": "réinitialiser le mot de passe",
+        "back-login": "retour à la connexion",
+        "new-password": "nouveau mot de passe",
+        "change-password": "changer le mot de passe",
+        "go-login": "revenir à la connexion",
+        "signup": {
+            "welcome": "Bienvenue!",         
+            "register": "s'inscrire",
+            "register-google": "s'inscrire avec Google"
+        },
+        "signup-completed": {
+            "verify-mail": "Vérifiez l'adresse e-mail ",
+            "sent-email-verify-account": "Nous avons envoyé un e-mail à {{email}} pour vérifier votre compte"
+        },
+        "reset-password-completed": {
+            "password-updated": "Mot de passe mis à jour"
+        }
     },
     "shared": {
         "loading": "Chargement",

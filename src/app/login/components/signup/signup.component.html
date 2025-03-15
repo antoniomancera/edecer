@@ -1,9 +1,5 @@
-<div class="row">
-  <img src="assets/images/login-background.svg" alt="Wave" class="wave" />
-  <ion-toolbar class="title-container">
-    <ion-title class="title">Bienvenue!</ion-title></ion-toolbar
-  >
-</div>
+<app-login-title [title]="'login.signup.welcome'"></app-login-title>
+
 <div class="row">
   <form
     *ngIf="signupForm"
@@ -14,7 +10,7 @@
     <ion-item class="p-2">
       <ion-input
         formControlName="username"
-        placeholder="{{ 'login.username' | transloco }}"
+        placeholder="{{ 'login.username' | transloco | firstChartUpper }}"
         type="text"
       ></ion-input>
     </ion-item>
@@ -22,23 +18,25 @@
       <ion-input
         formControlName="{{ 'global.email' | transloco }}"
         placeholder="{{
-          'profile.settings.contact-modal.subject' | transloco | titlecase
+          'global.email' | transloco | titlecase | firstChartUpper
         }}"
         type="text"
       ></ion-input>
     </ion-item>
     <ion-item class="p-2">
       <ion-input
-        formControlName="confirmPassword"
-        placeholder="{{ 'login.forget-password' | transloco }}"
+        formControlName="password"
+        placeholder="{{ 'login.password' | transloco | firstChartUpper }}"
         type="password"
         ><ion-input-password-toggle slot="end"></ion-input-password-toggle>
       </ion-input>
     </ion-item>
     <ion-item class="p-2">
       <ion-input
-        formControlName="password"
-        placeholder="{{ 'login.password' | transloco }}"
+        formControlName="confirmPassword"
+        placeholder="{{
+          'login.confirm-password' | transloco | firstChartUpper
+        }}"
         type="password"
         ><ion-input-password-toggle slot="end"></ion-input-password-toggle>
       </ion-input>
@@ -49,10 +47,10 @@
       class="pl-4 pr-4 pb-1 rounded-button"
       fill="solid"
       [disabled]="!signupForm.valid"
-      >{{ "login.register" | transloco }}</ion-button
+      >{{ "login.signup.register" | transloco | titlecase }}</ion-button
     >
     <ion-button color="primary" class="p-4 rounded-button" fill="solid">{{
-      "login.register-google" | transloco
+      "login.signup.register-google" | transloco | titlecase
     }}</ion-button>
     <div class="p-1 link-signup">
       {{ "login.have-account" | transloco }}

@@ -43,7 +43,6 @@ export class LoginPage implements OnInit {
           .signIn(credentials)
           .then((response) => {
             if (response.error) {
-              // Mostrar mensaje de error detallado
               alert(`Error de login: ${response.error.message}`);
             } else {
               this.router.navigate(['tabs/home']);
@@ -51,7 +50,6 @@ export class LoginPage implements OnInit {
           })
           .catch((error) => {
             console.error('Error en el login:', error);
-            // Mostrar mensaje de error al usuario
             alert(`Error de login: ${error.message}`);
           });
       });

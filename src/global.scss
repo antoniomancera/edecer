@@ -219,6 +219,10 @@ ion-item {
   --border-width: 0;
 }
 
+ion-button {
+  text-transform: none !important;
+}
+
 ion-button[shape=circle] {
   --border-radius: 50%;
   width: 100px;

@@ -63,9 +63,9 @@ export class AuthenticationService {
     return this.supabase.auth.signInWithPassword(credentials);
   }
 
-  // sendPwReset(email) {
-  //   return this.supabase.auth.resetPasswordForEmail(email);
-  // }
+  sendPasswordReset(email) {
+    return this.supabase.auth.resetPasswordForEmail(email);
+  }
 
   async signOut() {
     await this.supabase.auth.signOut();
@@ -74,6 +74,10 @@ export class AuthenticationService {
 
   getCurrentUser(): Observable<User | boolean> {
     return this.currentUser.asObservable();
+  }
+
+  async setResetPassword(newPassword: string) {
+    await this.supabase.auth.updateUser({ password: newPassword });
   }
 
   // getCurrentUserId(): string {

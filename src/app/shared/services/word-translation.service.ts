@@ -97,8 +97,8 @@ export class WordTranslationService {
   ): WordTranslation {
     const word = new WordTranslation(
       wordTranslation.id,
-      wordTranslation.wordFr,
-      wordTranslation.wordSp,
+      wordTranslation.wordSenseFr,
+      wordTranslation.wordSenseSp,
       wordTranslation.attempts,
       wordTranslation.successes,
       wordTranslation.phrase

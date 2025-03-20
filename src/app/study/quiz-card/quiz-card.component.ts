@@ -73,7 +73,7 @@ export class QuizCardComponent implements OnChanges {
     this.isLoading = true;
     if (
       this.quizzForm.controls.attemptWord.value ===
-      this.wordTranslation.wordFr.name
+      this.wordTranslation.wordSenseFr.wordFr.name
     ) {
       success = true;
     }

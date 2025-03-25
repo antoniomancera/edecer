@@ -21,7 +21,9 @@
 
     <div class="p-4 login-options">
       <span>
-        <ion-checkbox disabled="true" labelPlacement="end"
+        <ion-checkbox
+          (ionChange)="onChangeRememberMe($event)"
+          labelPlacement="end"
           >{{'login.remember-me'|transloco }}</ion-checkbox
         ></span
       >

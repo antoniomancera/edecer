@@ -80,6 +80,12 @@ export class AuthenticationService {
     await this.supabase.auth.updateUser({ password: newPassword });
   }
 
+  signInGoogle() {
+    return this.supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+  }
+
   // getCurrentUserId(): string {
   //   if (this.currentUser.value) {
   //     return (this.currentUser.value as User).email;

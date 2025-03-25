@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { noWhitespaceValidator } from '../shared/validators/custom-validators';
+import { ToastService } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -42,17 +44,32 @@ export class LoginPage implements OnInit {
         this.authenticationService
           .signIn(credentials)
           .then((response) => {
-            if (response.error) {
-              alert(`Error de login: ${response.error.message}`);
-            } else {
-              this.router.navigate(['tabs/home']);
-            }
+            this.onAttemptLogin(response);
           })
           .catch((error) => {
-            console.error('Error en el login:', error);
-            alert(`Error de login: ${error.message}`);
+            this.toastService.showDangerToast(error.message);
           });
       });
+    }
+  }
+
+  onClickLoginGoogle() {
+    this.authenticationService
+      .signInGoogle()
+      .then((response) => {
+        this.onAttemptLogin(response);
+      })
+      .catch((error) => {
+        this.toastService.showDangerToast(error.message);
+      });
+  }
+
+  private onAttemptLogin(response) {
+    console.log(response);
+    if (response.error) {
+      this.toastService.showDangerToast(response.error.message);
+    } else {
+      this.router.navigate(['tabs/home']);
     }
   }
 }

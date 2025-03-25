@@ -41,7 +41,10 @@
       >{{'login.login'|transloco }}</ion-button
     >
 
-    <ion-button type="submit" class="p-4 rounded-button"
+    <ion-button
+      type="submit"
+      class="p-4 rounded-button"
+      (click)="onClickLoginGoogle()"
       >{{'login.login-google'|transloco }}<ion-icon
         slot="end"
         name="logo-google"

@@ -65,11 +65,14 @@ export class LoginPage implements OnInit {
   }
 
   private onAttemptLogin(response) {
-    console.log(response);
     if (response.error) {
       this.toastService.showDangerToast(response.error.message);
     } else {
       this.router.navigate(['tabs/home']);
     }
+  }
+
+  onChangeRememberMe(event) {
+    localStorage.setItem('hasRememberMe', event.detail.checked);
   }
 }

@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
+import {
+  createClient,
+  SupabaseClient,
+  SupabaseClientOptions,
+  User,
+} from '@supabase/supabase-js';
 
 import {
   BehaviorSubject,
@@ -20,11 +25,15 @@ import { environment } from 'src/environments/environment.prod';
 export class AuthenticationService {
   private supabase: SupabaseClient;
   private currentUser: BehaviorSubject<User | null> = new BehaviorSubject(null);
+  private options: SupabaseClientOptions<'public'> = {
+    auth: { persistSession: localStorage.getItem('hasRememberMe') === 'true' },
+  };
 
   constructor(private router: Router) {
     this.supabase = createClient(
       environment.SUPABASE_URL,
-      environment.SUPABASE_KEY
+      environment.SUPABASE_KEY,
+      this.options
     );
 
     this.supabase.auth.onAuthStateChange((event, sess) => {

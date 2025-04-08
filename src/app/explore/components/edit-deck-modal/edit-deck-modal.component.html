@@ -1,65 +1,58 @@
-<ion-modal
-  [isOpen]="isEditDeckModalOpen"
-  (ionModalDidDismiss)="onModalDismiss()"
->
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>{{ selectedDeck.name }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    @if(isLoading){
-    <ion-spinner class="spinner-container"></ion-spinner>
-    } @if(!isLoading){
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ selectedDeck.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+@if(isLoading){
+<ion-spinner class="spinner-container"></ion-spinner>
+} @if(!isLoading){
 
-    <ion-content class="ion-padding">
-      <ion-segment
-        [(ngModel)]="selectedSegment"
-        (ionChange)="onChangeSegment(selectedSegment)"
-      >
-        <ion-segment-button value="info">
-          <ion-label>{{ "global.info" | transloco }}</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="words">
-          <ion-label>{{ "global.words" | transloco }}</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="phrases">
-          <ion-label>{{ "global.phrases" | transloco }}</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-      @if(selectedSegment === 'info'){
-      {{ selectedDeck.description }}
-      } @else if(selectedSegment === 'words'){ @for(wordWithPhrase of
-      wordTranslationsWithPhrases; track wordTranslationsWithPhrases){
-      <ion-accordion-group>
-        <ion-accordion value="wordWithPhrase">
-          <ion-item slot="header">
-            <ion-label>{{
-              wordWithPhrase.wordTranslation.wordSenseFr.wordFr.name
-            }}</ion-label>
-          </ion-item>
-          @for(phrase of wordWithPhrase.phrases; track phrase){
-          <div class="ion-padding" slot="content">
-            {{ phrase.phraseFr }}
-          </div>
-          }
-        </ion-accordion>
-      </ion-accordion-group>
-      } } @else if(selectedSegment === 'phrases'){ @for(phraseWithWords of
-      phrasesWithWordTranslations; track phraseWithWords){
-      <ion-accordion-group>
-        <ion-accordion value="phraseWithWords">
-          <ion-item slot="header">
-            <ion-label>{{ phraseWithWords.phrase.phraseFr }}</ion-label>
-          </ion-item>
-          @for(word of phraseWithWords.wordTranslations; track word){
-          <div class="ion-padding" slot="content">
-            {{ word.wordSenseFr.wordFr.name }}
-          </div>
-          }
-        </ion-accordion>
-      </ion-accordion-group>
-      } } </ion-content
-    >}
-  </ng-template>
-</ion-modal>
+<ion-content class="ion-padding">
+  <ion-segment
+    [(ngModel)]="selectedSegment"
+    (ionChange)="onChangeSegment(selectedSegment)"
+  >
+    <ion-segment-button value="info">
+      <ion-label>{{ "global.info" | transloco }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="words">
+      <ion-label>{{ "global.words" | transloco }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="phrases">
+      <ion-label>{{ "global.phrases" | transloco }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  @if(selectedSegment === 'info'){
+  {{ selectedDeck.description }}
+  } @else if(selectedSegment === 'words'){ @for(wordWithPhrase of
+  wordTranslationsWithPhrases; track wordTranslationsWithPhrases){
+  <ion-accordion-group>
+    <ion-accordion value="wordWithPhrase">
+      <ion-item slot="header">
+        <ion-label>{{
+          wordWithPhrase.wordTranslation.wordSenseFr.wordFr.name
+        }}</ion-label>
+      </ion-item>
+      @for(phrase of wordWithPhrase.phrases; track phrase){
+      <div class="ion-padding" slot="content">
+        {{ phrase.phraseFr }}
+      </div>
+      }
+    </ion-accordion>
+  </ion-accordion-group>
+  } } @else if(selectedSegment === 'phrases'){ @for(phraseWithWords of
+  phrasesWithWordTranslations; track phraseWithWords){
+  <ion-accordion-group>
+    <ion-accordion value="phraseWithWords">
+      <ion-item slot="header">
+        <ion-label>{{ phraseWithWords.phrase.phraseFr }}</ion-label>
+      </ion-item>
+      @for(word of phraseWithWords.wordTranslations; track word){
+      <div class="ion-padding" slot="content">
+        {{ word.wordSenseFr.wordFr.name }}
+      </div>
+      }
+    </ion-accordion>
+  </ion-accordion-group>
+  } } </ion-content
+>}

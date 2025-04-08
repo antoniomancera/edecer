@@ -1,10 +1,13 @@
-<ion-header [translucent]="true">
-  <ion-button fill="clear" (click)="onClickNavigateProfile()">
-    <ion-icon slot="start" name="arrow-back-outline"></ion-icon
-    ><span class="explanation"></span>{{ 'global.back' | transloco}}</ion-button
-  >
-  <ion-toolbar>
-    <ion-title>{{'home.statistics' | transloco | titlecase}}</ion-title>
+<ion-header [translucent]="true"
+  ><ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="onClickNavigateProfile()">
+        <ion-icon slot="start" name="arrow-back-outline" size="large"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+    <ion-title class="p-0"
+      >{{'home.statistics' | transloco | titlecase}}</ion-title
+    >
   </ion-toolbar>
 </ion-header>
 

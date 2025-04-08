@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { PhraseWithWordTranslations } from 'src/app/shared/models/phrase.interface';
@@ -16,8 +16,6 @@ export class EditDeckModalComponent {
   @Input() isEditDeckModalOpen = false;
   @Input() selectedDeck: Deck;
 
-  @Output() setIsEditDeckModalOpenFalse = new EventEmitter();
-
   isLoading = false;
   hasLoadWords = false;
   hasLoadPhrases = false;
@@ -30,10 +28,6 @@ export class EditDeckModalComponent {
     private toastService: ToastService,
     private wordTranslationService: WordTranslationService
   ) {}
-
-  onModalDismiss() {
-    this.setIsEditDeckModalOpenFalse.emit();
-  }
 
   onChangeSegment(selectedSegment: string) {
     if (selectedSegment === 'words' && !this.hasLoadWords) {

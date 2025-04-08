@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { MessagingService } from 'src/app/shared/services/messaging.service';
+import { EditDeckModalComponent } from '../edit-deck-modal/edit-deck-modal.component';
 
 @Component({
   selector: 'app-decks',
@@ -21,7 +23,8 @@ export class DecksComponent implements OnInit {
   };
   constructor(
     private messagingService: MessagingService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -37,6 +40,19 @@ export class DecksComponent implements OnInit {
       if (home && home.decks) this.decks = home.decks;
       this.isLoading = false;
     });
+  }
+
+  async onClickOpenEditDeck(selectedDeck: Deck) {
+    this.selectedDeck = selectedDeck;
+    const modal = await this.modalController.create({
+      component: EditDeckModalComponent,
+      componentProps: {
+        selectedDeck: selectedDeck,
+      },
+
+      initialBreakpoint: 0.9,
+    });
+    await modal.present();
   }
 
   onClickSetSelected(selectedDeck: Deck) {

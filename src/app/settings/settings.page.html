@@ -1,21 +1,17 @@
 <ion-header>
-  <ion-button fill="clear" (click)="onClickNavigateProfile()">
-    <ion-icon slot="start" name="arrow-back-outline"></ion-icon
-    ><span class="explanation"></span>{{ 'global.back' | transloco}}</ion-button
-  >
   <ion-toolbar>
-    <ion-title>{{'profile.settings.title' | transloco | titlecase}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="onClickNavigateProfile()">
+        <ion-icon
+          slot="start"
+          name="arrow-back-outline"
+          size="large"
+        ></ion-icon></ion-button
+    ></ion-buttons>
+    <ion-title class="p-0"
+      >{{'profile.settings.title' | transloco | titlecase}}</ion-title
+    >
   </ion-toolbar>
-  <ion-item class="p-2 ion-item-no-border">
-    <ion-avatar slot="start">
-      <img
-        [src]="userInfo && userInfo.image ? userInfo : 'https://www.w3schools.com/howto/img_avatar.png'"
-      />
-    </ion-avatar>
-    <ion-label
-      >Bonjour @if(userInfo && userInfo.surname){{{userInfo.surname}}}
-    </ion-label>
-  </ion-item>
 </ion-header>
 <ion-content>
   <ion-list lines="full" class="flex p-0 m-0">

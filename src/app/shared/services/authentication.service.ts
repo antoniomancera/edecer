@@ -18,6 +18,7 @@ import {
 } from 'rxjs';
 
 import { environment } from 'src/environments/environment.prod';
+import { MessagingService } from './messaging.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,10 @@ export class AuthenticationService {
     auth: { persistSession: localStorage.getItem('hasRememberMe') === 'true' },
   };
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private messagingService: MessagingService
+  ) {
     this.supabase = createClient(
       environment.SUPABASE_URL,
       environment.SUPABASE_KEY,
@@ -39,7 +43,9 @@ export class AuthenticationService {
     this.supabase.auth.onAuthStateChange((event, sess) => {
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         this.currentUser.next(sess.user);
+        this.messagingService.setUser(sess.user);
       } else {
+        this.messagingService.setUser(null);
         this.currentUser.next(null);
       }
     });

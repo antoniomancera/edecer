@@ -81,7 +81,8 @@
             "choose-goal": "choose your daily goals, you can change them at any time",
             "number-attempts": "number of attemps",
             "target-daily-attemps": "target daily attemps",
-            "percentage-success": "percentage of success"
+            "percentage-success": "percentage of success",
+            "goal-created": "Goal {{attempts}} (T) y {{accuracy}} (%) target"
         },
         "study-journal-modal":{
             "title": "diary of the day"

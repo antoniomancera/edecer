@@ -29,7 +29,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.messagingService.getHome().subscribe((home) => {
       this.home = home;
-      if (this.home && this.home.weekStats) {
+      if (this.home && this.home.weekStats && this.home.goal) {
         this.home.weekStats.map((dailyStats) => {
           const date: Date = new Date(dailyStats.date);
           dailyStats.monthDay = date.getDate();

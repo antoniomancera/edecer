@@ -24,8 +24,8 @@
     </ion-button>
   </div>
   <div class="horizontal-scroll">
-    @if(home && home.weekStats){ @for ( stat of home.weekStats; track
-    stat.weekDay) {
+    @if(home && home.weekStats && home.goal){ @for ( stat of home.weekStats;
+    track stat.weekDay) {
     <span>
       <ion-card
         class="weekly-goal-tracing-card"
@@ -56,7 +56,8 @@
         </ion-card-content>
       </ion-card>
     </span>
-    }}@else{<span class="pl-3 explanation"
+    }}@else if(home && !home.weekStats && !home.goal){<span
+      class="pl-3 explanation"
       >{{'home.no-stat-week' | transloco | firstChartUpper }}</span
     >
     }
@@ -64,7 +65,7 @@
   <br />
   <ion-title size="large">{{'shared.decks' | transloco | titlecase}}</ion-title>
   <div class="p-2">
-    @if(home && home.decks){
+    @if(home && home.decks && home.decks.length > 0){
     <ion-card
       *ngFor="let deck of home.decks"
       class="p-2 deck-card"

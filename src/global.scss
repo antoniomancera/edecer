@@ -278,3 +278,7 @@ body.dark .background-primary-color {
 .explanation {
   font-style: italic;
 }
+
+.ion-item-no-margin {
+  --inner-border-width: 0;
+}

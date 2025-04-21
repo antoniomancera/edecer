@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { WordTranslation } from '../shared/models/word-translation.model';
 import { MessagingService } from '../shared/services/messaging.service';
 import { Deck } from '../shared/models/deck.interface';
 import { Goal } from '../home/models/goal.interface';
-import { WordTranslationService } from '../shared/services/word-translation.service';
 import { DailyStats } from '../stats/models/daily-stats.interface';
+import { DeckUserWordPraseTranslationService } from '../shared/services/deck-user-word-prase-translation.service';
+import { WordPhraseTranslation } from '../shared/models/word-phrase-translation.model';
 
 @Component({
   selector: 'app-study',
@@ -13,7 +13,7 @@ import { DailyStats } from '../stats/models/daily-stats.interface';
   styleUrls: ['./study.page.scss'],
 })
 export class StudyPage implements OnInit {
-  wordTranslation: WordTranslation;
+  wordPhraseTranslation: WordPhraseTranslation;
   decks: Deck[] = [];
   lastDeck: Deck;
   selectedDeckId: number;
@@ -22,7 +22,7 @@ export class StudyPage implements OnInit {
   isLoading = true;
 
   constructor(
-    private wordTranslationService: WordTranslationService,
+    private deckUserWordPhraseTranslationService: DeckUserWordPraseTranslationService,
     private messagingService: MessagingService
   ) {}
 
@@ -30,7 +30,9 @@ export class StudyPage implements OnInit {
     this.messagingService.getHome().subscribe((home) => {
       this.decks = home.decks;
       this.goal = home.goal;
-      this.selectedDeckId = home.lastDeckId;
+      this.selectedDeckId = home.lastDeckId
+        ? home.lastDeckId
+        : this.decks[0].id;
       this.lastDeck = this.decks.find(
         (deck) => deck.id === this.selectedDeckId
       );
@@ -50,10 +52,10 @@ export class StudyPage implements OnInit {
 
   onChangeDeck(deckId: number) {
     this.selectedDeckId = deckId;
-    this.wordTranslationService
-      .getRandomWordTranslation(deckId)
-      .subscribe((wordTranslation) => {
-        this.wordTranslation = wordTranslation;
+    this.deckUserWordPhraseTranslationService
+      .getRandomWordPhraseTranslation(deckId)
+      .subscribe((wordPhraseTranslation) => {
+        this.wordPhraseTranslation = wordPhraseTranslation;
       });
   }
 }

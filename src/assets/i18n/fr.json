@@ -79,7 +79,8 @@
             "choose-goal": "choisissez vos objectifs quotidiens, vous pouvez les modifier à tout moment",
             "number-attempts": "nombre de tentatives",
             "target-daily-attemps": "cibler les tentatives quotidiennes",
-            "percentage-success": "pourcentage de hits"
+            "percentage-success": "pourcentage de hits",
+            "goal-created": "But {{attempts}} (T) y {{accuracy}} (%) défini"
         },
         "study-journal-modal":{
             "title": "journal du jour"

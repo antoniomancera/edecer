@@ -1,7 +1,7 @@
-@if(wordTranslation && quizzForm){
+@if(wordPhraseTranslation && quizzForm){
 <form
   [@changeDeck]="hasChangedDeck ? 'zoomIn' : 'null'"
-  (ngSubmit)="attemptsWordTranslation()"
+  (ngSubmit)="attemptsWordPhraseTranslation()"
   [formGroup]="quizzForm"
 >
   <ion-card class="quiz-card p-2"></ion-card>
@@ -9,7 +9,7 @@
   <ion-card class="quiz-card p-2"> </ion-card>
   <ion-card class="quiz-card p-2">
     <ion-card-content
-      >{{ wordTranslation.wordSenseFr.wordFr.name }}
+      >{{ wordPhraseTranslation.wordTranslation.wordSenseFr.word.name }}
     </ion-card-content></ion-card
   >
   <ion-card
@@ -18,7 +18,7 @@
     class="quiz-card p-2 no-rotate"
   >
     <ion-card-content>
-      {{ wordTranslation.wordFrFirstPart
+      {{ wordPhraseTranslation.phraseFrFirstPart
       }}<input
         class="background-primary-color"
         type="text"
@@ -26,9 +26,9 @@
         name="name"
         required
         formControlName="attemptWord"
-      />{{ wordTranslation.wordFrSecondPart }}
+      />{{ wordPhraseTranslation.phraseFrSecondPart }}
       <br />
-      {{ wordTranslation.phrase.phraseEs }}
+      {{ wordPhraseTranslation.phraseTranslation.phraseSp }}
     </ion-card-content>
   </ion-card>
   <ion-toolbar class="p-2 ion-toolbar-footer">
@@ -38,7 +38,7 @@
         <ion-col size-sm="6" size="6" class="ion-text-center">
           <ion-button
             shape="circle"
-            (click)="getRandomWordTranslation()"
+            (click)="getRandomWordPhraseTranslation()"
             color="secondary"
           >
             <ion-icon name="reload"></ion-icon>

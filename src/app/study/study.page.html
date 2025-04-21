@@ -1,14 +1,16 @@
 <ion-header>
   <ion-toolbar>
+    @if(stat && goal){
     <app-track-progress-total-percentage
       [stat]="stat"
       [goal]="goal"
     ></app-track-progress-total-percentage>
+    }
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
   @if(!isLoading && decks && decks.length > 0){
-  <ion-item>
+  <ion-item class="ion-item-no-margin">
     @for(deck of decks; track deck.id){
     <ion-chip
       (click)="onChangeDeck(deck.id)"

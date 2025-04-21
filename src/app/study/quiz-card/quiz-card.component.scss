@@ -16,4 +16,12 @@
             top: ($i + 1) * 20px;
         }
     }
+
+    &:not(.no-rotate) {
+        @for $i from 2 through 10 {
+            &:nth-child(#{$i}) {
+                transform: rotate(0.5deg * $i * pow(-1, $i));
+            }
+        }
+    }
 }

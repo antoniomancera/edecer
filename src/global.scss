@@ -197,9 +197,9 @@ ion-textarea {
 }
 
 
-ion-range {
-  background-color: var(--ion-background-color-step-800);
-}
+// ion-range {
+//   background-color: var(--ion-background-color-step-800);
+// }
 
 ion-toolbar {
   --border-width: 0;
@@ -209,18 +209,24 @@ ion-header {
   box-shadow: none !important;
 }
 
-ion-header ion-toolbar {
-  --border-width: 0 0 2px 0 !important;
-  --border-color: var(--ion-color-primary);
-  --ion-toolbar-background: var(--ion-background-color-step-750);
+ion-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--ion-color-dark);
 }
 
 ion-item {
   --border-width: 0;
 }
 
-body.dark ion-header ion-toolbar {
-  --ion-toolbar-background: var(--global-primary-color);
+ion-button {
+  text-transform: none !important;
+}
+
+ion-button[shape=circle] {
+  --border-radius: 50%;
+  width: 100px;
+  height: 100px;
 }
 
 a {
@@ -250,9 +256,10 @@ body.dark .background-primary-color {
 
 .icon-float-right {
   float: right;
+  margin-left: auto;
 }
 
-.deck-card {
+.cursor-pointer {
   cursor: pointer;
 }
 
@@ -268,6 +275,10 @@ body.dark .background-primary-color {
   align-items: center;
 }
 
-.icon-float-right {
-  margin-left: auto;
+.explanation {
+  font-style: italic;
+}
+
+.ion-item-no-margin {
+  --inner-border-width: 0;
 }

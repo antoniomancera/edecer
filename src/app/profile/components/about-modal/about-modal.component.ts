@@ -12,8 +12,4 @@ export class AboutModalComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
-
-  close() {
-    this.modal.dismiss();
-  }
 }

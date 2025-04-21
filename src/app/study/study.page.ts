@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TranslocoService } from '@jsverse/transloco';
-
-import { WordTranslation } from '../shared/models/word-translation.model';
 import { MessagingService } from '../shared/services/messaging.service';
 import { Deck } from '../shared/models/deck.interface';
 import { Goal } from '../home/models/goal.interface';
-import { ToastService } from '../shared/services/toast.service';
-import { WordTranslationService } from '../shared/services/word-translation.service';
 import { DailyStats } from '../stats/models/daily-stats.interface';
+import { DeckUserWordPraseTranslationService } from '../shared/services/deck-user-word-prase-translation.service';
+import { WordPhraseTranslation } from '../shared/models/word-phrase-translation.model';
 
 @Component({
   selector: 'app-study',
@@ -16,38 +13,26 @@ import { DailyStats } from '../stats/models/daily-stats.interface';
   styleUrls: ['./study.page.scss'],
 })
 export class StudyPage implements OnInit {
-  wordTranslation: WordTranslation;
+  wordPhraseTranslation: WordPhraseTranslation;
   decks: Deck[] = [];
   lastDeck: Deck;
   selectedDeckId: number;
   goal: Goal;
   stat: DailyStats;
   isLoading = true;
-  customActionSheetOptions = {
-    header: '',
-    subHeader: '',
-  };
 
   constructor(
-    private wordTranslationService: WordTranslationService,
-    private messagingService: MessagingService,
-    private translocoService: TranslocoService,
-    private toastService: ToastService
+    private deckUserWordPhraseTranslationService: DeckUserWordPraseTranslationService,
+    private messagingService: MessagingService
   ) {}
 
   ngOnInit(): void {
-    this.translocoService
-      .selectTranslateObject('study.select-deck')
-      .subscribe((translations) => {
-        this.customActionSheetOptions.header = translations['selected-deck'];
-        this.customActionSheetOptions.subHeader =
-          translations['select-deck-to-practise'];
-      });
-
     this.messagingService.getHome().subscribe((home) => {
       this.decks = home.decks;
       this.goal = home.goal;
-      this.selectedDeckId = home.lastDeckId;
+      this.selectedDeckId = home.lastDeckId
+        ? home.lastDeckId
+        : this.decks[0].id;
       this.lastDeck = this.decks.find(
         (deck) => deck.id === this.selectedDeckId
       );
@@ -66,10 +51,11 @@ export class StudyPage implements OnInit {
   }
 
   onChangeDeck(deckId: number) {
-    this.wordTranslationService
-      .getRandomWordTranslation(deckId)
-      .subscribe((wordTranslation) => {
-        this.wordTranslation = wordTranslation;
+    this.selectedDeckId = deckId;
+    this.deckUserWordPhraseTranslationService
+      .getRandomWordPhraseTranslation(deckId)
+      .subscribe((wordPhraseTranslation) => {
+        this.wordPhraseTranslation = wordPhraseTranslation;
       });
   }
 }

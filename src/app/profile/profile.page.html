@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{ 'tabs.profile' | transloco | titlecase }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-avatar class="p-5 item-avatar">
+    <img
+      alt="Silhouette of a person's head"
+      src="https://ionicframework.com/docs/img/demos/avatar.svg"
+    />
+  </ion-avatar>
+  <div class="p-4 user-name">
+    Bonjour @if(userInfo && userInfo.surname){{{userInfo.surname}}}
+  </div>
+  <ion-button
+    class="pr-3 pl-3 p-2 rounded-button"
+    color="primary"
+    (click)="onClickNavigateSettings()"
+    >{{'profile.settings.title' | transloco | titlecase }}</ion-button
+  >
+  <ion-button class="pr-3 pl-3 p-2 rounded-button" color="secondary"
+    >{{'profile.edit-profile' | transloco | titlecase }}</ion-button
+  >
+  <ion-button
+    id="open-contact-modal"
+    class="pr-3 pl-3 p-2 rounded-button"
+    color="tertiary"
+    >{{'profile.settings.contact-modal.title'|transloco | titlecase
+    }}</ion-button
+  >
+  <ion-button
+    id="open-about-modal"
+    class="pr-3 pl-3 p-2 rounded-button"
+    color="quaternary"
+    >{{'profile.settings.about.title'|transloco | titlecase }}</ion-button
+  >
+  <ion-button
+    class="pr-3 pl-3 p-2 rounded-button"
+    color="quinary"
+    (click)="onClickNavigateStats()"
+    >{{'tabs.progress' | transloco | titlecase }}</ion-button
+  >
+</ion-content>
+
+<app-contact-modal [userInfo]="userInfo"></app-contact-modal>
+<app-about-modal></app-about-modal>

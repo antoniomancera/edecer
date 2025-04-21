@@ -1,9 +1,4 @@
-<div class="row">
-  <img src="assets/images/login-background.svg" alt="Wave" class="wave" />
-  <ion-toolbar class="title-container">
-    <ion-title class="title">Bonjour!</ion-title></ion-toolbar
-  >
-</div>
+<app-login-title [title]="'Bonjour!'"></app-login-title>
 
 <div class="row">
   <form *ngIf="loginForm" (ngSubmit)="onSubmitLogin()" [formGroup]="loginForm">
@@ -26,12 +21,16 @@
 
     <div class="p-4 login-options">
       <span>
-        <ion-checkbox disabled="true" labelPlacement="end"
+        <ion-checkbox
+          (ionChange)="onChangeRememberMe($event)"
+          labelPlacement="end"
           >{{'login.remember-me'|transloco }}</ion-checkbox
         ></span
       >
       <span class="align-vertical-icon-container"
-        >{{'login.forget-password'|transloco }}?</span
+        ><a routerLink="forget-password" routerLinkActive="active"
+          >{{'login.forgot-password'|transloco }}</a
+        ></span
       >
     </div>
 
@@ -44,7 +43,10 @@
       >{{'login.login'|transloco }}</ion-button
     >
 
-    <ion-button type="submit" class="p-4 rounded-button"
+    <ion-button
+      type="submit"
+      class="p-4 rounded-button"
+      (click)="onClickLoginGoogle()"
       >{{'login.login-google'|transloco }}<ion-icon
         slot="end"
         name="logo-google"

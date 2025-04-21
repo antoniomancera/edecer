@@ -22,23 +22,40 @@
         "cancel": "annuler",
         "close": "fermer",
         "total": "total",
-        "percentage": "pourcentage"
+        "percentage": "pourcentage",
+        "back": "revenir",
+        "send": "envoyer"
     },
     "login": {
         "password": "mot de passe",
         "remember-me": "se souvenir de moi",
-        "forget-password": "mot de passe oublié ?",
         "login": "se connecter",
         "login-google": "Se connecter avec Google",
         "not-member": "Pas encore membre ?",
         "join-now": "inscrivez-vous maintenant",
-        "name": "nom",
-        "confirm-password": "confirmer le mot de passe",
+        "name": "nom",  
+        "confirm-password": "confirmer le mot de passe", 
         "have-account": "Vous avez déjà un compte ?",
         "login-now": "connectez-vous maintenant",
-        "register": "s'inscrire",
-        "register-google": "s'inscrire avec Google",
-        "username": "nom d'utilisateur"
+        "username": "nom d'utilisateur",
+        "forgot-password": "mot de passe oublié?",
+        "reset-password": "réinitialiser le mot de passe",
+        "back-login": "retour à la connexion",
+        "new-password": "nouveau mot de passe",
+        "change-password": "changer le mot de passe",
+        "go-login": "revenir à la connexion",
+        "signup": {
+            "welcome": "Bienvenue!",         
+            "register": "s'inscrire",
+            "register-google": "s'inscrire avec Google"
+        },
+        "signup-completed": {
+            "verify-mail": "Vérifiez l'adresse e-mail ",
+            "sent-email-verify-account": "Nous avons envoyé un e-mail à {{email}} pour vérifier votre compte"
+        },
+        "reset-password-completed": {
+            "password-updated": "Mot de passe mis à jour"
+        }
     },
     "shared": {
         "loading": "Chargement",
@@ -54,25 +71,32 @@
     "home":{
         "statistics": "statistiques",
         "current-goals": "Vos objectifs actuels sont {{attempts}} (T) et {{accuracy}} (%)",
+        "no-goal": "aucun objectif quotidien n'a été défini, vous pouvez en choisir un vous-même",
+        "no-stat-week": "il n'y a aucune donnée cette semaine",
+        "no-deck": "aucun deck n'a été trouvé",
         "add-goal-modal":{
             "title": "objectifs quotidiens",
             "choose-goal": "choisissez vos objectifs quotidiens, vous pouvez les modifier à tout moment",
             "number-attempts": "nombre de tentatives",
             "target-daily-attemps": "cibler les tentatives quotidiennes",
-            "percentage-success": "pourcentage de hits"
+            "percentage-success": "pourcentage de hits",
+            "goal-created": "But {{attempts}} (T) y {{accuracy}} (%) défini"
         },
         "study-journal-modal":{
             "title": "journal du jour"
         }
     },
-    "menu": {
-        "select-language": "Sélectionner la langue",
-        "contact-modal": {
-            "title": "contactez-nous",
-            "message": "message",
-            "subject": "objet",
-            "user-request-created": "Nous avons bien reçu votre demande",
-            "user-request-last-week-not-answered": "Il existe une demande effectuée il y a moins d'une semaine qui n'a pas encore été répondue."
+    "profile": {
+        "edit-profile": "editar perfil",
+        "settings": {
+            "title": "configuración",
+            "select-language": "Sélectionner la langue",
+            "contact-modal": {
+                "title": "contactez-nous",
+                "message": "message",
+                "subject": "objet",
+                "user-request-created": "Nous avons bien reçu votre demande",
+                "user-request-last-week-not-answered": "Il existe une demande effectuée il y a moins d'une semaine qui n'a pas encore été répondue."
         },
         "log-out": "Déconnexion",
         "contact": "contact",
@@ -82,6 +106,7 @@
             "title":"à propos",
             "message": "Cette application a été créée par Antonio Manuel Manceras Hevilla dans le but de fournir un programme pour apprendre le français basé sur l'espagnol, gratuit, facile à utiliser, mais en même temps adaptable selon les besoins de l'utilisateur."
         } 
+    }
     },
     "study": {
         "select-deck": {
@@ -90,10 +115,10 @@
         }
     },
     "tabs": {
-    "home": "accueil",
-    "study": "étudier",
-    "progress": "progrès",
-    "explore": "explorer",
-    "settings": "paramètres"
+        "home": "accueil",
+        "study": "étudier",
+        "progress": "progrès",
+        "explore": "explorer",
+        "profile": "profil"
   }
 }

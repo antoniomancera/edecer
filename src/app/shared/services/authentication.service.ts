@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { createClient, SupabaseClient, User } from '@supabase/supabase-js';
+import {
+  createClient,
+  SupabaseClient,
+  SupabaseClientOptions,
+  User,
+} from '@supabase/supabase-js';
 
 import {
   BehaviorSubject,
@@ -13,6 +18,7 @@ import {
 } from 'rxjs';
 
 import { environment } from 'src/environments/environment.prod';
+import { MessagingService } from './messaging.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,17 +26,26 @@ import { environment } from 'src/environments/environment.prod';
 export class AuthenticationService {
   private supabase: SupabaseClient;
   private currentUser: BehaviorSubject<User | null> = new BehaviorSubject(null);
+  private options: SupabaseClientOptions<'public'> = {
+    auth: { persistSession: localStorage.getItem('hasRememberMe') === 'true' },
+  };
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private messagingService: MessagingService
+  ) {
     this.supabase = createClient(
       environment.SUPABASE_URL,
-      environment.SUPABASE_KEY
+      environment.SUPABASE_KEY,
+      this.options
     );
 
     this.supabase.auth.onAuthStateChange((event, sess) => {
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         this.currentUser.next(sess.user);
+        this.messagingService.setUser(sess.user);
       } else {
+        this.messagingService.setUser(null);
         this.currentUser.next(null);
       }
     });
@@ -63,17 +78,27 @@ export class AuthenticationService {
     return this.supabase.auth.signInWithPassword(credentials);
   }
 
-  // sendPwReset(email) {
-  //   return this.supabase.auth.resetPasswordForEmail(email);
-  // }
+  sendPasswordReset(email) {
+    return this.supabase.auth.resetPasswordForEmail(email);
+  }
 
   async signOut() {
     await this.supabase.auth.signOut();
-    this.router.navigateByUrl('/', { replaceUrl: true });
+    this.router.navigateByUrl('/login', { replaceUrl: true });
   }
 
   getCurrentUser(): Observable<User | boolean> {
     return this.currentUser.asObservable();
+  }
+
+  async setResetPassword(newPassword: string) {
+    await this.supabase.auth.updateUser({ password: newPassword });
+  }
+
+  signInGoogle() {
+    return this.supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
   }
 
   // getCurrentUserId(): string {

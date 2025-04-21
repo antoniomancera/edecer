@@ -1,13 +1,13 @@
-//Reusable interface for WordFr and WordSp
+import { Type } from './type.interface';
+
 export interface Word {
   id: number;
   name: string;
 }
 
-//Reusable interface for WordSenseFr and WordSenseSp
 export interface WordSense {
   id: number;
-  wordFr?: Word;
-  wordSp?: Word;
+  word: Word;
+  type: Type;
   definition: string;
 }

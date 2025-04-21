@@ -5,7 +5,7 @@ import { map, Observable } from 'rxjs';
 
 import {
   WordTranslation,
-  WordTranslationWithPhrases,
+  WordTranslationWithPhraseTranslations,
 } from '../models/word-translation.model';
 import { environment } from 'src/environments/environment';
 
@@ -26,8 +26,8 @@ export class WordTranslationService {
    */
   getAllWordTranslationWithPhrasesByDeck(
     deckId: number
-  ): Observable<WordTranslationWithPhrases[]> {
-    return this.http.get<WordTranslationWithPhrases[]>(
+  ): Observable<WordTranslationWithPhraseTranslations[]> {
+    return this.http.get<WordTranslationWithPhraseTranslations[]>(
       environment.BASE_URL + this.MOT_PALABRA + '/' + deckId
     );
   }

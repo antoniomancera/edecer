@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { PhraseWithWordTranslations } from 'src/app/shared/models/phrase.interface';
-import { WordTranslationWithPhrases } from 'src/app/shared/models/word-translation.model';
+import { WordTranslationWithPhraseTranslations } from 'src/app/shared/models/word-translation.model';
 import { PhraseService } from 'src/app/shared/services/phrase.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { WordTranslationService } from 'src/app/shared/services/word-translation.service';
@@ -20,7 +20,7 @@ export class EditDeckModalComponent {
   hasLoadWords = false;
   hasLoadPhrases = false;
   phrasesWithWordTranslations: PhraseWithWordTranslations[] = [];
-  wordTranslationsWithPhrases: WordTranslationWithPhrases[] = [];
+  wordTranslationsWithPhrases: WordTranslationWithPhraseTranslations[] = [];
   selectedSegment = 'info';
 
   constructor(

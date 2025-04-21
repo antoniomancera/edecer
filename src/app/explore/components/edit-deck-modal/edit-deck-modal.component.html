@@ -30,10 +30,10 @@
     <ion-accordion value="wordWithPhrase">
       <ion-item slot="header">
         <ion-label>{{
-          wordWithPhrase.wordTranslation.wordSenseFr.wordFr.name
+          wordWithPhrase.wordTranslation.wordSenseFr.word.name
         }}</ion-label>
       </ion-item>
-      @for(phrase of wordWithPhrase.phrases; track phrase){
+      @for(phrase of wordWithPhrase.phraseTranslations; track phrase){
       <div class="ion-padding" slot="content">
         {{ phrase.phraseFr }}
       </div>
@@ -49,7 +49,7 @@
       </ion-item>
       @for(word of phraseWithWords.wordTranslations; track word){
       <div class="ion-padding" slot="content">
-        {{ word.wordSenseFr.wordFr.name }}
+        {{ word.wordSenseFr.word.name }}
       </div>
       }
     </ion-accordion>

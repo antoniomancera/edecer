@@ -1,3 +1,4 @@
+import { PhraseTranslation } from './phrase-translation.interface';
 import { Phrase } from './phrase.interface';
 import { WordSense } from './word.interface';
 
@@ -9,7 +10,7 @@ export class WordTranslation {
   successes: number;
 }
 
-export interface WordTranslationWithPhrases {
+export interface WordTranslationWithPhraseTranslations {
   wordTranslation: WordTranslation;
-  phrases: Phrase[];
+  phraseTranslations: PhraseTranslation[];
 }

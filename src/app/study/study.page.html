@@ -1,25 +1,25 @@
 <ion-header>
   <ion-toolbar>
+    @if(stat && goal){
     <app-track-progress-total-percentage
       [stat]="stat"
       [goal]="goal"
     ></app-track-progress-total-percentage>
+    }
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <ion-item *ngIf="!isLoading && decks && decks.length > 0">
-    <ion-select
-      #selectDeck
-      [(ngModel)]="selectedDeckId"
-      label="{{'study.select-deck.selected-deck' | transloco | titlecase}}"
-      [interfaceOptions]="customActionSheetOptions"
-      interface="action-sheet"
-      (ionChange)="onChangeDeck(selectDeck.value)"
+  @if(!isLoading && decks && decks.length > 0){
+  <ion-item class="ion-item-no-margin">
+    @for(deck of decks; track deck.id){
+    <ion-chip
+      (click)="onChangeDeck(deck.id)"
+      [color]="deck.id == selectedDeckId ? 'primary' : 'default'"
+      >{{ deck.name }}</ion-chip
     >
-      <ion-select-option *ngFor="let deck of decks" [value]="deck.id">
-        {{ deck.name }}
-      </ion-select-option>
-    </ion-select>
+    }
   </ion-item>
+  }
+
   <app-quiz-card [selectedDeckId]="selectedDeckId"> </app-quiz-card>
 </ion-content>

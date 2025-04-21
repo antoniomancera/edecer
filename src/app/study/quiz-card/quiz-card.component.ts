@@ -10,6 +10,8 @@ import {
   ZOOM_IN,
 } from '../../shared/constants/animations.constants';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { DeckUserWordPraseTranslationService } from 'src/app/shared/services/deck-user-word-prase-translation.service';
+import { WordPhraseTranslation } from 'src/app/shared/models/word-phrase-translation.model';
 
 @Component({
   selector: 'app-quiz-card',
@@ -31,7 +33,7 @@ export class QuizCardComponent implements OnChanges {
   @Input() selectedDeckId: number = 0;
 
   quizzForm!: FormGroup;
-  wordTranslation: WordTranslation;
+  wordPhraseTranslation: WordPhraseTranslation;
   isLoading = false;
 
   isAttemptCorrect = false;
@@ -39,7 +41,7 @@ export class QuizCardComponent implements OnChanges {
   hasChangedDeck = false;
 
   constructor(
-    private wordTranslationService: WordTranslationService,
+    private deckUserWordPhraseTranslationService: DeckUserWordPraseTranslationService,
     private toastService: ToastService
   ) {
     this.quizzForm = new FormGroup({
@@ -51,11 +53,15 @@ export class QuizCardComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    this.wordTranslationService
-      .getRandomWordTranslation(this.selectedDeckId)
+    this.getRandomWordPhraseTranslation();
+  }
+
+  getRandomWordPhraseTranslation() {
+    this.deckUserWordPhraseTranslationService
+      .getRandomWordPhraseTranslation(this.selectedDeckId)
       .subscribe({
-        next: (wordTranslation) => {
-          this.wordTranslation = wordTranslation;
+        next: (wordPhraseTranslation) => {
+          this.wordPhraseTranslation = wordPhraseTranslation;
           this.hasChangedDeck = true;
 
           setTimeout(() => (this.hasChangedDeck = false));
@@ -64,43 +70,41 @@ export class QuizCardComponent implements OnChanges {
       });
   }
 
-  attemptsWordTranslation() {
-    let success = false;
+  attemptsWordPhraseTranslation() {
     this.isLoading = true;
-    if (
-      this.quizzForm.controls.attemptWord.value ===
-      this.wordTranslation.wordFr.name
-    ) {
-      success = true;
-    }
-    if (success) {
-      this.isAttemptCorrect = true;
-      setTimeout(() => {
-        this.isAttemptCorrect = false;
-      });
-    } else {
-      this.isAttemptIncorrect = true;
-      setTimeout(() => {
-        this.isAttemptIncorrect = false;
-      });
-    }
-    this.wordTranslationService
-      .attemptsWordTranslation(
-        this.wordTranslation.id,
-        this.wordTranslation.phrase.id,
-        success,
-        this.selectedDeckId ? this.selectedDeckId : 1
+
+    this.deckUserWordPhraseTranslationService
+      .attemptsWordPhraseTranslation(
+        this.wordPhraseTranslation.id,
+        this.selectedDeckId ? this.selectedDeckId : 1,
+        this.quizzForm.controls.attemptWord.value
       )
       .subscribe({
         next: (word) => {
-          this.wordTranslation = word;
-          this.isLoading = false;
+          console.log(word);
+          if (word.hasSuccess) {
+            this.isAttemptCorrect = true;
+            setTimeout(() => {
+              this.isAttemptCorrect = false;
+              this.setWordPhraseTranslation(word.wordPhraseTranslation);
+            });
+          } else {
+            this.isAttemptIncorrect = true;
+            setTimeout(() => {
+              this.isAttemptIncorrect = false;
+            });
+          }
         },
         error: (err) => {
           this.isLoading = false;
           this.toastService.showDangerToast(err.error.message);
         },
       });
+  }
+
+  private setWordPhraseTranslation(word: WordPhraseTranslation) {
+    this.wordPhraseTranslation = word;
+    this.isLoading = false;
   }
 
   private noWhitespaceValidator(control: FormControl) {

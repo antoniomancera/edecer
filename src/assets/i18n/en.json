@@ -22,23 +22,41 @@
         "cancel": "cancel",
         "close": "close",
         "total": "total",
-        "percentage": "percentage"
+        "percentage": "percentage",
+        "back": "back",
+        "send": "send",
+        "welcome": "welcome"
     },
     "login": {
         "password": "password",
         "remember-me": "remember me",
-        "forget-password": "forget password?",
         "login": "login",
         "login-google": "login with Google",
         "not-member": "Not a member",
         "join-now": "join now",
         "name": "name",
-        "confirm-paswword": "confirm password",
+        "confirm-password": "confirm password",
         "have-account": "Already have an account?",
         "login-now": "login now",
-        "register": "register",
-        "register-google": "register with google",
-        "username": "username"
+        "username": "username",
+        "forgot-password": "forgot your password?",
+        "reset-password": "reset password",
+        "back-login": "back to login",
+        "new-password": "new password",
+        "change-password": "change password",
+        "go-login": "go login",
+        "signup": {
+            "welcome": "Welcome!",       
+            "register": "register",
+            "register-google": "register with google"
+        },
+        "signup-completed": {
+            "verify-mail": "verify email",
+            "sent-email-verify-account": "We sent and email to {{email}} to verify your account"
+        },
+        "reset-password-completed": {
+            "password-updated": "updated password"
+        }
     },
     "shared": {
         "loading": "loading",
@@ -55,39 +73,47 @@
         "statistics": "statistics",
         "decks": "decks",
         "current-goals": "Your current goals are {{attempts}} (T) and {{accuracy}} (%)",
+        "no-goal": "no daily goal has been set, you can choose one yourself",
+        "no-stat-week": "there is no data this week",
+        "no-deck": "no deck has been found",
         "add-goal-modal":{
             "title": "daily goals",
             "choose-goal": "choose your daily goals, you can change them at any time",
             "number-attempts": "number of attemps",
             "target-daily-attemps": "target daily attemps",
-            "percentage-success": "percentage of success"
+            "percentage-success": "percentage of success",
+            "goal-created": "Goal {{attempts}} (T) y {{accuracy}} (%) target"
         },
         "study-journal-modal":{
             "title": "diary of the day"
         }
     },
-    "menu": {
-        "select-language": "Select language",
-        "contact-modal": {
-            "title": "contact with us",
-            "message": "message",
-            "subject": "objet",
-            "user-request-created": "Your request has been successfully received",
-            "user-request-last-week-not-answered": "There is a request made less than a week ago that has not yet been answered."
+    "profile": {
+        "edit-profile": "edit profile",
+        "settings": {
+            "title": "settings",
+            "select-language": "Select language",
+            "contact-modal": {
+                "title": "contact with us",
+                "message": "message",
+                "subject": "objet",
+                "user-request-created": "Your request has been successfully received",
+                "user-request-last-week-not-answered": "There is a request made less than a week ago that has not yet been answered."
+            },
+            "log-out": "logout",
+            "contact": "contact",
+            "dark-mode": "dark mode",
+            "language": "language",
+            "about": {
+                "title":"à propos",
+                "message": "This application has been created by Antonio Manuel Manceras Hevilla with the aim of providing a program to learn French based on Spanish, being free, easy to use, but at the same time adaptable according to the user's needs."
+            }
         },
-        "log-out": "logout",
-        "contact": "contact",
-        "dark-mode": "dark mode",
-        "language": "language",
-        "about": {
-            "title":"à propos",
-            "message": "This application has been created by Antonio Manuel Manceras Hevilla with the aim of providing a program to learn French based on Spanish, being free, easy to use, but at the same time adaptable according to the user's needs."
-        }
-    },
-    "study": {
-        "select-deck": {
-            "selected-deck": "Selected deck",
-            "select-deck-to-practise": "Select the deck you want to practice"
+        "study": {
+            "select-deck": {
+                "selected-deck": "Selected deck",
+                "select-deck-to-practise": "Select the deck you want to practice"
+            }
         }
     },
     "tabs": {
@@ -95,6 +121,6 @@
         "study": "study",
         "progress": "progreso",
         "explore": "explore",
-        "settings": "settings"
+        "profile": "profile"
     }
 }

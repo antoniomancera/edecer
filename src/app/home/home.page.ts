@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 
 import { ModalController } from '@ionic/angular';
 
-import Chart from 'chart.js/auto';
-
 import { WordTranslation } from '../shared/models/word-translation.model';
 import { Home } from './models/home.interface';
 import { ModalAddGoalComponent } from './components/modal-add-goal/modal-add-goal.component';
@@ -20,7 +18,6 @@ export class HomePage implements OnInit {
   isDarkMode: boolean = false;
   wordTranslation: WordTranslation;
   home: Home;
-  chart: Chart;
   isLoading = true;
 
   constructor(
@@ -32,18 +29,20 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.messagingService.getHome().subscribe((home) => {
       this.home = home;
-      this.home.weekStats.map((dailyStats) => {
-        const date: Date = new Date(dailyStats.date);
-        dailyStats.monthDay = date.getDate();
-        dailyStats.weekDay = date.getDay();
-        dailyStats.isAttemptsGoalSuccess =
-          dailyStats.totalAttempts >= home.goal.attempts;
-        dailyStats.isSuccessesAccuracyGoalSuccess =
-          dailyStats.totalSuccesses / dailyStats.totalAttempts >
-          home.goal.successesAccuracy;
+      if (this.home && this.home.weekStats && this.home.goal) {
+        this.home.weekStats.map((dailyStats) => {
+          const date: Date = new Date(dailyStats.date);
+          dailyStats.monthDay = date.getDate();
+          dailyStats.weekDay = date.getDay();
+          dailyStats.isAttemptsGoalSuccess =
+            dailyStats.totalAttempts >= home.goal.attempts;
+          dailyStats.isSuccessesAccuracyGoalSuccess =
+            dailyStats.totalSuccesses / dailyStats.totalAttempts >
+            home.goal.successesAccuracy;
 
-        return dailyStats;
-      });
+          return dailyStats;
+        });
+      }
       this.isLoading = false;
     });
   }
@@ -80,8 +79,12 @@ export class HomePage implements OnInit {
   }
 
   onClickNavigateDeck(deckId: number) {
-    this.router.navigate(['/explore/decks'], {
+    this.router.navigate(['tabs/explore/decks'], {
       queryParams: { deckId: deckId },
     });
+  }
+
+  onClickNavigateStudy() {
+    this.router.navigate(['tabs/study']);
   }
 }

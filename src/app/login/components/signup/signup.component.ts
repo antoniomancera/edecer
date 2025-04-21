@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import {
   matchPasswords,
@@ -15,14 +16,14 @@ import {
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss'],
+  styleUrls: ['../../login.page.scss'],
 })
 export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
 
   constructor(
-    private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +63,12 @@ export class SignupComponent implements OnInit {
       };
       this.authenticationService
         .signUp(credentials)
-        .then((res) => console.log('res', res));
+        .then(() =>
+          this.router.navigate([
+            '/signup-completed',
+            { email: this.signupForm.controls.email.getRawValue() },
+          ])
+        );
     }
   }
 }

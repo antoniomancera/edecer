@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import Chart from 'chart.js/auto';
 
@@ -33,7 +34,8 @@ export class StatsPage implements OnInit {
 
   constructor(
     private statsService: StatsService,
-    private messagingService: MessagingService
+    private messagingService: MessagingService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -177,6 +179,10 @@ export class StatsPage implements OnInit {
       };
     }
     this.chart.update();
+  }
+
+  onClickNavigateProfile() {
+    this.router.navigate(['tabs/profile']);
   }
 
   private getDailyEvolutionStat(stat: number[]): number[] {

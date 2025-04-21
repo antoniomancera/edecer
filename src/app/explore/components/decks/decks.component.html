@@ -14,15 +14,9 @@
       *ngFor="let deck of decks"
       class="p-4 m-2 deck-card"
       [color]="deck.color ? deck.color : 'tertiary'"
-      (click)="onClickSetSelected(deck)"
+      (click)="onClickOpenEditDeck(deck)"
     >
       {{ deck.name }}
     </ion-card>
   </div>
 </ion-content>
-<app-edit-deck-modal
-  *ngIf="isEditDeckModalOpen"
-  [isEditDeckModalOpen]="isEditDeckModalOpen"
-  [selectedDeck]="selectedDeck"
-  (setIsEditDeckModalOpenFalse)="setIsEditDeckModalOpenFalse()"
-></app-edit-deck-modal>

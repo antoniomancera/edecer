@@ -1,0 +1,24 @@
+.deck-card {
+    border-radius: 25px !important;
+    cursor: pointer;
+}
+
+.rounded-button {
+    --border-radius: 50px !important;
+    width: 100%;
+    text-transform: none !important;
+}
+
+.item-avatar {
+    margin: 0 auto;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 200px !important;
+    max-height: 200px !important;
+}
+
+.user-name {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}

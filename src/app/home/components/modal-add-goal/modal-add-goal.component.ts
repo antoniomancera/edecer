@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ModalController } from '@ionic/angular';
 
+import { TranslocoService } from '@jsverse/transloco';
+
 import { HomeService } from '../../services/home.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { Goal } from '../../models/goal.interface';
@@ -20,7 +22,8 @@ export class ModalAddGoalComponent implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private homeService: HomeService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private translocoService: TranslocoService
   ) {
     this.addGoalForm = new FormGroup({
       attempts: new FormControl(null, [Validators.required]),
@@ -50,7 +53,12 @@ export class ModalAddGoalComponent implements OnInit {
     this.homeService.createGoal(this.addGoalForm.getRawValue()).subscribe({
       next: (goal) => {
         this.isLoading = false;
-        this.toastService.showSuccessToast(`objetivo ${goal} creado`),
+        this.toastService.showSuccessToast(
+          this.translocoService.translate('home.add-goal-modal.goal-created', {
+            attempts: goal.attempts,
+            accuracy: goal.successesAccuracy,
+          })
+        ),
           this.cancel();
       },
       error: (err) => {

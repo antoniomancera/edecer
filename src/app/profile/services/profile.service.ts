@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class SettingsService {
+export class ProfileService {
   private readonly USER_REQUEST = '/userRequest';
 
   constructor(private http: HttpClient) {}

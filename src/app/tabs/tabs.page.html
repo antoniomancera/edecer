@@ -4,37 +4,43 @@
       <ion-icon
         [name]="selectedTab === 'home' ? 'home' : 'home-outline'"
       ></ion-icon>
-      {{ 'tabs.home' | transloco }}
+      {{ 'tabs.home' | transloco | titlecase }}
     </ion-tab-button>
     <ion-tab-button tab="study">
       <ion-icon
         [name]="selectedTab === 'study' ? 'book' : 'book-outline'"
       ></ion-icon>
-      {{ 'tabs.study' | transloco }}
+      {{ 'tabs.study' | transloco | titlecase }}
     </ion-tab-button>
-    <ion-tab-button tab="stats">
+    <!-- <ion-tab-button tab="stats">
       <ion-icon
         [name]="
           selectedTab === 'stats' ? 'stats-chart' : 'stats-chart-outline'
         "
       ></ion-icon>
-      {{ 'tabs.progress' | transloco }}
-    </ion-tab-button>
+      {{ 'tabs.progress' | transloco | titlecase}}
+    </ion-tab-button> -->
     <ion-tab-button tab="explore">
       <ion-icon
         [name]="
           selectedTab === 'explore'
-            ? 'search-circle'
-            : 'search-circle-outline'
+            ? 'search'
+            : 'search-outline'
         "
       ></ion-icon>
-      {{ 'tabs.explore' | transloco }}
+      {{ 'tabs.explore' | transloco | titlecase }}
     </ion-tab-button>
-    <ion-tab-button tab="settings">
+    <!-- <ion-tab-button tab="settings">
       <ion-icon
-        [name]="selectedTab === 'settings' ? 'cog-outline' : 'cog'"
+        [name]="selectedTab === 'settings' ? 'cog' : 'cog-outline'"
       ></ion-icon>
-      {{ 'tabs.settings' | transloco }}
+      {{ 'tabs.settings' | transloco | titlecase }}
+    </ion-tab-button> -->
+    <ion-tab-button tab="profile">
+      <ion-icon
+        [name]="selectedTab === 'profile' ? 'happy' : 'happy-outline'"
+      ></ion-icon>
+      {{ 'tabs.profile' | transloco | titlecase }}
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

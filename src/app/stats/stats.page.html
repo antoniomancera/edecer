@@ -1,6 +1,13 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>stats</ion-title>
+<ion-header [translucent]="true"
+  ><ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="onClickNavigateProfile()">
+        <ion-icon slot="start" name="arrow-back-outline" size="large"></ion-icon
+      ></ion-button>
+    </ion-buttons>
+    <ion-title class="p-0"
+      >{{'home.statistics' | transloco | titlecase}}</ion-title
+    >
   </ion-toolbar>
 </ion-header>
 
@@ -25,4 +32,6 @@
     <canvas id="canvas" height="120">{{ chart }}</canvas>
   </ion-content>
 </ion-content>
-<app-loading [isLoading]="isLoading"></app-loading>
+@if(isLoading){
+<app-loading></app-loading>
+}

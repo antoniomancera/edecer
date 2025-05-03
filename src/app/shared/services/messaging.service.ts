@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { User } from '@supabase/supabase-js';
-
 import { BehaviorSubject } from 'rxjs';
 
 import { Home } from 'src/app/home/models/home.interface';
@@ -35,10 +33,6 @@ export class MessagingService {
     return this.selectedLanguage.asObservable();
   }
 
-  getUser() {
-    return this.user.asObservable();
-  }
-
   setHome(home: Home) {
     this.home.next(home);
   }
@@ -49,21 +43,5 @@ export class MessagingService {
 
   setSelectedLanguage(selectedLanguage: string) {
     this.selectedLanguage.next(selectedLanguage);
-  }
-
-  setUser(userSupabase: User) {
-    if (userSupabase) {
-      this.userInfoService.getUserInfoBySupabaseId(userSupabase.id).subscribe({
-        next: (user) => {
-          this.user.next(user);
-        },
-        error: (err) => {
-          this.user.next(null);
-          this.toastService.showDangerToast(err.error.message);
-        },
-      });
-    } else {
-      this.user.next(null);
-    }
   }
 }

@@ -4,8 +4,8 @@ import { MessagingService } from '../shared/services/messaging.service';
 import { Deck } from '../shared/models/deck.interface';
 import { Goal } from '../home/models/goal.interface';
 import { DailyStats } from '../stats/models/daily-stats.interface';
-import { DeckUserWordPraseTranslationService } from '../shared/services/deck-user-word-prase-translation.service';
 import { WordPhraseTranslation } from '../shared/models/word-phrase-translation.model';
+import { DeckWordPhraseTranslationService } from '../shared/services/deck-word-phrase-translation.service';
 
 @Component({
   selector: 'app-study',
@@ -22,7 +22,7 @@ export class StudyPage implements OnInit {
   isLoading = true;
 
   constructor(
-    private deckUserWordPhraseTranslationService: DeckUserWordPraseTranslationService,
+    private deckWordPhraseTranslationService: DeckWordPhraseTranslationService,
     private messagingService: MessagingService
   ) {}
 
@@ -52,7 +52,7 @@ export class StudyPage implements OnInit {
 
   onChangeDeck(deckId: number) {
     this.selectedDeckId = deckId;
-    this.deckUserWordPhraseTranslationService
+    this.deckWordPhraseTranslationService
       .getRandomWordPhraseTranslation(deckId)
       .subscribe((wordPhraseTranslation) => {
         this.wordPhraseTranslation = wordPhraseTranslation;

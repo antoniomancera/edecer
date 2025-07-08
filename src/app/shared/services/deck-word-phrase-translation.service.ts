@@ -10,8 +10,8 @@ import { AttemptResult } from '../models/attempt-result.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class DeckUserWordPraseTranslationService {
-  private readonly DECK_USER_WORD_PHRASE = '/deckUserWordPhrase';
+export class DeckWordPhraseTranslationService {
+  private readonly DECK_WORD_PHRASE = '/deckWordPhrase';
   private readonly RANDOM_GET_URL = '/getRandom';
   private readonly ATTEMPTS = '/attempts';
 
@@ -29,7 +29,7 @@ export class DeckUserWordPraseTranslationService {
     return this.http
       .get<WordPhraseTranslation>(
         environment.BASE_URL +
-          this.DECK_USER_WORD_PHRASE +
+          this.DECK_WORD_PHRASE +
           this.RANDOM_GET_URL +
           '/' +
           deckId
@@ -61,7 +61,7 @@ export class DeckUserWordPraseTranslationService {
 
     return this.http
       .put<AttemptResult>(
-        `${environment.BASE_URL}${this.DECK_USER_WORD_PHRASE}${this.ATTEMPTS}/${wordPhraseId}`,
+        `${environment.BASE_URL}${this.DECK_WORD_PHRASE}${this.ATTEMPTS}/${wordPhraseId}`,
         null,
         { params: params }
       )

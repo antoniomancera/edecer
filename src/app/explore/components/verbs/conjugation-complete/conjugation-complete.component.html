@@ -1,0 +1,26 @@
+@if(!isLoading){
+<ion-title size="large">INDICATIVE </ion-title>
+@for(conj of conjugationIndicative; track $index){
+<app-conjugation-tense [conjugationTense]="conj"></app-conjugation-tense>
+}
+
+<ion-title size="large">SUBJUNTIVE </ion-title>
+@for(conj of conjugationSubjunctive; track $index){
+<app-conjugation-tense [conjugationTense]="conj"></app-conjugation-tense>
+
+}
+
+<ion-title size="large">CONDITIONAL </ion-title>
+@for(conj of conjugationConditional; track $index){
+<app-conjugation-tense [conjugationTense]="conj"></app-conjugation-tense>
+}
+
+<ion-title size="large">IMPERATIVE </ion-title>
+@for(conj of conjugationImperative; track $index){
+<app-conjugation-tense [conjugationTense]="conj"></app-conjugation-tense>
+}
+
+<ion-title size="large">NON PERSONAL </ion-title>
+@for(conj of conjugationImpersonal; track $index){
+<app-conjugation-tense [conjugationTense]="conj"></app-conjugation-tense>
+} }

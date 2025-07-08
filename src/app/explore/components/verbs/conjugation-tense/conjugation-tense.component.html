@@ -1,0 +1,10 @@
+<ion-card class="deck-card" color="secondary">
+  <ion-card-header>
+    <ion-card-title>{{ conjugationTense.tense?.name }}</ion-card-title>
+    <!-- <h1>{{ conjugationTense.tense?.name }}</h1> -->
+  </ion-card-header>
+
+  @for(conju of conjugationWordPositions;track $index){
+  {{ conju | conjugationTensePronoun }}<br />
+  }
+</ion-card>

@@ -9,6 +9,7 @@ import { WeekdayPipe } from './pipes/weekday.pipe';
 import { FirstChartUpperPipe } from './pipes/first-chart-upper.pipe';
 import { BoldPipe } from './pipes/bold.pipe';
 import { TrackProgressTotalPercentageComponent } from './components/track-progress-total-percentage/track-progress-total-percentage.component';
+import { ConjugationTensePronounPipe } from './pipes/conjugation-tense-pronoun.pipe';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { TrackProgressTotalPercentageComponent } from './components/track-progre
     WeekdayPipe,
     FirstChartUpperPipe,
     TrackProgressTotalPercentageComponent,
+    ConjugationTensePronounPipe,
   ],
   imports: [CommonModule, TranslocoModule, BoldPipe, IonicModule],
   exports: [
@@ -24,6 +26,7 @@ import { TrackProgressTotalPercentageComponent } from './components/track-progre
     FirstChartUpperPipe,
     BoldPipe,
     TrackProgressTotalPercentageComponent,
+    ConjugationTensePronounPipe,
   ],
 })
 export class SharedModule {}

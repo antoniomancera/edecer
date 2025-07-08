@@ -24,4 +24,8 @@ export class ExplorePage implements OnInit {
   onClickNavigatePhrases() {
     this.router.navigate(['tabs/explore/phrases']);
   }
+
+  onClickNavigateVerbs() {
+    this.router.navigate(['tabs/explore/verbs']);
+  }
 }

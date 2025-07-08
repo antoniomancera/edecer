@@ -5,6 +5,7 @@ import { ExplorePage } from './explore.page';
 import { DecksComponent } from './components/decks/decks.component';
 import { WordsComponent } from './components/words/words.component';
 import { PhrasesComponent } from './components/phrases/phrases.component';
+import { VerbsComponent } from './components/verbs/verbs.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'phrases',
     component: PhrasesComponent,
+  },
+  {
+    path: 'verbs',
+    component: VerbsComponent,
   },
 ];
 

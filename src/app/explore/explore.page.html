@@ -68,6 +68,26 @@
           /></ion-card-content>
         </ion-card>
       </ion-col>
+
+      <ion-col size-sm="6" size="6">
+        <ion-card
+          class="deck-card"
+          color="secondary"
+          (click)="onClickNavigateVerbs()"
+        >
+          <ion-card-header>
+            <ion-card-title
+              >{{ "global.phrases" | transloco | titlecase }}</ion-card-title
+            >
+            <ion-card-subtitle
+              >{{ 'explore.manage-phrases' | transloco }}1</ion-card-subtitle
+            >
+          </ion-card-header>
+          <ion-card-content
+            ><img src="assets/images/phrase.svg" alt="Wave" class="wave"
+          /></ion-card-content>
+        </ion-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

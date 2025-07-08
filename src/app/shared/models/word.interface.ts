@@ -3,6 +3,7 @@ import { Type } from './type.interface';
 export interface Word {
   id: number;
   name: string;
+  type: Type;
 }
 
 export interface WordSense {

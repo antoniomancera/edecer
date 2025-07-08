@@ -2,16 +2,14 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { transition, trigger, useAnimation } from '@angular/animations';
 
-import { WordTranslation } from '../../shared/models/word-translation.model';
-import { WordTranslationService } from '../../shared/services/word-translation.service';
 import {
   HINGE,
   TADA,
   ZOOM_IN,
 } from '../../shared/constants/animations.constants';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { DeckUserWordPraseTranslationService } from 'src/app/shared/services/deck-user-word-prase-translation.service';
 import { WordPhraseTranslation } from 'src/app/shared/models/word-phrase-translation.model';
+import { DeckWordPhraseTranslationService } from 'src/app/shared/services/deck-word-phrase-translation.service';
 
 @Component({
   selector: 'app-quiz-card',
@@ -41,7 +39,7 @@ export class QuizCardComponent implements OnChanges {
   hasChangedDeck = false;
 
   constructor(
-    private deckUserWordPhraseTranslationService: DeckUserWordPraseTranslationService,
+    private deckWordPhraseTranslationService: DeckWordPhraseTranslationService,
     private toastService: ToastService
   ) {
     this.quizzForm = new FormGroup({
@@ -57,7 +55,7 @@ export class QuizCardComponent implements OnChanges {
   }
 
   getRandomWordPhraseTranslation() {
-    this.deckUserWordPhraseTranslationService
+    this.deckWordPhraseTranslationService
       .getRandomWordPhraseTranslation(this.selectedDeckId)
       .subscribe({
         next: (wordPhraseTranslation) => {
@@ -73,7 +71,7 @@ export class QuizCardComponent implements OnChanges {
   attemptsWordPhraseTranslation() {
     this.isLoading = true;
 
-    this.deckUserWordPhraseTranslationService
+    this.deckWordPhraseTranslationService
       .attemptsWordPhraseTranslation(
         this.wordPhraseTranslation.id,
         this.selectedDeckId ? this.selectedDeckId : 1,

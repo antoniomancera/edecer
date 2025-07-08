@@ -29,6 +29,7 @@ export class AuthenticationService {
   private options: SupabaseClientOptions<'public'> = {
     auth: { persistSession: localStorage.getItem('hasRememberMe') === 'true' },
   };
+  private currentAccessToken = new BehaviorSubject<string>(null);
 
   constructor(
     private router: Router,
@@ -42,10 +43,9 @@ export class AuthenticationService {
 
     this.supabase.auth.onAuthStateChange((event, sess) => {
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        this.currentAccessToken.next(sess.access_token);
         this.currentUser.next(sess.user);
-        this.messagingService.setUser(sess.user);
       } else {
-        this.messagingService.setUser(null);
         this.currentUser.next(null);
       }
     });
@@ -99,6 +99,10 @@ export class AuthenticationService {
     return this.supabase.auth.signInWithOAuth({
       provider: 'google',
     });
+  }
+
+  getCurrentAccessToken() {
+    return this.currentAccessToken.asObservable();
   }
 
   // getCurrentUserId(): string {

@@ -7,6 +7,7 @@ export class WordPhraseTranslation {
   phraseTranslation: PhraseTranslation;
   phraseFrFirstPart?: string;
   phraseFrSecondPart?: string;
+  globalIndex?: number;
 
   constructor(
     id: number,

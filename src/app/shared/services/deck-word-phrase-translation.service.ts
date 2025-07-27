@@ -14,6 +14,7 @@ export class DeckWordPhraseTranslationService {
   private readonly DECK_WORD_PHRASE = '/deckWordPhrase';
   private readonly RANDOM_GET_URL = '/getRandom';
   private readonly ATTEMPTS = '/attempts';
+  private readonly ADD = '/add';
 
   constructor(private http: HttpClient) {}
 
@@ -77,6 +78,29 @@ export class DeckWordPhraseTranslationService {
           return wordTranslation;
         })
       );
+  }
+
+  /**
+   * Create a deck with a name and a description, besides, a list of deckWordPhraseTranslation is created linked
+   * to the deck
+   *
+   * @param request
+   * @return HTTP respond with the DeckDTO created
+   * @throws WordPhraseTranslationNotFoundException if any wordPhraseTranslation is not found
+   */
+  createDeckWithWordPhraseTranslation(
+    name: string,
+    description: string,
+    wordPhraseTranslationIds: number[]
+  ) {
+    return this.http.post<WordPhraseTranslation>(
+      environment.BASE_URL + this.DECK_WORD_PHRASE + this.ADD,
+      {
+        name: name,
+        description: description,
+        wordPhraseTranslationIds: wordPhraseTranslationIds,
+      }
+    );
   }
 
   private getWordPhraseTranslationWithParts(

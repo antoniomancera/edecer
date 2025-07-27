@@ -1,0 +1,44 @@
+<form (ngSubmit)="addDeck()" [formGroup]="addTitleForm">
+  <ion-item class="p-2">
+    <ion-input
+      formControlName="name"
+      label="{{
+        'profile.settings.contact-modal.subject' | transloco | titlecase
+      }}"
+      type="text"
+      labelPlacement="floating"
+    ></ion-input>
+  </ion-item>
+  <ion-item class="p-2">
+    <ion-textarea
+      formControlName="description"
+      label="{{
+        'profile.settings.contact-modal.message' | transloco | titlecase
+      }}"
+      labelPlacement="floating"
+      [autoGrow]="true"
+      [counter]="true"
+      maxlength="250"
+      [counterFormatter]="customCharactersRemainingFormatter"
+    >
+    </ion-textarea>
+  </ion-item>
+  <ion-toolbar class="p-2 ion-toolbar-footer">
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-spinner *ngIf="isLoading" fill="solid"></ion-spinner>
+      </ion-button>
+      <ion-button
+        *ngIf="!isLoading"
+        type="submit"
+        color="primary"
+        fill="solid"
+        [disabled]="!addTitleForm.valid"
+        >{{ "global.accept" | transloco | titlecase }}</ion-button
+      >
+      <ion-button (click)="closeModal()" color="medium" fill="solid">{{
+        "global.cancel" | transloco | titlecase
+      }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</form>

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Word } from '../models/word.interface';
+import { Word, WordWithSense } from '../models/word.interface';
 import { environment } from 'src/environments/environment';
 import { ConjugationTense } from '../models/conjugation-tense.model';
 
@@ -12,6 +12,7 @@ export class WordService {
   private readonly WORD = '/word';
   private readonly VERBS = '/allVerbs';
   private readonly CONJGUATION = '/conjugationVerb';
+  private readonly PAGINATED = '/paginated';
 
   constructor(private http: HttpClient) {}
 
@@ -36,6 +37,28 @@ export class WordService {
         this.CONJGUATION +
         '/allComplete/wordSense/' +
         wordSenseId
+    );
+  }
+
+  /**
+   * Return a page with wordWitSenses, that is a collection of word with their respective wordSense
+   *
+   * @param pageNumber
+   * @param pageSize
+   * @return HTTP respond with a List<WordWithSenseDTO>
+   */
+  getWordWithSensePaginated(
+    pageNumber?: number,
+    pageSize?: number
+  ): Observable<WordWithSense[]> {
+    return this.http.get<WordWithSense[]>(
+      environment.BASE_URL +
+        this.WORD +
+        this.PAGINATED +
+        '/' +
+        pageSize +
+        '/' +
+        pageNumber
     );
   }
 }

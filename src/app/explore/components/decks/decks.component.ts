@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { MessagingService } from 'src/app/shared/services/messaging.service';
 import { EditDeckModalComponent } from '../edit-deck-modal/edit-deck-modal.component';
+import { AddDeckModalComponent } from './add-deck-modal/add-deck-modal.component';
 
 @Component({
   selector: 'app-decks',
@@ -49,7 +50,6 @@ export class DecksComponent implements OnInit {
       componentProps: {
         selectedDeck: selectedDeck,
       },
-
       initialBreakpoint: 0.9,
     });
     await modal.present();
@@ -62,5 +62,14 @@ export class DecksComponent implements OnInit {
 
   setIsEditDeckModalOpenFalse() {
     this.isEditDeckModalOpen = false;
+  }
+
+  async onClickOpenAddDeck() {
+    const modal = await this.modalController.create({
+      component: AddDeckModalComponent,
+
+      initialBreakpoint: 0.9,
+    });
+    await modal.present();
   }
 }

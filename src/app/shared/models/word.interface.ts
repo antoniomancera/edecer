@@ -8,7 +8,13 @@ export interface Word {
 
 export interface WordSense {
   id: number;
+  word?: Word;
+  sense: string;
+  isChecked?: boolean;
+  globalIndex?: number;
+}
+
+export interface WordWithSense {
   word: Word;
-  type: Type;
-  definition: string;
+  wordSenses: WordSense[];
 }

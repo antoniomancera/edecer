@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ "shared.decks" | transloco | titlecase }}</ion-title>
+    <ion-grid class="wizard-stepper ion-no-padding">
+      <ion-row class="segments">
+        <ion-col
+          class="segment"
+          [class.filled]="addDeckStateIndex >= 0"
+        ></ion-col>
+        <ion-col
+          class="segment"
+          [class.filled]="addDeckStateIndex >= 1"
+        ></ion-col>
+        <ion-col
+          class="segment"
+          [class.filled]="addDeckStateIndex >= 2"
+        ></ion-col>
+      </ion-row>
+
+      <ion-row class="step-labels">
+        <ion-col class="step-label">
+          {{ "deck.wordSense" | transloco }}
+        </ion-col>
+        <ion-col class="step-label">
+          {{ "deck.phrases" | transloco }}
+        </ion-col>
+        <ion-col class="step-label">
+          {{ "deck.title" | transloco }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <!-- Add words -->
+  @if(actualState===addDeckState.WORD_SENSE){<app-add-word-sense
+  ></app-add-word-sense>}
+
+  <!-- Add phrases -->
+  @if(actualState===addDeckState.PHRASE){<app-add-phrase></app-add-phrase>}
+
+  <!-- Add title -->
+  @if(actualState===addDeckState.TITLE){<app-add-title-description
+  ></app-add-title-description>}
+</ion-content>

@@ -1,0 +1,22 @@
+<ion-toolbar>
+  <ion-title>{{ "shared.decks" | transloco | titlecase }}</ion-title>
+  <ion-grid class="wizard-stepper ion-no-padding">
+    <ion-row class="segments">
+      <ion-col class="segment" [class.filled]="actualStateIndex >= 0"></ion-col>
+      <ion-col class="segment" [class.filled]="actualStateIndex >= 1"></ion-col>
+      <ion-col class="segment" [class.filled]="actualStateIndex >= 2"></ion-col>
+    </ion-row>
+
+    <ion-row class="step-labels">
+      <ion-col class="step-label">
+        {{ "deck.wordSense" | transloco }}
+      </ion-col>
+      <ion-col class="step-label">
+        {{ "deck.phrases" | transloco }}
+      </ion-col>
+      <ion-col class="step-label">
+        {{ "deck.title" | transloco }}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-toolbar>

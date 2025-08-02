@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { minSelectedCheckboxes } from 'src/app/shared/validators/custom-validators';
-import {
-  AddDeckState,
-  DeckStateService,
-} from '../../services/deck-state.service';
+import { DeckStateService } from '../../services/deck-state.service';
 import { WordPhraseTranslationService } from 'src/app/shared/services/word-phrase-translation.service';
 import { WordPhraseTranslation } from 'src/app/shared/models/word-phrase-translation.model';
 
@@ -15,13 +18,16 @@ import { WordPhraseTranslation } from 'src/app/shared/models/word-phrase-transla
   styleUrls: ['./add-phrase.component.scss'],
 })
 export class AddPhraseComponent implements OnInit {
+  @Output() validityChange = new EventEmitter<boolean>();
+
   addPhrasesForm!: FormGroup;
   wordPhraseTranslations: WordPhraseTranslation[] = [];
 
   constructor(
     private deckStateService: DeckStateService,
     private wordPhraseTranslationService: WordPhraseTranslationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdRef: ChangeDetectorRef
   ) {
     this.addPhrasesForm = this.fb.group({
       selectedPhrases: new FormArray([], minSelectedCheckboxes()),
@@ -45,6 +51,12 @@ export class AddPhraseComponent implements OnInit {
           this.addPhrasesForm.setControl('selectedPhrases', formArray);
         });
     });
+
+    this.addPhrasesForm.statusChanges.subscribe((validity) =>
+      validity === 'VALID'
+        ? this.validityChange.emit(true)
+        : this.validityChange.emit(false)
+    );
   }
 
   get selectedPhrasesFormArray() {
@@ -63,6 +75,7 @@ export class AddPhraseComponent implements OnInit {
       globalIndex++;
     });
     this.deckStateService.setWordPhraseTranslationIds(wordPhraseTranslationIds);
-    this.deckStateService.setAddDeckState(AddDeckState.TITLE);
+    this.deckStateService.setNextState();
+    this.cdRef.detectChanges();
   }
 }

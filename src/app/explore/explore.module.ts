@@ -20,6 +20,7 @@ import { AddDeckModalComponent } from './components/decks/add-deck-modal/add-dec
 import { AddWordSenseComponent } from './components/decks/add-deck-modal/components/add-word-sense/add-word-sense.component';
 import { AddPhraseComponent } from './components/decks/add-deck-modal/components/add-phrase/add-phrase.component';
 import { AddTitleDescriptionComponent } from './components/decks/add-deck-modal/components/add-title-description/add-title-description.component';
+import { AddDeckStepsComponent } from './components/decks/add-deck-modal/components/add-deck-steps/add-deck-steps.component';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { AddTitleDescriptionComponent } from './components/decks/add-deck-modal/
     AddWordSenseComponent,
     AddPhraseComponent,
     AddTitleDescriptionComponent,
+    AddDeckStepsComponent,
   ],
 })
 export class ExplorePageModule {}

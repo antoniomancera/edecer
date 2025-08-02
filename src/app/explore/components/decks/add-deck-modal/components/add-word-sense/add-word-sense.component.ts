@@ -1,31 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { WordWithSense } from 'src/app/shared/models/word.interface';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { WordService } from 'src/app/shared/services/word.service';
 import { minSelectedCheckboxes } from 'src/app/shared/validators/custom-validators';
-import {
-  AddDeckState,
-  DeckStateService,
-} from '../../services/deck-state.service';
+import { DeckStateService } from '../../services/deck-state.service';
 @Component({
   selector: 'app-add-word-sense',
   templateUrl: './add-word-sense.component.html',
   styleUrls: ['./add-word-sense.component.scss'],
 })
 export class AddWordSenseComponent implements OnInit {
+  @Output() validityChange = new EventEmitter<boolean>();
+  @Output() isLoadingChange = new EventEmitter<boolean>();
+
   addWordSensesForm!: FormGroup;
   pageNumber = 1;
   pageSize = 10;
-  isLoading = false;
+  isLoading = true;
   wordWithSenses: WordWithSense[] = [];
 
   constructor(
     private toastService: ToastService,
     private wordService: WordService,
     private fb: FormBuilder,
-    private deckStateService: DeckStateService
+    private deckStateService: DeckStateService,
+    private cdRef: ChangeDetectorRef
   ) {
     this.addWordSensesForm = this.fb.group({
       selectedSenses: new FormArray([], minSelectedCheckboxes()),
@@ -34,6 +41,11 @@ export class AddWordSenseComponent implements OnInit {
 
   ngOnInit() {
     this.getWordWithSensePaginated(this.pageSize, this.pageNumber);
+    this.addWordSensesForm.statusChanges.subscribe((validity) =>
+      validity === 'VALID'
+        ? this.validityChange.emit(true)
+        : this.validityChange.emit(false)
+    );
   }
 
   get selectedSensesFormArray() {
@@ -54,12 +66,14 @@ export class AddWordSenseComponent implements OnInit {
       });
     });
     this.deckStateService.setWordSenseIds(wordSenseIds);
-    this.deckStateService.setAddDeckState(AddDeckState.PHRASE);
+    this.deckStateService.setNextState();
 
     return wordSenseIds;
   }
 
   private getWordWithSensePaginated(pageSize: number, pageNumber: number) {
+    this.isLoadingChange.emit(true);
+
     this.wordService.getWordWithSensePaginated(pageSize, pageNumber).subscribe({
       next: (wordWithSenses) => {
         this.wordWithSenses = wordWithSenses;
@@ -76,6 +90,9 @@ export class AddWordSenseComponent implements OnInit {
 
         const formArray = new FormArray(controls, minSelectedCheckboxes());
         this.addWordSensesForm.setControl('selectedSenses', formArray);
+
+        this.isLoadingChange.emit(false);
+        this.cdRef.detectChanges();
       },
       error: (err) => {
         this.toastService.showDangerToast(err.message);

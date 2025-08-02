@@ -24,23 +24,3 @@
 
   }
 </form>
-<ion-toolbar class="p-2 ion-toolbar-footer">
-  <ion-buttons slot="end">
-    <ion-button>
-      <ion-spinner *ngIf="isLoading" fill="solid"></ion-spinner>
-    </ion-button>
-    <ion-button
-      *ngIf="!isLoading"
-      type="submit"
-      color="primary"
-      fill="solid"
-      [disabled]="!addWordSensesForm.valid"
-      (click)="onSubmitSelectPhrases()"
-    >
-      {{ "global.accept" | transloco | titlecase }}</ion-button
-    >
-    <ion-button (click)="closeModal()" color="medium" fill="solid">{{
-      "global.cancel" | transloco | titlecase
-    }}</ion-button>
-  </ion-buttons>
-</ion-toolbar>

@@ -4,6 +4,7 @@ export interface Word {
   id: number;
   name: string;
   type: Type;
+  isChecked?: boolean;
 }
 
 export interface WordSense {

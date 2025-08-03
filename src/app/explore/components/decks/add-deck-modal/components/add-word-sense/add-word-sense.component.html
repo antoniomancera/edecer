@@ -7,13 +7,23 @@
   <ion-accordion-group>
     <ion-accordion value="wordWithPhrase">
       <ion-item slot="header">
-        <ion-label>{{ wordWithSense.word.name }}</ion-label>
+        <ion-checkbox
+          justify="start"
+          labelPlacement="end"
+          [checked]="wordWithSense.word.isChecked"
+          (ionChange)="onChangeWord($event, wordWithSense)"
+        >
+          {{ wordWithSense.word.name }} ({{
+            wordWithSense.word.type.type
+          }})</ion-checkbox
+        >
       </ion-item>
       @for(wordSense of wordWithSense.wordSenses; track $index){
       <div class="ion-padding" slot="content">
         <ion-checkbox
           labelPlacement="end"
           [formControl]="selectedSensesFormArray.at(wordSense.globalIndex)"
+          (ionChange)="onChangeWordSense(wordWithSense, wordSense)"
         >
           {{ wordSense.sense }}</ion-checkbox
         >

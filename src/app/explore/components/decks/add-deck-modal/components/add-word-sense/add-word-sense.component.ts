@@ -7,11 +7,12 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
-import { WordWithSense } from 'src/app/shared/models/word.interface';
+import { WordSense, WordWithSense } from 'src/app/shared/models/word.interface';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { WordService } from 'src/app/shared/services/word.service';
 import { minSelectedCheckboxes } from 'src/app/shared/validators/custom-validators';
 import { DeckStateService } from '../../services/deck-state.service';
+
 @Component({
   selector: 'app-add-word-sense',
   templateUrl: './add-word-sense.component.html',
@@ -69,6 +70,37 @@ export class AddWordSenseComponent implements OnInit {
     this.deckStateService.setNextState();
 
     return wordSenseIds;
+  }
+
+  onChangeWord(event, wordWithSense: WordWithSense) {
+    const isChecked = event.detail.checked;
+    const globalIndexOfWordSense = wordWithSense.wordSenses.map(
+      (wordSense) => wordSense.globalIndex
+    );
+
+    globalIndexOfWordSense.forEach((globalIndex) => {
+      const control = this.selectedSensesFormArray.at(globalIndex);
+      control.setValue(isChecked);
+    });
+  }
+
+  onChangeWordSense(wordWithSense: WordWithSense, wordSense: WordSense) {
+    if (this.selectedSensesFormArray.at(wordSense.globalIndex).value) {
+      wordWithSense.word.isChecked = true;
+    } else {
+      const globalIndexOfWordSense = wordWithSense.wordSenses.map(
+        (wordSense) => wordSense.globalIndex
+      );
+
+      const hasSelectedWordSense = globalIndexOfWordSense.some(
+        (globalIndex) => {
+          const control = this.selectedSensesFormArray.at(globalIndex);
+          return control?.value && wordSense.id != null;
+        }
+      );
+
+      wordWithSense.word.isChecked = hasSelectedWordSense;
+    }
   }
 
   private getWordWithSensePaginated(pageSize: number, pageNumber: number) {

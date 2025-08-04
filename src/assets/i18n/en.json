@@ -25,7 +25,8 @@
         "percentage": "percentage",
         "back": "back",
         "send": "send",
-        "welcome": "welcome"
+        "welcome": "welcome",
+        "next": "next"
     },
     "login": {
         "password": "password",

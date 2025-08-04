@@ -1,4 +1,10 @@
-import { Component, OnInit, signal, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 
 import { ModalController } from '@ionic/angular';
 
@@ -6,6 +12,7 @@ import { AddDeckState, DeckStateService } from './services/deck-state.service';
 import { AddWordSenseComponent } from './components/add-word-sense/add-word-sense.component';
 import { AddTitleDescriptionComponent } from './components/add-title-description/add-title-description.component';
 import { AddPhraseComponent } from './components/add-phrase/add-phrase.component';
+import { combineLatest, map } from 'rxjs';
 
 @Component({
   selector: 'app-add-deck-modal',
@@ -20,19 +27,40 @@ export class AddDeckModalComponent implements OnInit {
   addTitleDescription!: AddTitleDescriptionComponent;
 
   isActualFormValid = false;
-  isLoading = true;
-  addDeckState: any = AddDeckState;
+  isLoading = false;
+  addDeckState = AddDeckState;
   actualState = signal<AddDeckState>(AddDeckState.WORD_SENSE);
+  isFirstStep = signal<boolean>(null);
+  isLastStep = signal<boolean>(null);
 
   constructor(
     private deckStateService: DeckStateService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.deckStateService.getAddDeckState().subscribe((state) => {
-      this.actualState.set(state);
-    });
+    combineLatest([
+      this.deckStateService.getAddDeckState(),
+      this.deckStateService.getIsFirstStep(),
+      this.deckStateService.getIsLastStep(),
+    ])
+      .pipe(
+        map(([state, isFirstStep, isLastStep]) => {
+          this.actualState.set(state);
+          this.isFirstStep.set(isFirstStep);
+          this.isLastStep.set(isLastStep);
+          this.cdRef.detectChanges();
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.isLoading = false;
+        },
+        error: (err) => {
+          this.isLoading = false;
+        },
+      });
   }
 
   setIsLoading(isLoading: boolean) {
@@ -44,12 +72,7 @@ export class AddDeckModalComponent implements OnInit {
   }
 
   onClickBack() {
-    if (this.actualState() === AddDeckState.PHRASE) {
-      this.actualState.set(AddDeckState.WORD_SENSE);
-    }
-    if (this.actualState() === AddDeckState.TITLE) {
-      this.actualState.set(AddDeckState.PHRASE);
-    }
+    this.deckStateService.setPreviousState();
   }
 
   onClickSubmit() {

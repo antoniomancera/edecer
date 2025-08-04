@@ -37,6 +37,8 @@ export class DeckStateService {
   );
   private addOrEdit = new BehaviorSubject<AddOrEdit>(AddOrEdit.ADD);
   private addDeckStateIndex = new BehaviorSubject<number>(null);
+  private isFirstStep = new BehaviorSubject<boolean>(true);
+  private isLastStep = new BehaviorSubject<boolean>(false);
 
   getWordSenseIds() {
     return this.wordSenseIds.asObservable();
@@ -58,12 +60,22 @@ export class DeckStateService {
     return this.addDeckStateIndex.asObservable();
   }
 
+  getIsFirstStep() {
+    return this.isFirstStep.asObservable();
+  }
+
+  getIsLastStep() {
+    return this.isLastStep.asObservable();
+  }
+
   setWordSenseIds(wordSenseIds: number[]) {
     this.wordSenseIds.next(wordSenseIds);
   }
 
   setAddDeckState(addDeckState: AddDeckState) {
     this.addDeckState.next(addDeckState);
+    this.setIsFirstStep();
+    this.setIsLastStep();
   }
 
   setWordPhraseTranslationIds(phraseTranslationIds: number[]) {
@@ -95,6 +107,44 @@ export class DeckStateService {
     }
 
     this.setAddDeckState(nextState);
+  }
+
+  setPreviousState() {
+    const addOrEdit = this.addOrEdit.value;
+    const deckState = DECK_STATE_ORDER[addOrEdit];
+    const currentAddDeckStateIndex =
+      this.getCurrentAddDeckStateIndexByState(addOrEdit);
+
+    let nextState;
+    if (currentAddDeckStateIndex === 0) {
+      nextState = this.addDeckState;
+    } else {
+      nextState = deckState[currentAddDeckStateIndex - 1];
+      this.setAddDeckStateIndex(currentAddDeckStateIndex - 1);
+    }
+
+    this.setAddDeckState(nextState);
+  }
+
+  setIsFirstStep() {
+    const addOrEdit = this.addOrEdit.value;
+    const deckState = DECK_STATE_ORDER[addOrEdit];
+    if (deckState[0] === this.addDeckState.value) {
+      this.isFirstStep.next(true);
+      return;
+    }
+    this.isFirstStep.next(false);
+  }
+
+  setIsLastStep() {
+    const addOrEdit = this.addOrEdit.value;
+    const deckState = DECK_STATE_ORDER[addOrEdit];
+    const deckStateLength = deckState.length;
+    if (deckState[deckStateLength - 1] === this.addDeckState.value) {
+      this.isLastStep.next(true);
+      return;
+    }
+    this.isLastStep.next(false);
   }
 
   private getCurrentAddDeckStateIndexByState(addOrEdit: AddOrEdit) {

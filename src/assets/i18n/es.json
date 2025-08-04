@@ -24,7 +24,8 @@
         "total": "total",
         "percentage": "porcentaje",
         "back": "atrás",
-        "send": "enviar"
+        "send": "enviar",
+        "next": "siguiente"
     },
     "login": {
         "password": "contraseña",

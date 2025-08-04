@@ -1,7 +1,9 @@
 <ion-header>
   <app-add-deck-steps></app-add-deck-steps>
 </ion-header>
-
+<!-- @if(isLoading){
+<ion-spinner class="spinner-container"></ion-spinner>
+} @if(!isLoading){ -->
 <ion-content [fullscreen]="true">
   @switch(actualState()){ @case(addDeckState.WORD_SENSE) {
   <app-add-word-sense
@@ -22,21 +24,63 @@
   }}
 </ion-content>
 <ion-toolbar class="p-2 ion-toolbar-footer">
-  <ion-buttons slot="end">
-    <ion-button> </ion-button>
-    <ion-button (click)="onClickBack()" color="medium">"back"</ion-button>
-    <ion-button
-      *ngIf="!isLoading"
-      type="submit"
-      color="primary"
-      fill="solid"
-      [disabled]="!isActualFormValid"
-      (click)="onClickSubmit()"
-    >
-      {{ "global.accept" | transloco | titlecase }}</ion-button
-    >
-    <ion-button (click)="closeModal()" color="medium" fill="solid">{{
-      "global.cancel" | transloco | titlecase
-    }}</ion-button>
+  <ion-buttons>
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6" size="6" class="ion-text-center">
+          @if(isFirstStep()){
+          <ion-button
+            shape="round"
+            expand="full"
+            (click)="closeModal()"
+            color="medium"
+            ><ion-icon slot="start" name="close"></ion-icon
+            >{{ "global.cancel" | transloco | titlecase }}</ion-button
+          >} @if(!isFirstStep()){
+          <ion-button
+            shape="round"
+            expand="full"
+            (click)="onClickBack()"
+            color="medium"
+            ><ion-icon slot="start" name="arrow-back"></ion-icon
+            >{{ "global.back" | transloco | titlecase }}</ion-button
+          >}
+        </ion-col>
+
+        <ion-col size-sm="6" size="6" class="ion-text-center">
+          <ion-button
+            shape="round"
+            expand="full"
+            type="submit"
+            color="primary"
+            fill="solid"
+            [disabled]="!isActualFormValid"
+            (click)="onClickSubmit()"
+          >
+            @if(isLastStep()){{{ "global.accept" | transloco | titlecase
+
+
+
+
+
+
+
+            }}<ion-icon slot="end" name="checkmark"></ion-icon> }
+            @if(!isLastStep()){{{ "global.next" | transloco | titlecase
+
+
+
+            }}<ion-icon slot="end" name="arrow-forward"></ion-icon>}</ion-button
+          >
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-buttons>
 </ion-toolbar>
+<!-- } -->
+
+<!-- <ion-footer>
+  <ion-toolbar>
+    <ion-title>Footer</ion-title>
+  </ion-toolbar>
+</ion-footer> -->

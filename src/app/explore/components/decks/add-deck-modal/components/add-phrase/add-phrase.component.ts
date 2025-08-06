@@ -52,11 +52,11 @@ export class AddPhraseComponent implements OnInit {
         });
     });
 
-    this.addPhrasesForm.statusChanges.subscribe((validity) =>
+    this.addPhrasesForm.statusChanges.subscribe((validity) => {
       validity === 'VALID'
         ? this.validityChange.emit(true)
-        : this.validityChange.emit(false)
-    );
+        : this.validityChange.emit(false);
+    });
   }
 
   get selectedPhrasesFormArray() {

@@ -7,6 +7,8 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
+import { combineLatest, map } from 'rxjs';
+
 import { WordSense, WordWithSense } from 'src/app/shared/models/word.interface';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { WordService } from 'src/app/shared/services/word.service';
@@ -23,10 +25,13 @@ export class AddWordSenseComponent implements OnInit {
   @Output() isLoadingChange = new EventEmitter<boolean>();
 
   addWordSensesForm!: FormGroup;
+  globalIndex = 0;
   pageNumber = 1;
   pageSize = 10;
+  hasMoreWords = true;
   isLoading = true;
   wordWithSenses: WordWithSense[] = [];
+  wordSenseIds: number[] = [];
 
   constructor(
     private toastService: ToastService,
@@ -41,7 +46,23 @@ export class AddWordSenseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getWordWithSensePaginated(this.pageSize, this.pageNumber);
+    combineLatest([
+      this.deckStateService.getWordSenseIds(),
+      this.deckStateService.getPageNumberAddWordSensesForm(),
+      this.deckStateService.getWordWithSensesAddWordSensesForm(),
+      this.deckStateService.getHasMoreWordsAddWordSensesForm(),
+    ])
+      .pipe(
+        map(([wordSenseIds, pageNumber, wordWithSenses, hasMoreWords]) => {
+          this.wordSenseIds = wordSenseIds;
+          this.pageNumber = pageNumber;
+          this.wordWithSenses = wordWithSenses;
+          this.hasMoreWords = hasMoreWords;
+        })
+      )
+      .subscribe();
+
+    this.createSelectedSensesFormArray(this.pageNumber, this.pageSize);
     this.addWordSensesForm.statusChanges.subscribe((validity) =>
       validity === 'VALID'
         ? this.validityChange.emit(true)
@@ -67,6 +88,11 @@ export class AddWordSenseComponent implements OnInit {
       });
     });
     this.deckStateService.setWordSenseIds(wordSenseIds);
+    this.deckStateService.setWordWithSenseAddWordSensesForm(
+      this.wordWithSenses
+    );
+    this.deckStateService.setPageNumberAddWordSensesForm(this.pageNumber);
+    this.deckStateService.setHasMoreWordsAddWordSensesForm(this.hasMoreWords);
     this.deckStateService.setNextState();
 
     return wordSenseIds;
@@ -103,20 +129,36 @@ export class AddWordSenseComponent implements OnInit {
     }
   }
 
-  private getWordWithSensePaginated(pageSize: number, pageNumber: number) {
+  onIonInfiniteGetNextPageWordSenses(infiniteScroll) {
+    this.pageNumber += 1;
+    this.addNextPageWordSenses(this.pageNumber, this.pageSize, infiniteScroll);
+  }
+
+  private createSelectedSensesFormArray(pageNumber: number, pageSize: number) {
     this.isLoadingChange.emit(true);
 
-    this.wordService.getWordWithSensePaginated(pageSize, pageNumber).subscribe({
+    this.wordService.getWordWithSensePaginated(pageNumber, pageSize).subscribe({
       next: (wordWithSenses) => {
         this.wordWithSenses = wordWithSenses;
 
         const controls = [];
-        let globalIndex = 0;
         this.wordWithSenses.forEach((wordWithSense) => {
           wordWithSense.wordSenses.forEach((wordSense) => {
-            wordSense.globalIndex = globalIndex;
-            globalIndex++;
-            controls.push(new FormControl(false));
+            wordSense.globalIndex = this.globalIndex;
+            this.globalIndex++;
+            if (
+              this.wordSenseIds &&
+              this.wordSenseIds.some(
+                (wordSenseId) => wordSenseId === wordSense.id
+              )
+            ) {
+              controls.push(new FormControl(true));
+              if (!wordWithSense.word.isChecked) {
+                wordWithSense.word.isChecked = true;
+              }
+            } else {
+              controls.push(new FormControl(false));
+            }
           });
         });
 
@@ -128,6 +170,44 @@ export class AddWordSenseComponent implements OnInit {
       },
       error: (err) => {
         this.toastService.showDangerToast(err.message);
+        this.isLoadingChange.emit(false);
+      },
+    });
+  }
+
+  private addNextPageWordSenses(
+    pageNumber: number,
+    pageSize: number,
+    infiniteScroll
+  ) {
+    this.isLoadingChange.emit(true);
+
+    this.wordService.getWordWithSensePaginated(pageNumber, pageSize).subscribe({
+      next: (wordWithSenses) => {
+        if (wordWithSenses && wordWithSenses.length > 0) {
+          if (wordWithSenses.length < this.pageSize) this.hasMoreWords = false;
+
+          this.wordWithSenses = [...this.wordWithSenses, ...wordWithSenses];
+
+          wordWithSenses.forEach((wordWithSense) => {
+            wordWithSense.wordSenses.forEach((wordSense) => {
+              wordSense.globalIndex = this.globalIndex;
+              this.globalIndex++;
+              this.selectedSensesFormArray.push(new FormControl(false));
+            });
+          });
+        } else {
+          this.hasMoreWords = false;
+        }
+
+        this.isLoadingChange.emit(false);
+        infiniteScroll.target.complete();
+        this.cdRef.detectChanges();
+      },
+      error: (err) => {
+        this.toastService.showDangerToast(err.message);
+        infiniteScroll.target.complete();
+        this.isLoadingChange.emit(false);
       },
     });
   }

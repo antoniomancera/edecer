@@ -56,9 +56,9 @@ export class WordService {
         this.WORD +
         this.PAGINATED +
         '/' +
-        pageSize +
+        pageNumber +
         '/' +
-        pageNumber
+        pageSize
     );
   }
 }

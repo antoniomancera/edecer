@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ModalController } from '@ionic/angular';
 
+import { startWith } from 'rxjs';
+
 import { DeckWordPhraseTranslationService } from 'src/app/shared/services/deck-word-phrase-translation.service';
 import { noWhitespaceValidator } from 'src/app/shared/validators/custom-validators';
 import { DeckStateService } from '../../services/deck-state.service';
@@ -43,11 +45,13 @@ export class AddTitleDescriptionComponent implements OnInit {
           (this.wordPhraseTranslationIds = wordPhraseTranslationIds)
       );
 
-    this.addTitleForm.statusChanges.subscribe((validity) =>
-      validity === 'VALID'
-        ? this.validityChange.emit(true)
-        : this.validityChange.emit(false)
-    );
+    this.addTitleForm.statusChanges
+      .pipe(startWith(this.addTitleForm.status))
+      .subscribe((validity) => {
+        validity === 'VALID'
+          ? this.validityChange.emit(true)
+          : this.validityChange.emit(false);
+      });
   }
 
   onSubmitAddDeck() {

@@ -67,8 +67,9 @@ export class DecksComponent implements OnInit {
   async onClickOpenAddDeck() {
     const modal = await this.modalController.create({
       component: AddDeckModalComponent,
-
-      initialBreakpoint: 0.9,
+      initialBreakpoint: 1,
+      breakpoints: [1],
+      presentingElement: await this.modalController.getTop(),
     });
     await modal.present();
   }

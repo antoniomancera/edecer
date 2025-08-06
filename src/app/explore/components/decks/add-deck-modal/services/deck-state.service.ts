@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
+import { WordWithSense } from 'src/app/shared/models/word.interface';
 
 export enum AddDeckState {
   WORD_SENSE = 'WORD_SENSE',
@@ -39,6 +40,11 @@ export class DeckStateService {
   private addDeckStateIndex = new BehaviorSubject<number>(null);
   private isFirstStep = new BehaviorSubject<boolean>(true);
   private isLastStep = new BehaviorSubject<boolean>(false);
+  private wordWithSensesAddWordSensesForm = new BehaviorSubject<
+    WordWithSense[]
+  >(null);
+  private pageNumberAddWordSensesForm = new BehaviorSubject<number>(1);
+  private hasMoreWordsAddWordSensesForm = new BehaviorSubject<boolean>(true);
 
   getWordSenseIds() {
     return this.wordSenseIds.asObservable();
@@ -66,6 +72,18 @@ export class DeckStateService {
 
   getIsLastStep() {
     return this.isLastStep.asObservable();
+  }
+
+  getWordWithSensesAddWordSensesForm() {
+    return this.wordWithSensesAddWordSensesForm.asObservable();
+  }
+
+  getPageNumberAddWordSensesForm() {
+    return this.pageNumberAddWordSensesForm.asObservable();
+  }
+
+  getHasMoreWordsAddWordSensesForm() {
+    return this.hasMoreWordsAddWordSensesForm.asObservable();
   }
 
   setWordSenseIds(wordSenseIds: number[]) {
@@ -145,6 +163,18 @@ export class DeckStateService {
       return;
     }
     this.isLastStep.next(false);
+  }
+
+  setWordWithSenseAddWordSensesForm(wordWithSenses: WordWithSense[]) {
+    this.wordWithSensesAddWordSensesForm.next(wordWithSenses);
+  }
+
+  setPageNumberAddWordSensesForm(pageNumber: number) {
+    this.pageNumberAddWordSensesForm.next(pageNumber);
+  }
+
+  setHasMoreWordsAddWordSensesForm(hasMoreWords: boolean) {
+    this.hasMoreWordsAddWordSensesForm.next(hasMoreWords);
   }
 
   private getCurrentAddDeckStateIndexByState(addOrEdit: AddOrEdit) {

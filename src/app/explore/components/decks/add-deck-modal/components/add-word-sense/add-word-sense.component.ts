@@ -7,8 +7,6 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
-import { combineLatest, map } from 'rxjs';
-
 import { WordSense, WordWithSense } from 'src/app/shared/models/word.interface';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { WordService } from 'src/app/shared/services/word.service';
@@ -21,12 +19,11 @@ import { DeckStateService } from '../../services/deck-state.service';
   styleUrls: ['./add-word-sense.component.scss'],
 })
 export class AddWordSenseComponent implements OnInit {
-  @Output() validityChange = new EventEmitter<boolean>();
   @Output() isLoadingChange = new EventEmitter<boolean>();
 
   addWordSensesForm!: FormGroup;
   globalIndex = 0;
-  pageNumber = 1;
+  pageNumber = 0;
   pageSize = 10;
   hasMoreWords = true;
   isLoading = true;
@@ -46,28 +43,14 @@ export class AddWordSenseComponent implements OnInit {
   }
 
   ngOnInit() {
-    combineLatest([
-      this.deckStateService.getWordSenseIds(),
-      this.deckStateService.getPageNumberAddWordSensesForm(),
-      this.deckStateService.getWordWithSensesAddWordSensesForm(),
-      this.deckStateService.getHasMoreWordsAddWordSensesForm(),
-    ])
-      .pipe(
-        map(([wordSenseIds, pageNumber, wordWithSenses, hasMoreWords]) => {
-          this.wordSenseIds = wordSenseIds;
-          this.pageNumber = pageNumber;
-          this.wordWithSenses = wordWithSenses;
-          this.hasMoreWords = hasMoreWords;
-        })
-      )
-      .subscribe();
+    this.deckStateService.setIsAddWordSenseInitialized(true);
 
     this.createSelectedSensesFormArray(this.pageNumber, this.pageSize);
-    this.addWordSensesForm.statusChanges.subscribe((validity) =>
+    this.addWordSensesForm.statusChanges.subscribe((validity) => {
       validity === 'VALID'
-        ? this.validityChange.emit(true)
-        : this.validityChange.emit(false)
-    );
+        ? this.deckStateService.setIsAddWordSenseFormValid(true)
+        : this.deckStateService.setIsAddWordSenseFormValid(false);
+    });
   }
 
   get selectedSensesFormArray() {
@@ -88,11 +71,6 @@ export class AddWordSenseComponent implements OnInit {
       });
     });
     this.deckStateService.setWordSenseIds(wordSenseIds);
-    this.deckStateService.setWordWithSenseAddWordSensesForm(
-      this.wordWithSenses
-    );
-    this.deckStateService.setPageNumberAddWordSensesForm(this.pageNumber);
-    this.deckStateService.setHasMoreWordsAddWordSensesForm(this.hasMoreWords);
     this.deckStateService.setNextState();
 
     return wordSenseIds;
@@ -166,7 +144,7 @@ export class AddWordSenseComponent implements OnInit {
         this.addWordSensesForm.setControl('selectedSenses', formArray);
 
         this.isLoadingChange.emit(false);
-        this.cdRef.detectChanges();
+        // this.cdRef.detectChanges();
       },
       error: (err) => {
         this.toastService.showDangerToast(err.message);
@@ -202,7 +180,7 @@ export class AddWordSenseComponent implements OnInit {
 
         this.isLoadingChange.emit(false);
         infiniteScroll.target.complete();
-        this.cdRef.detectChanges();
+        // this.cdRef.detectChanges();
       },
       error: (err) => {
         this.toastService.showDangerToast(err.message);

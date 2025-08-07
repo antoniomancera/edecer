@@ -25,7 +25,9 @@
         "percentage": "porcentaje",
         "back": "atrás",
         "send": "enviar",
-        "next": "siguiente"
+        "next": "siguiente",
+        "title": "titulo",
+        "description": "descripcion"
     },
     "login": {
         "password": "contraseña",
@@ -67,7 +69,12 @@
         "title": "explorar",
         "manage-decks": "Gestiona tus mazos",
         "manage-words": "Gestiona tus palabras",
-        "manage-phrases": "Gestiona tus frases"
+        "manage-phrases": "Gestiona tus frases",
+        "decks": {
+            "add-edit-deck-modal": {
+                "add-title": "nuevo mazo"
+            }
+        }
     },
     "home": {
         "statistics": "estadísticas",

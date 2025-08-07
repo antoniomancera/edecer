@@ -34,17 +34,21 @@
             expand="full"
             (click)="closeModal()"
             color="medium"
-            ><ion-icon slot="start" name="close"></ion-icon
-            >{{ "global.cancel" | transloco | titlecase }}</ion-button
-          >} @if(!isFirstStep()){
+          >
+            <ion-icon slot="start" name="close"></ion-icon>
+            {{ "global.cancel" | transloco | titlecase }}
+          </ion-button>
+          } @if(!isFirstStep()){
           <ion-button
             shape="round"
             expand="full"
             (click)="onClickBack()"
             color="medium"
-            ><ion-icon slot="start" name="arrow-back"></ion-icon
-            >{{ "global.back" | transloco | titlecase }}</ion-button
-          >}
+          >
+            <ion-icon slot="start" name="arrow-back"></ion-icon>
+            {{ "global.back" | transloco | titlecase }}
+          </ion-button>
+          }
         </ion-col>
 
         <ion-col size-sm="6" size="6" class="ion-text-center">
@@ -58,30 +62,16 @@
             (click)="onClickSubmit()"
           >
             @if(isLastStep()){{{ "global.accept" | transloco | titlecase
-
-
-
-
-
-
-
-
-
-
-
-            }}<ion-icon slot="end" name="checkmark"></ion-icon> }
-            @if(!isLastStep()){{{ "global.next" | transloco | titlecase
-
-
-
-
-
-
-
-            }}<ion-icon slot="end" name="arrow-forward"></ion-icon>}</ion-button
-          >
+            }}
+            <ion-icon slot="end" name="checkmark"></ion-icon>
+            } @if(!isLastStep()){{{ "global.next" | transloco | titlecase
+            }}
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+            }
+          </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-buttons> </ion-toolbar
->}
+  </ion-buttons>
+</ion-toolbar>
+}

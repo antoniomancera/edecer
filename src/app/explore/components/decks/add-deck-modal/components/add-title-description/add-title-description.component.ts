@@ -15,8 +15,6 @@ import { DeckStateService } from '../../services/deck-state.service';
   styleUrls: ['./add-title-description.component.scss'],
 })
 export class AddTitleDescriptionComponent implements OnInit {
-  @Output() validityChange = new EventEmitter<boolean>();
-
   addTitleForm!: FormGroup;
   wordPhraseTranslationIds: number[] = [];
 
@@ -38,6 +36,8 @@ export class AddTitleDescriptionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.deckStateService.setIsAddTitleItialized(true);
+
     this.deckStateService
       .getWordPhraseTranslationIds()
       .subscribe(
@@ -49,8 +49,8 @@ export class AddTitleDescriptionComponent implements OnInit {
       .pipe(startWith(this.addTitleForm.status))
       .subscribe((validity) => {
         validity === 'VALID'
-          ? this.validityChange.emit(true)
-          : this.validityChange.emit(false);
+          ? this.deckStateService.setIsAddTitleDescriptionFormValid(true)
+          : this.deckStateService.setIsAddTitleDescriptionFormValid(false);
       });
   }
 

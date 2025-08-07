@@ -5,23 +5,23 @@
 <ion-spinner class="spinner-container"></ion-spinner>
 } @if(!isLoading){ -->
 <ion-content [fullscreen]="true">
-  @switch(actualState()){ @case(addDeckState.WORD_SENSE) {
+  @if(actualState()===addDeckState.WORD_SENSE || isAddWordSenseInitialized()) {
   <app-add-word-sense
     #addWordSense
-    (validityChange)="setIsActualFormValid($event)"
+    [hidden]="actualState() != addDeckState.WORD_SENSE"
     (isLoadingChange)="setIsLoading($event)"
   ></app-add-word-sense>
-  } @case(addDeckState.PHRASE) {
+  } @if(actualState()===addDeckState.PHRASE || isAddPhraseInitialized()) {
   <app-add-phrase
     #addPhrase
-    (validityChange)="setIsActualFormValid($event)"
+    [hidden]="actualState() != addDeckState.PHRASE"
   ></app-add-phrase>
-  } @case(addDeckState.TITLE) {
+  } @if(actualState()===addDeckState.TITLE || isAddTitleItialized()) {
   <app-add-title-description
     #addTitleDescription
-    (validityChange)="setIsActualFormValid($event)"
+    [hidden]="actualState() != addDeckState.TITLE"
   ></app-add-title-description>
-  }}
+  }
 </ion-content>
 <ion-toolbar class="p-2 ion-toolbar-footer">
   <ion-buttons>
@@ -54,7 +54,7 @@
             type="submit"
             color="primary"
             fill="solid"
-            [disabled]="!isActualFormValid"
+            [disabled]="!isActualFormValid()"
             (click)="onClickSubmit()"
           >
             @if(isLastStep()){{{ "global.accept" | transloco | titlecase
@@ -65,8 +65,14 @@
 
 
 
+
+
+
             }}<ion-icon slot="end" name="checkmark"></ion-icon> }
             @if(!isLastStep()){{{ "global.next" | transloco | titlecase
+
+
+
 
 
 

@@ -18,8 +18,6 @@ import { WordPhraseTranslation } from 'src/app/shared/models/word-phrase-transla
   styleUrls: ['./add-phrase.component.scss'],
 })
 export class AddPhraseComponent implements OnInit {
-  @Output() validityChange = new EventEmitter<boolean>();
-
   addPhrasesForm!: FormGroup;
   wordPhraseTranslations: WordPhraseTranslation[] = [];
 
@@ -33,7 +31,10 @@ export class AddPhraseComponent implements OnInit {
       selectedPhrases: new FormArray([], minSelectedCheckboxes()),
     });
   }
+
   ngOnInit() {
+    this.deckStateService.setIsAddPhraseInitialized(true);
+
     this.deckStateService.getWordSenseIds().subscribe((wordSenseIds) => {
       this.wordPhraseTranslationService
         .getAllWordPhraseTranslationByWordSense(wordSenseIds)
@@ -54,8 +55,8 @@ export class AddPhraseComponent implements OnInit {
 
     this.addPhrasesForm.statusChanges.subscribe((validity) => {
       validity === 'VALID'
-        ? this.validityChange.emit(true)
-        : this.validityChange.emit(false);
+        ? this.deckStateService.setIsAddPhraseFormValid(true)
+        : this.deckStateService.setIsAddPhraseFormValid(false);
     });
   }
 
@@ -76,6 +77,6 @@ export class AddPhraseComponent implements OnInit {
     });
     this.deckStateService.setWordPhraseTranslationIds(wordPhraseTranslationIds);
     this.deckStateService.setNextState();
-    this.cdRef.detectChanges();
+    // this.cdRef.detectChanges();
   }
 }

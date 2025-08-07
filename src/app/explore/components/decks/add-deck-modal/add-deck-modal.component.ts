@@ -26,12 +26,15 @@ export class AddDeckModalComponent implements OnInit {
   @ViewChild('addTitleDescription')
   addTitleDescription!: AddTitleDescriptionComponent;
 
-  isActualFormValid = false;
+  isActualFormValid = signal<boolean>(null);
   isLoading = false;
   addDeckState = AddDeckState;
   actualState = signal<AddDeckState>(AddDeckState.WORD_SENSE);
   isFirstStep = signal<boolean>(null);
   isLastStep = signal<boolean>(null);
+  isAddWordSenseInitialized = signal<boolean>(null);
+  isAddPhraseInitialized = signal<boolean>(null);
+  isAddTitleItialized = signal<boolean>(null);
 
   constructor(
     private deckStateService: DeckStateService,
@@ -44,14 +47,32 @@ export class AddDeckModalComponent implements OnInit {
       this.deckStateService.getAddDeckState(),
       this.deckStateService.getIsFirstStep(),
       this.deckStateService.getIsLastStep(),
+      this.deckStateService.getIsAddWordSenseInitialized(),
+      this.deckStateService.getIsAddPhraseInitialized(),
+      this.deckStateService.getIsAddTitleItialized(),
+      this.deckStateService.getIsActualFormValid(),
     ])
       .pipe(
-        map(([state, isFirstStep, isLastStep]) => {
-          this.actualState.set(state);
-          this.isFirstStep.set(isFirstStep);
-          this.isLastStep.set(isLastStep);
-          this.cdRef.detectChanges();
-        })
+        map(
+          ([
+            actualState,
+            isFirstStep,
+            isLastStep,
+            isAddWordSenseInitialized,
+            isAddPhraseInitialized,
+            isAddTitleItialized,
+            isActualFormValid,
+          ]) => {
+            this.actualState.set(actualState);
+            this.isFirstStep.set(isFirstStep);
+            this.isLastStep.set(isLastStep);
+            this.isAddWordSenseInitialized.set(isAddWordSenseInitialized);
+            this.isAddPhraseInitialized.set(isAddPhraseInitialized);
+            this.isAddTitleItialized.set(isAddTitleItialized);
+            this.isActualFormValid.set(isActualFormValid);
+            // this.cdRef.detectChanges();
+          }
+        )
       )
       .subscribe({
         next: () => {
@@ -65,10 +86,6 @@ export class AddDeckModalComponent implements OnInit {
 
   setIsLoading(isLoading: boolean) {
     this.isLoading = isLoading;
-  }
-
-  setIsActualFormValid(event: boolean) {
-    this.isActualFormValid = event;
   }
 
   onClickBack() {

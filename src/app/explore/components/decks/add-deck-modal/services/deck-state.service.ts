@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
-import { WordWithSense } from 'src/app/shared/models/word.interface';
 
 export enum AddDeckState {
   WORD_SENSE = 'WORD_SENSE',
@@ -40,11 +39,13 @@ export class DeckStateService {
   private addDeckStateIndex = new BehaviorSubject<number>(null);
   private isFirstStep = new BehaviorSubject<boolean>(true);
   private isLastStep = new BehaviorSubject<boolean>(false);
-  private wordWithSensesAddWordSensesForm = new BehaviorSubject<
-    WordWithSense[]
-  >(null);
-  private pageNumberAddWordSensesForm = new BehaviorSubject<number>(1);
-  private hasMoreWordsAddWordSensesForm = new BehaviorSubject<boolean>(true);
+  private isAddWordSenseInitialized = new BehaviorSubject<boolean>(false);
+  private isAddPhraseInitialized = new BehaviorSubject<boolean>(false);
+  private isAddTitleItialized = new BehaviorSubject<boolean>(false);
+  private isAddWordSenseFormValid = new BehaviorSubject<boolean>(false);
+  private isAddPhraseFormValid = new BehaviorSubject<boolean>(false);
+  private isAddTitleDescriptionFormValid = new BehaviorSubject<boolean>(false);
+  private isActualFormValid = new BehaviorSubject<boolean>(false);
 
   getWordSenseIds() {
     return this.wordSenseIds.asObservable();
@@ -74,16 +75,32 @@ export class DeckStateService {
     return this.isLastStep.asObservable();
   }
 
-  getWordWithSensesAddWordSensesForm() {
-    return this.wordWithSensesAddWordSensesForm.asObservable();
+  getIsAddWordSenseInitialized() {
+    return this.isAddWordSenseInitialized.asObservable();
   }
 
-  getPageNumberAddWordSensesForm() {
-    return this.pageNumberAddWordSensesForm.asObservable();
+  getIsAddPhraseInitialized() {
+    return this.isAddPhraseInitialized.asObservable();
   }
 
-  getHasMoreWordsAddWordSensesForm() {
-    return this.hasMoreWordsAddWordSensesForm.asObservable();
+  getIsAddTitleItialized() {
+    return this.isAddTitleItialized.asObservable();
+  }
+
+  getIsAddWordSenseFormValid() {
+    return this.isAddWordSenseFormValid.asObservable();
+  }
+
+  getIsAddPhraseFormValid() {
+    return this.isAddPhraseFormValid.asObservable();
+  }
+
+  getIsAddTitleDescriptionFormValid() {
+    return this.isAddTitleDescriptionFormValid.asObservable();
+  }
+
+  getIsActualFormValid() {
+    return this.isActualFormValid.asObservable();
   }
 
   setWordSenseIds(wordSenseIds: number[]) {
@@ -94,6 +111,7 @@ export class DeckStateService {
     this.addDeckState.next(addDeckState);
     this.setIsFirstStep();
     this.setIsLastStep();
+    this.setIsActualFormValid();
   }
 
   setWordPhraseTranslationIds(phraseTranslationIds: number[]) {
@@ -165,16 +183,47 @@ export class DeckStateService {
     this.isLastStep.next(false);
   }
 
-  setWordWithSenseAddWordSensesForm(wordWithSenses: WordWithSense[]) {
-    this.wordWithSensesAddWordSensesForm.next(wordWithSenses);
+  setIsAddWordSenseInitialized(isAddWordSenseInitialized: boolean) {
+    this.isAddWordSenseInitialized.next(isAddWordSenseInitialized);
   }
 
-  setPageNumberAddWordSensesForm(pageNumber: number) {
-    this.pageNumberAddWordSensesForm.next(pageNumber);
+  setIsAddPhraseInitialized(isAddPhraseInitialized: boolean) {
+    this.isAddPhraseInitialized.next(isAddPhraseInitialized);
   }
 
-  setHasMoreWordsAddWordSensesForm(hasMoreWords: boolean) {
-    this.hasMoreWordsAddWordSensesForm.next(hasMoreWords);
+  setIsAddTitleItialized(isAddTitleItialized: boolean) {
+    this.isAddTitleItialized.next(isAddTitleItialized);
+  }
+
+  setIsAddWordSenseFormValid(isAddWordSenseFormValid: boolean) {
+    this.isAddWordSenseFormValid.next(isAddWordSenseFormValid);
+    this.setIsActualFormValid();
+  }
+
+  setIsAddPhraseFormValid(isAddPhraseFormValid: boolean) {
+    this.isAddPhraseFormValid.next(isAddPhraseFormValid);
+    this.setIsActualFormValid();
+  }
+
+  setIsAddTitleDescriptionFormValid(isAddTitleDescriptionFormValid: boolean) {
+    this.isAddTitleDescriptionFormValid.next(isAddTitleDescriptionFormValid);
+    this.setIsActualFormValid();
+  }
+
+  setIsActualFormValid() {
+    let isActualFormValid = false;
+    switch (this.addDeckState.value) {
+      case AddDeckState.WORD_SENSE:
+        isActualFormValid = this.isAddWordSenseFormValid.value;
+        break;
+      case AddDeckState.PHRASE:
+        isActualFormValid = this.isAddPhraseFormValid.value;
+        break;
+      case AddDeckState.TITLE:
+        isActualFormValid = this.isAddTitleDescriptionFormValid.value;
+        break;
+    }
+    this.isActualFormValid.next(isActualFormValid);
   }
 
   private getCurrentAddDeckStateIndexByState(addOrEdit: AddOrEdit) {

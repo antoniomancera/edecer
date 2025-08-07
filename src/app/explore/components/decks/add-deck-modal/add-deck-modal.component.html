@@ -1,28 +1,28 @@
 <ion-header>
   <app-add-deck-steps></app-add-deck-steps>
 </ion-header>
-<!-- @if(isLoading){
+@if(isLoading()){
 <ion-spinner class="spinner-container"></ion-spinner>
-} @if(!isLoading){ -->
+}
 <ion-content [fullscreen]="true">
   @if(actualState()===addDeckState.WORD_SENSE || isAddWordSenseInitialized()) {
   <app-add-word-sense
     #addWordSense
-    [hidden]="actualState() != addDeckState.WORD_SENSE"
-    (isLoadingChange)="setIsLoading($event)"
+    [hidden]="actualState() != addDeckState.WORD_SENSE || isLoading()"
   ></app-add-word-sense>
   } @if(actualState()===addDeckState.PHRASE || isAddPhraseInitialized()) {
   <app-add-phrase
     #addPhrase
-    [hidden]="actualState() != addDeckState.PHRASE"
+    [hidden]="actualState() != addDeckState.PHRASE || isLoading()"
   ></app-add-phrase>
   } @if(actualState()===addDeckState.TITLE || isAddTitleItialized()) {
   <app-add-title-description
     #addTitleDescription
-    [hidden]="actualState() != addDeckState.TITLE"
+    [hidden]="actualState() != addDeckState.TITLE || isLoading()"
   ></app-add-title-description>
   }
 </ion-content>
+@if(!isLoading()){
 <ion-toolbar class="p-2 ion-toolbar-footer">
   <ion-buttons>
     <ion-grid>
@@ -68,8 +68,10 @@
 
 
 
+
             }}<ion-icon slot="end" name="checkmark"></ion-icon> }
             @if(!isLastStep()){{{ "global.next" | transloco | titlecase
+
 
 
 
@@ -81,12 +83,5 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-buttons>
-</ion-toolbar>
-<!-- } -->
-
-<!-- <ion-footer>
-  <ion-toolbar>
-    <ion-title>Footer</ion-title>
-  </ion-toolbar>
-</ion-footer> -->
+  </ion-buttons> </ion-toolbar
+>}

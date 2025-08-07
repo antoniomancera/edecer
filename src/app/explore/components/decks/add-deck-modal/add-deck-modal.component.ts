@@ -26,8 +26,8 @@ export class AddDeckModalComponent implements OnInit {
   @ViewChild('addTitleDescription')
   addTitleDescription!: AddTitleDescriptionComponent;
 
+  isLoading = signal<boolean>(null);
   isActualFormValid = signal<boolean>(null);
-  isLoading = false;
   addDeckState = AddDeckState;
   actualState = signal<AddDeckState>(AddDeckState.WORD_SENSE);
   isFirstStep = signal<boolean>(null);
@@ -44,6 +44,7 @@ export class AddDeckModalComponent implements OnInit {
 
   ngOnInit() {
     combineLatest([
+      this.deckStateService.getIsLoading(),
       this.deckStateService.getAddDeckState(),
       this.deckStateService.getIsFirstStep(),
       this.deckStateService.getIsLastStep(),
@@ -55,6 +56,7 @@ export class AddDeckModalComponent implements OnInit {
       .pipe(
         map(
           ([
+            isLoading,
             actualState,
             isFirstStep,
             isLastStep,
@@ -63,6 +65,7 @@ export class AddDeckModalComponent implements OnInit {
             isAddTitleItialized,
             isActualFormValid,
           ]) => {
+            this.isLoading.set(isLoading);
             this.actualState.set(actualState);
             this.isFirstStep.set(isFirstStep);
             this.isLastStep.set(isLastStep);
@@ -76,16 +79,12 @@ export class AddDeckModalComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.isLoading = false;
+          this.isLoading.set(false);
         },
         error: (err) => {
-          this.isLoading = false;
+          this.isLoading.set(false);
         },
       });
-  }
-
-  setIsLoading(isLoading: boolean) {
-    this.isLoading = isLoading;
   }
 
   onClickBack() {

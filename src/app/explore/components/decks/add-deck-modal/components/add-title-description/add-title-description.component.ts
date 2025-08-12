@@ -1,7 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ModalController } from '@ionic/angular';
+
+import { TranslocoService } from '@jsverse/transloco';
 
 import { startWith } from 'rxjs';
 
@@ -17,11 +19,13 @@ import { DeckStateService } from '../../services/deck-state.service';
 export class AddTitleDescriptionComponent implements OnInit {
   addTitleForm!: FormGroup;
   wordPhraseTranslationIds: number[] = [];
+  customCharactersRemaining = '';
 
   constructor(
     private deckWordPhraseTranslationService: DeckWordPhraseTranslationService,
     private deckStateService: DeckStateService,
-    private mondalController: ModalController
+    private mondalController: ModalController,
+    private translocoService: TranslocoService
   ) {
     this.addTitleForm = new FormGroup({
       name: new FormControl<string>(null, [
@@ -36,14 +40,23 @@ export class AddTitleDescriptionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.deckStateService.setIsLoading(true);
     this.deckStateService.setIsAddTitleItialized(true);
+
+    this.translocoService
+      .selectTranslate('global.characters-remaining')
+      .subscribe((translation) => {
+        this.customCharactersRemaining = translation;
+      });
 
     this.deckStateService
       .getWordPhraseTranslationIds()
-      .subscribe(
-        (wordPhraseTranslationIds) =>
-          (this.wordPhraseTranslationIds = wordPhraseTranslationIds)
-      );
+      .subscribe((wordPhraseTranslationIds) => {
+        this.wordPhraseTranslationIds = wordPhraseTranslationIds;
+        this.addTitleForm.controls.description.setValue(
+          wordPhraseTranslationIds.length + ' mots dans le nouveau paquet'
+        );
+      });
 
     this.addTitleForm.statusChanges
       .pipe(startWith(this.addTitleForm.status))
@@ -63,4 +76,11 @@ export class AddTitleDescriptionComponent implements OnInit {
       )
       .subscribe({ next: () => this.mondalController.dismiss(null) });
   }
+
+  customCharactersRemainingFormatter = (
+    inputLength: number,
+    maxLength: number
+  ) => {
+    return `${maxLength - inputLength} ` + this.customCharactersRemaining;
+  };
 }

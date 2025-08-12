@@ -1,5 +1,7 @@
 <ion-toolbar>
-  <ion-title>{{ "shared.decks" | transloco | titlecase }}</ion-title>
+  <ion-title>{{
+    "explore.decks.add-edit-deck-modal.add-title" | transloco | titlecase
+  }}</ion-title>
   <ion-grid class="wizard-stepper ion-no-padding">
     <ion-row class="segments">
       <ion-col class="segment" [class.filled]="actualStateIndex >= 0"></ion-col>

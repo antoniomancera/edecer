@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { WordSense, WordWithSense } from 'src/app/shared/models/word.interface';
@@ -19,14 +13,11 @@ import { DeckStateService } from '../../services/deck-state.service';
   styleUrls: ['./add-word-sense.component.scss'],
 })
 export class AddWordSenseComponent implements OnInit {
-  @Output() isLoadingChange = new EventEmitter<boolean>();
-
   addWordSensesForm!: FormGroup;
   globalIndex = 0;
   pageNumber = 0;
   pageSize = 10;
   hasMoreWords = true;
-  isLoading = true;
   wordWithSenses: WordWithSense[] = [];
   wordSenseIds: number[] = [];
 
@@ -43,6 +34,7 @@ export class AddWordSenseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.deckStateService.setIsLoading(true);
     this.deckStateService.setIsAddWordSenseInitialized(true);
 
     this.createSelectedSensesFormArray(this.pageNumber, this.pageSize);
@@ -113,8 +105,6 @@ export class AddWordSenseComponent implements OnInit {
   }
 
   private createSelectedSensesFormArray(pageNumber: number, pageSize: number) {
-    this.isLoadingChange.emit(true);
-
     this.wordService.getWordWithSensePaginated(pageNumber, pageSize).subscribe({
       next: (wordWithSenses) => {
         this.wordWithSenses = wordWithSenses;
@@ -143,12 +133,11 @@ export class AddWordSenseComponent implements OnInit {
         const formArray = new FormArray(controls, minSelectedCheckboxes());
         this.addWordSensesForm.setControl('selectedSenses', formArray);
 
-        this.isLoadingChange.emit(false);
-        // this.cdRef.detectChanges();
+        this.deckStateService.setIsLoading(false);
       },
       error: (err) => {
         this.toastService.showDangerToast(err.message);
-        this.isLoadingChange.emit(false);
+        this.deckStateService.setIsLoading(false);
       },
     });
   }
@@ -158,8 +147,6 @@ export class AddWordSenseComponent implements OnInit {
     pageSize: number,
     infiniteScroll
   ) {
-    this.isLoadingChange.emit(true);
-
     this.wordService.getWordWithSensePaginated(pageNumber, pageSize).subscribe({
       next: (wordWithSenses) => {
         if (wordWithSenses && wordWithSenses.length > 0) {
@@ -178,14 +165,11 @@ export class AddWordSenseComponent implements OnInit {
           this.hasMoreWords = false;
         }
 
-        this.isLoadingChange.emit(false);
         infiniteScroll.target.complete();
-        // this.cdRef.detectChanges();
       },
       error: (err) => {
         this.toastService.showDangerToast(err.message);
         infiniteScroll.target.complete();
-        this.isLoadingChange.emit(false);
       },
     });
   }

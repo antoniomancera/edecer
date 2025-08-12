@@ -33,6 +33,7 @@ export class AddPhraseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.deckStateService.setIsLoading(true);
     this.deckStateService.setIsAddPhraseInitialized(true);
 
     this.deckStateService.getWordSenseIds().subscribe((wordSenseIds) => {

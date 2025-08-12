@@ -30,6 +30,7 @@ export const DECK_STATE_ORDER = {
   providedIn: 'root',
 })
 export class DeckStateService {
+  private isLoading = new BehaviorSubject<boolean>(false);
   private wordSenseIds = new BehaviorSubject<number[]>(null);
   private wordPhraseTranslationIds = new BehaviorSubject<number[]>(null);
   private addDeckState = new BehaviorSubject<AddDeckState>(
@@ -46,6 +47,10 @@ export class DeckStateService {
   private isAddPhraseFormValid = new BehaviorSubject<boolean>(false);
   private isAddTitleDescriptionFormValid = new BehaviorSubject<boolean>(false);
   private isActualFormValid = new BehaviorSubject<boolean>(false);
+
+  getIsLoading() {
+    return this.isLoading.asObservable();
+  }
 
   getWordSenseIds() {
     return this.wordSenseIds.asObservable();
@@ -101,6 +106,10 @@ export class DeckStateService {
 
   getIsActualFormValid() {
     return this.isActualFormValid.asObservable();
+  }
+
+  setIsLoading(isLoading: boolean) {
+    this.isLoading.next(isLoading);
   }
 
   setWordSenseIds(wordSenseIds: number[]) {

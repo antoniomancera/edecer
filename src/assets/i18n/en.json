@@ -26,7 +26,9 @@
         "back": "back",
         "send": "send",
         "welcome": "welcome",
-        "next": "next"
+        "next": "next",
+        "title": "title",
+        "description": "description"
     },
     "login": {
         "password": "password",
@@ -68,7 +70,12 @@
         "title": "explore",
         "manage-decks": "Manage your decks",
         "manage-words": "Manage your words",
-        "manage-phrases": "Manage your phrases"
+        "manage-phrases": "Manage your phrases",
+        "decks": {
+            "add-edit-deck-modal": {
+                "add-title": "New deck"
+            }
+        }
     },
     "home":{
         "statistics": "statistics",

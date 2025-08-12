@@ -2,9 +2,7 @@
   <ion-item class="p-2">
     <ion-input
       formControlName="name"
-      label="{{
-        'profile.settings.contact-modal.subject' | transloco | titlecase
-      }}"
+      label="{{ 'global.title' | transloco | titlecase }}"
       type="text"
       labelPlacement="floating"
     ></ion-input>
@@ -12,9 +10,7 @@
   <ion-item class="p-2">
     <ion-textarea
       formControlName="description"
-      label="{{
-        'profile.settings.contact-modal.message' | transloco | titlecase
-      }}"
+      label="{{ 'global.description' | transloco | titlecase }}"
       labelPlacement="floating"
       [autoGrow]="true"
       [counter]="true"

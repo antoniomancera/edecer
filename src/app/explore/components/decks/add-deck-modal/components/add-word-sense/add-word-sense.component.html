@@ -3,34 +3,34 @@
   (ngSubmit)="onSubmitSelectPhrases()"
   [formGroup]="addWordSensesForm"
 >
-  @for(wordWithSense of wordWithSenses; track $index){
-  <ion-accordion-group>
-    <ion-accordion value="wordWithPhrase">
-      <ion-item slot="header">
-        <ion-checkbox
-          justify="start"
-          labelPlacement="end"
-          [checked]="wordWithSense.word.isChecked"
-          (ionChange)="onChangeWord($event, wordWithSense)"
-        >
-          {{ wordWithSense.word.name }} ({{
-            wordWithSense.word.type.type
-          }})</ion-checkbox
-        >
-      </ion-item>
-      @for(wordSense of wordWithSense.wordSenses; track $index){
-      <div class="ion-padding" slot="content">
-        <ion-checkbox
-          labelPlacement="end"
-          [formControl]="selectedSensesFormArray.at(wordSense.globalIndex)"
-          (ionChange)="onChangeWordSense(wordWithSense, wordSense)"
-        >
-          {{ wordSense.sense }}</ion-checkbox
-        >
-      </div>
-      }
-    </ion-accordion>
-  </ion-accordion-group>
+  @for (wordWithSense of wordWithSenses; track $index) {
+    <ion-accordion-group>
+      <ion-accordion value="wordWithPhrase">
+        <ion-item slot="header">
+          <ion-checkbox
+            justify="start"
+            labelPlacement="end"
+            [checked]="wordWithSense.word.isChecked"
+            (ionChange)="onChangeWord($event, wordWithSense)"
+          >
+            {{ wordWithSense.word.name }} ({{
+              wordWithSense.word.type.type
+            }})</ion-checkbox
+          >
+        </ion-item>
+        @for (wordSense of wordWithSense.wordSenses; track $index) {
+          <div class="ion-padding" slot="content">
+            <ion-checkbox
+              labelPlacement="end"
+              [formControl]="selectedSensesFormArray.at(wordSense.globalIndex)"
+              (ionChange)="onChangeWordSense(wordWithSense, wordSense)"
+            >
+              {{ wordSense.sense }}</ion-checkbox
+            >
+          </div>
+        }
+      </ion-accordion>
+    </ion-accordion-group>
   }
   <ion-infinite-scroll
     [disabled]="!hasMoreWords"

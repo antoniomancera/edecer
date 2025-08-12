@@ -25,7 +25,9 @@
         "percentage": "pourcentage",
         "back": "revenir",
         "send": "envoyer",
-        "next": "suivant"
+        "next": "suivant",
+        "title": "titre",
+        "description": "description"
     },
     "login": {
         "password": "mot de passe",
@@ -67,7 +69,12 @@
         "title": "explorer",
         "manage-decks": "Gérez vos decks",
         "manage-words": "Gérez vos mots",
-        "manage-phrases": "Gérez vos phrases"
+        "manage-phrases": "Gérez vos phrases",
+        "decks": {
+            "add-edit-deck-modal": {
+                "add-title": "nouveau paquet"
+            }
+        }
     },
     "home":{
         "statistics": "statistiques",

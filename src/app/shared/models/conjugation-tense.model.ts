@@ -7,7 +7,7 @@ export class ConjugationTense {
 
   constructor(
     tense: Tense,
-    personGenderNumberConjugation: { [key: string]: ConjugationWordPosition[] }
+    personGenderNumberConjugation: { [key: string]: ConjugationWordPosition[] },
   ) {
     this.tense = tense;
     this.personGenderNumberConjugation = personGenderNumberConjugation;
@@ -27,10 +27,10 @@ export class ConjugationTense {
 
   static getConjugationTensesByMode(
     conjugationTenses: ConjugationTense[],
-    mode: string
+    mode: string,
   ) {
     return conjugationTenses.filter((conjuTense) => {
-      return conjuTense.tense.mood?.name === mode;
+      return conjuTense.tense.mood?.code === mode;
     });
   }
 }

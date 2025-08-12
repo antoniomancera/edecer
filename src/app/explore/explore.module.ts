@@ -21,6 +21,7 @@ import { AddWordSenseComponent } from './components/decks/add-deck-modal/compone
 import { AddPhraseComponent } from './components/decks/add-deck-modal/components/add-phrase/add-phrase.component';
 import { AddTitleDescriptionComponent } from './components/decks/add-deck-modal/components/add-title-description/add-title-description.component';
 import { AddDeckStepsComponent } from './components/decks/add-deck-modal/components/add-deck-steps/add-deck-steps.component';
+import { FilterWordSenseComponent } from './components/decks/add-deck-modal/components/add-word-sense/filter-word-sense/filter-word-sense.component';
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { AddDeckStepsComponent } from './components/decks/add-deck-modal/compone
     AddPhraseComponent,
     AddTitleDescriptionComponent,
     AddDeckStepsComponent,
+    FilterWordSenseComponent,
   ],
 })
 export class ExplorePageModule {}

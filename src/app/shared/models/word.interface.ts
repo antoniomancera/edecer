@@ -1,3 +1,8 @@
+import { Category } from './category.model';
+import { Level } from './level.model';
+import { MoodWithTense } from './mood.interface';
+import { Gender, Number, Person } from './person-gender-number.model';
+import { Tense } from './tense.interface';
 import { Type } from './type.interface';
 
 export interface Word {
@@ -18,4 +23,21 @@ export interface WordSense {
 export interface WordWithSense {
   word: Word;
   wordSenses: WordSense[];
+}
+
+export interface WordSenseFilter extends WordSenseFilterArrays {
+  minAccuracy?: number;
+  maxAccuracy?: number;
+}
+
+export interface WordSenseFilterArrays {
+  textFiltered?: string[];
+  types: Type[];
+  levels: Level[];
+  categories: Category[];
+  persons: Person[];
+  genders: Gender[];
+  numbers: Number[];
+  moodWithTenses: MoodWithTense[];
+  tenses: Tense[];
 }

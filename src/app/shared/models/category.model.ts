@@ -1,5 +1,5 @@
 import { BasicEntity } from './basic-entity.interface';
 
-export interface Type extends BasicEntity {
+export interface Category extends BasicEntity {
   globalIndex?: number;
 }

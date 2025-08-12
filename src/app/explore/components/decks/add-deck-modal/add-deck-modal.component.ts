@@ -6,13 +6,14 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { ModalController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 
 import { AddDeckState, DeckStateService } from './services/deck-state.service';
 import { AddWordSenseComponent } from './components/add-word-sense/add-word-sense.component';
 import { AddTitleDescriptionComponent } from './components/add-title-description/add-title-description.component';
 import { AddPhraseComponent } from './components/add-phrase/add-phrase.component';
 import { combineLatest, map } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-deck-modal',
@@ -35,14 +36,21 @@ export class AddDeckModalComponent implements OnInit {
   isAddWordSenseInitialized = signal<boolean>(null);
   isAddPhraseInitialized = signal<boolean>(null);
   isAddTitleItialized = signal<boolean>(null);
+  isPlatformDesktop = signal<boolean>(null);
+  slotButtons = signal<string>('');
 
   constructor(
     private deckStateService: DeckStateService,
-    private modalController: ModalController,
-    private cdRef: ChangeDetectorRef
+    private router: Router,
+    private platform: Platform,
   ) {}
 
   ngOnInit() {
+    this.isPlatformDesktop.set(this.platform.is('desktop'));
+    if (this.isPlatformDesktop()) {
+      this.slotButtons.set('end');
+    }
+
     combineLatest([
       this.deckStateService.getIsLoading(),
       this.deckStateService.getAddDeckState(),
@@ -73,9 +81,8 @@ export class AddDeckModalComponent implements OnInit {
             this.isAddPhraseInitialized.set(isAddPhraseInitialized);
             this.isAddTitleItialized.set(isAddTitleItialized);
             this.isActualFormValid.set(isActualFormValid);
-            // this.cdRef.detectChanges();
-          }
-        )
+          },
+        ),
       )
       .subscribe({
         next: () => {
@@ -101,7 +108,7 @@ export class AddDeckModalComponent implements OnInit {
     }
   }
 
-  closeModal() {
-    this.modalController.dismiss(null);
+  onClickReturnDecksPage() {
+    this.router.navigate(['tabs/explore/decks']);
   }
 }

@@ -3,6 +3,31 @@
         "error": {
             "DECK_WORD_TRANSLATION_HISTORIAL_NOT_FOUND": "Aucun historique trouvé pour la journée {{date}}"
         },
+        "backend-constant": {
+            "SUSTANTIVE": "nom",
+            "VERB": "verbe",
+            "ADJECTIVE": "adjectif",
+            "ADVERB": "adverbe",
+            "PRONOUN": "pronom",
+            "PREPOSITION": "préposition",
+            "CONJUNCTION": "conjonction",
+            "INTERJECTION": "interjection",
+            "PARTICLE": "particule",
+            "FIRST": "première personne",
+            "SECOND": "deuxième personne",
+            "THIRD": "troisième personne",
+            "NON_PERSONAL": "non personnel",
+            "NEUTRAL": "neutre",
+            "FEMININE": "féminin",
+            "MASCULINE": "masculin",
+            "SINGULAR": "singulier",
+            "PLURAL": "pluriel",
+            "NON_NUMBER": "sans nombre",
+            "INDICATIVE": "indicatif",
+            "SUBJUNCTIVE": "subjonctif",
+            "CONDITIONAL": "conditionnel",
+            "IMPERATIVE": "impératif"
+        },
         "email": "email",
         "unknown-error": "Erreur inconnue",
         "week-days": {

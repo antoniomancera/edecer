@@ -3,6 +3,31 @@
         "error": {
             "DECK_WORD_TRANSLATION_HISTORIAL_NOT_FOUND": "Not found any historial for the day {{date}}"
         },
+        "constant": {
+            "SUSTANTIVE": "noun",
+            "VERB": "verb",
+            "ADJECTIVE": "adjective",
+            "ADVERB": "adverb",
+            "PRONOUN": "pronoun",
+            "PREPOSITION": "preposition",
+            "CONJUNCTION": "conjunction",
+            "INTERJECTION": "interjection",
+            "PARTICLE": "particle",
+            "FIRST": "first person",
+            "SECOND": "second person",
+            "THIRD": "third person",
+            "NON_PERSONAL": "non-personal",
+            "NEUTRAL": "neutral",
+            "FEMININE": "feminine",
+            "MASCULINE": "masculine",
+            "SINGULAR": "singular",
+            "PLURAL": "plural",
+            "NON_NUMBER": "non-number",
+            "INDICATIVE": "indicative",
+            "SUBJUNCTIVE": "subjunctive",
+            "CONDITIONAL": "conditional",
+            "IMPERATIVE": "imperative"
+        },
         "email": "email",
         "unknown-error": "unknown error",
         "week-days": {

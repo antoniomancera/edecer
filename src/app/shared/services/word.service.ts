@@ -36,7 +36,7 @@ export class WordService {
       environment.BASE_URL +
         this.CONJGUATION +
         '/allComplete/wordSense/' +
-        wordSenseId
+        wordSenseId,
     );
   }
 
@@ -49,7 +49,7 @@ export class WordService {
    */
   getWordWithSensePaginated(
     pageNumber?: number,
-    pageSize?: number
+    pageSize?: number,
   ): Observable<WordWithSense[]> {
     return this.http.get<WordWithSense[]>(
       environment.BASE_URL +
@@ -58,7 +58,7 @@ export class WordService {
         '/' +
         pageNumber +
         '/' +
-        pageSize
+        pageSize,
     );
   }
 }

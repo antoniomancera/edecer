@@ -10,13 +10,13 @@
     </ion-row>
 
     <ion-row class="step-labels">
-      <ion-col class="step-label">
+      <ion-col class="step-label" [class.underline]="actualStateIndex == 0">
         {{ "global.words" | transloco | titlecase }}
       </ion-col>
-      <ion-col class="step-label">
+      <ion-col class="step-label" [class.underline]="actualStateIndex == 1">
         {{ "global.phrases" | transloco | titlecase }}
       </ion-col>
-      <ion-col class="step-label">
+      <ion-col class="step-label" [class.underline]="actualStateIndex == 2">
         {{ "global.info" | transloco | titlecase }}
       </ion-col>
     </ion-row>

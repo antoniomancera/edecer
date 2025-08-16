@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
+import { deepEqual } from 'assert';
 
 import { BehaviorSubject } from 'rxjs';
+
+import {
+  compareWordSenseFilter,
+  WordSenseFilter,
+} from 'src/app/shared/models/word.interface';
 
 export enum AddDeckState {
   WORD_SENSE = 'WORD_SENSE',
@@ -34,7 +40,7 @@ export class DeckStateService {
   private wordSenseIds = new BehaviorSubject<number[]>(null);
   private wordPhraseTranslationIds = new BehaviorSubject<number[]>(null);
   private addDeckState = new BehaviorSubject<AddDeckState>(
-    AddDeckState.WORD_SENSE
+    AddDeckState.WORD_SENSE,
   );
   private addOrEdit = new BehaviorSubject<AddOrEdit>(AddOrEdit.ADD);
   private addDeckStateIndex = new BehaviorSubject<number>(null);
@@ -47,6 +53,20 @@ export class DeckStateService {
   private isAddPhraseFormValid = new BehaviorSubject<boolean>(false);
   private isAddTitleDescriptionFormValid = new BehaviorSubject<boolean>(false);
   private isActualFormValid = new BehaviorSubject<boolean>(false);
+
+  private wordSenseFilter = new BehaviorSubject<WordSenseFilter>({
+    textFiltered: [],
+    minAccuracy: null,
+    maxAccuracy: null,
+    types: [],
+    levels: [],
+    categories: [],
+    persons: [],
+    genders: [],
+    numbers: [],
+    moodWithTenses: [],
+    tenses: [],
+  });
 
   getIsLoading() {
     return this.isLoading.asObservable();
@@ -106,6 +126,10 @@ export class DeckStateService {
 
   getIsActualFormValid() {
     return this.isActualFormValid.asObservable();
+  }
+
+  getWordSenseFilter() {
+    return this.wordSenseFilter.asObservable();
   }
 
   setIsLoading(isLoading: boolean) {
@@ -233,6 +257,12 @@ export class DeckStateService {
         break;
     }
     this.isActualFormValid.next(isActualFormValid);
+  }
+
+  setWordSenseFilter(wordSenseFilter: WordSenseFilter) {
+    if (!compareWordSenseFilter(wordSenseFilter, this.wordSenseFilter.value)) {
+      this.wordSenseFilter.next(wordSenseFilter);
+    }
   }
 
   private getCurrentAddDeckStateIndexByState(addOrEdit: AddOrEdit) {

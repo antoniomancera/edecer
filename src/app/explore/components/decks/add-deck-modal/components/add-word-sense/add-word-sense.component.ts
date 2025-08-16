@@ -1,11 +1,17 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
-import { WordSense, WordWithSense } from 'src/app/shared/models/word.interface';
+import {
+  WordSense,
+  WordSenseFilter,
+  WordWithSense,
+} from 'src/app/shared/models/word.interface';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { WordService } from 'src/app/shared/services/word.service';
 import { minSelectedCheckboxes } from 'src/app/shared/validators/custom-validators';
 import { DeckStateService } from '../../services/deck-state.service';
+import { ModalController } from '@ionic/angular';
+import { FilterWordSenseComponent } from './filter-word-sense/filter-word-sense.component';
 
 @Component({
   selector: 'app-add-word-sense',
@@ -20,13 +26,15 @@ export class AddWordSenseComponent implements OnInit {
   hasMoreWords = true;
   wordWithSenses: WordWithSense[] = [];
   wordSenseIds: number[] = [];
+  wordSenseFilter: WordSenseFilter;
 
   constructor(
     private toastService: ToastService,
     private wordService: WordService,
     private fb: FormBuilder,
     private deckStateService: DeckStateService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private modalController: ModalController,
   ) {
     this.addWordSensesForm = this.fb.group({
       selectedSenses: new FormArray([], minSelectedCheckboxes()),
@@ -36,6 +44,10 @@ export class AddWordSenseComponent implements OnInit {
   ngOnInit() {
     this.deckStateService.setIsLoading(true);
     this.deckStateService.setIsAddWordSenseInitialized(true);
+
+    this.deckStateService
+      .getWordSenseFilter()
+      .subscribe((wordSenseFilter) => (this.wordSenseFilter = wordSenseFilter));
 
     this.createSelectedSensesFormArray(this.pageNumber, this.pageSize);
     this.addWordSensesForm.statusChanges.subscribe((validity) => {
@@ -71,7 +83,7 @@ export class AddWordSenseComponent implements OnInit {
   onChangeWord(event, wordWithSense: WordWithSense) {
     const isChecked = event.detail.checked;
     const globalIndexOfWordSense = wordWithSense.wordSenses.map(
-      (wordSense) => wordSense.globalIndex
+      (wordSense) => wordSense.globalIndex,
     );
 
     globalIndexOfWordSense.forEach((globalIndex) => {
@@ -85,14 +97,14 @@ export class AddWordSenseComponent implements OnInit {
       wordWithSense.word.isChecked = true;
     } else {
       const globalIndexOfWordSense = wordWithSense.wordSenses.map(
-        (wordSense) => wordSense.globalIndex
+        (wordSense) => wordSense.globalIndex,
       );
 
       const hasSelectedWordSense = globalIndexOfWordSense.some(
         (globalIndex) => {
           const control = this.selectedSensesFormArray.at(globalIndex);
           return control?.value && wordSense.id != null;
-        }
+        },
       );
 
       wordWithSense.word.isChecked = hasSelectedWordSense;
@@ -102,6 +114,15 @@ export class AddWordSenseComponent implements OnInit {
   onIonInfiniteGetNextPageWordSenses(infiniteScroll) {
     this.pageNumber += 1;
     this.addNextPageWordSenses(this.pageNumber, this.pageSize, infiniteScroll);
+  }
+
+  async onClickOpenFilterModal() {
+    const modal = await this.modalController.create({
+      component: FilterWordSenseComponent,
+
+      initialBreakpoint: 0.9,
+    });
+    await modal.present();
   }
 
   private createSelectedSensesFormArray(pageNumber: number, pageSize: number) {
@@ -117,7 +138,7 @@ export class AddWordSenseComponent implements OnInit {
             if (
               this.wordSenseIds &&
               this.wordSenseIds.some(
-                (wordSenseId) => wordSenseId === wordSense.id
+                (wordSenseId) => wordSenseId === wordSense.id,
               )
             ) {
               controls.push(new FormControl(true));
@@ -133,6 +154,7 @@ export class AddWordSenseComponent implements OnInit {
         const formArray = new FormArray(controls, minSelectedCheckboxes());
         this.addWordSensesForm.setControl('selectedSenses', formArray);
 
+        // this.cdRef.detectChanges();
         this.deckStateService.setIsLoading(false);
       },
       error: (err) => {
@@ -145,7 +167,7 @@ export class AddWordSenseComponent implements OnInit {
   private addNextPageWordSenses(
     pageNumber: number,
     pageSize: number,
-    infiniteScroll
+    infiniteScroll,
   ) {
     this.wordService.getWordWithSensePaginated(pageNumber, pageSize).subscribe({
       next: (wordWithSenses) => {
@@ -165,6 +187,7 @@ export class AddWordSenseComponent implements OnInit {
           this.hasMoreWords = false;
         }
 
+        // this.cdRef.detectChanges();
         infiniteScroll.target.complete();
       },
       error: (err) => {

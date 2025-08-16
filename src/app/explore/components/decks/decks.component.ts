@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { ModalController } from '@ionic/angular';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { MessagingService } from 'src/app/shared/services/messaging.service';
 import { EditDeckModalComponent } from '../edit-deck-modal/edit-deck-modal.component';
-import { AddDeckModalComponent } from './add-deck-modal/add-deck-modal.component';
 
 @Component({
   selector: 'app-decks',
@@ -22,10 +22,12 @@ export class DecksComponent implements OnInit {
     header: '',
     subHeader: '',
   };
+
   constructor(
     private messagingService: MessagingService,
     private route: ActivatedRoute,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -64,13 +66,7 @@ export class DecksComponent implements OnInit {
     this.isEditDeckModalOpen = false;
   }
 
-  async onClickOpenAddDeck() {
-    const modal = await this.modalController.create({
-      component: AddDeckModalComponent,
-      initialBreakpoint: 1,
-      breakpoints: [1],
-      presentingElement: await this.modalController.getTop(),
-    });
-    await modal.present();
+  onClickNavigateAddDeck() {
+    this.router.navigate(['decks/add-deck']);
   }
 }

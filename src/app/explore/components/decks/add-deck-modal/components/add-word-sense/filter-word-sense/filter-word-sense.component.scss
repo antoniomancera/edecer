@@ -1,0 +1,11 @@
+// ion-footer {
+//     --background: var(--ion-color-light);
+//     border-top: 1px solid var(--ion-color-medium);
+//     position: sticky
+// }
+
+.ion-toolbar-footer {
+    display: flex;
+    flex-direction: column;
+    height: 20%;
+}

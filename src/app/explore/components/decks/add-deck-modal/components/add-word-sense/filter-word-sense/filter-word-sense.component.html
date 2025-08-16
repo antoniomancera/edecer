@@ -1,0 +1,359 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Filtros</ion-title>
+  </ion-toolbar>
+</ion-header>
+@if (isLoading()) {
+  <ion-spinner class="spinner-container"></ion-spinner>
+}
+<ion-content [fullscreen]="true" class="p-2">
+  @if (!isLoading()) {
+    <form
+      (ngSubmit)="onSubmitAppyFilters()"
+      [formGroup]="addWordSenseFilterForm"
+    >
+      <ion-accordion-group [value]="'textFiltered'">
+        <ion-accordion value="textFiltered">
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "global.title" | transloco | firstChartUpper
+            }}</ion-label>
+          </ion-item>
+
+          <div class="ion-padding" slot="content">
+            puede intriducir multiples textos entre espacios
+
+            <ion-input
+              class="ion-item-no-margin"
+              type="text"
+              labelPlacement="fixed"
+              formControlName="textFiltered"
+              (ionInput)="getWordSenseFilterSelected($event)"
+            ></ion-input>
+          </div>
+        </ion-accordion>
+        <ion-accordion value="percentageRange">
+          <ion-item slot="header" color="light">
+            <ion-label>{{
+              "home.add-goal-modal.percentage-success"
+                | transloco
+                | firstChartUpper
+            }}</ion-label>
+            @if (wordSenseFilterSelected.minAccuracy) {
+              <ion-chip [disabled]="true">
+                > {{ wordSenseFilterSelected.minAccuracy }}%</ion-chip
+              >
+            }
+            @if (wordSenseFilterSelected.maxAccuracy) {
+              <ion-chip [disabled]="true">
+                < {{ wordSenseFilterSelected.maxAccuracy }}%</ion-chip
+              >
+            }
+          </ion-item>
+
+          <div class="ion-padding" slot="content">
+            introduzca el porcentaje maximo y minimo
+            <ion-range
+              class="p-4"
+              labelPlacement="start"
+              aria-label="Dual Knobs Range"
+              [dualKnobs]="true"
+              [pin]="true"
+              [ticks]="true"
+              [snaps]="true"
+              formControlName="successesAccuracyRange"
+              (ionChange)="onChangeSuccessesAccuracyRange($event)"
+            ></ion-range>
+          </div>
+        </ion-accordion>
+
+        <ion-accordion value="type">
+          <ion-item slot="header" color="light">
+            <ion-label>types</ion-label>
+
+            @if (wordSenseFilterSelected.types.length > 2) {
+              <ion-chip [disabled]="true">
+                {{ wordSenseFilterSelected.types.length }}</ion-chip
+              >
+            } @else {
+              @for (type of wordSenseFilterSelected.types; track $index) {
+                <ion-chip [disabled]="true"> {{ type.code }}</ion-chip>
+              }
+            }
+          </ion-item>
+          @for (type of wordSenseFilter.types; track $index) {
+            <div class="ion-padding" slot="content">
+              <ion-checkbox
+                labelPlacement="end"
+                [formControl]="selectedTypesFormArray.at(type.globalIndex)"
+                (ionChange)="onChangeSelectedTypes($event, type)"
+              >
+                {{
+                  type.code | backEndConstant | transloco | firstChartUpper
+                }}</ion-checkbox
+              >
+            </div>
+          }
+        </ion-accordion>
+        <ion-accordion value="level">
+          <ion-item slot="header" color="light">
+            <ion-label>levels</ion-label>
+            @if (wordSenseFilterSelected.levels.length > 2) {
+              <ion-chip [disabled]="true">
+                {{ wordSenseFilterSelected.levels.length }}</ion-chip
+              >
+            } @else {
+              @for (level of wordSenseFilterSelected.levels; track $index) {
+                <ion-chip [disabled]="true"> {{ level.code }}</ion-chip>
+              }
+            }
+          </ion-item>
+          @for (level of wordSenseFilter.levels; track $index) {
+            <div class="ion-padding" slot="content">
+              <ion-checkbox
+                labelPlacement="end"
+                [formControl]="selectedLevelsFormArray.at(level.globalIndex)"
+                (ionChange)="onChangeSelectedLevels($event, level)"
+              >
+                {{ level.code }}</ion-checkbox
+              >
+            </div>
+          }
+        </ion-accordion>
+        <ion-accordion value="category">
+          <ion-item slot="header" color="light">
+            <ion-label>categories</ion-label>
+            @if (wordSenseFilterSelected.categories.length > 2) {
+              <ion-chip [disabled]="true">
+                {{ wordSenseFilterSelected.categories.length }}</ion-chip
+              >
+            } @else {
+              @for (
+                gender of wordSenseFilterSelected.categories;
+                track $index
+              ) {
+                <ion-chip [disabled]="true"> {{ category.name }}</ion-chip>
+              }
+            }
+          </ion-item>
+          @for (category of wordSenseFilter.categories; track $index) {
+            <div class="ion-padding" slot="content">
+              <ion-checkbox
+                labelPlacement="end"
+                [formControl]="
+                  selectedCategoriesFormArray.at(category.globalIndex)
+                "
+                (ionChange)="onChangeSelectedCategories($event, category)"
+              >
+                {{ category.name }}</ion-checkbox
+              >
+            </div>
+          }
+        </ion-accordion>
+        <ion-accordion value="person">
+          <ion-item slot="header" color="light">
+            <ion-label>persons</ion-label>
+            @if (wordSenseFilterSelected.persons.length > 2) {
+              <ion-chip [disabled]="true">
+                {{ wordSenseFilterSelected.persons.length }}</ion-chip
+              >
+            } @else {
+              @for (person of wordSenseFilterSelected.persons; track $index) {
+                <ion-chip [disabled]="true"> > {{ person.code }}</ion-chip>
+              }
+            }
+          </ion-item>
+          @for (person of wordSenseFilter.persons; track $index) {
+            <div class="ion-padding" slot="content">
+              <ion-checkbox
+                labelPlacement="end"
+                [formControl]="selectedPersonsFormArray.at(person.globalIndex)"
+                (ionChange)="onChangeSelectedPersons($event, person)"
+              >
+                {{
+                  person.code | backEndConstant | transloco | firstChartUpper
+                }}</ion-checkbox
+              >
+            </div>
+          }
+        </ion-accordion>
+        <ion-accordion value="gender">
+          <ion-item slot="header" color="light">
+            <ion-label>genders</ion-label>
+            @if (wordSenseFilterSelected.genders.length > 2) {
+              <ion-chip [disabled]="true">
+                {{ wordSenseFilterSelected.genders.length }}</ion-chip
+              >
+            } @else {
+              @for (gender of wordSenseFilterSelected.genders; track $index) {
+                <ion-chip [disabled]="true"> {{ gender.code }}</ion-chip>
+              }
+            }
+          </ion-item>
+          @for (gender of wordSenseFilter.genders; track $index) {
+            <div class="ion-padding" slot="content">
+              <ion-checkbox
+                labelPlacement="end"
+                [formControl]="selectedGendersFormArray.at(gender.globalIndex)"
+                (ionChange)="onChangeSelectedGenders($event, gender)"
+              >
+                {{
+                  gender.code | backEndConstant | transloco | firstChartUpper
+                }}</ion-checkbox
+              >
+            </div>
+          }
+        </ion-accordion>
+        <ion-accordion value="number">
+          <ion-item slot="header" color="light">
+            <ion-label>numbers</ion-label>
+            <!-- @if (wordSenseFilterSelected && wordSenseFilterSelected.persons) { -->
+            @if (wordSenseFilterSelected.numbers.length > 2) {
+              <ion-chip [disabled]="true">
+                {{ wordSenseFilterSelected.numbers.length }}</ion-chip
+              >
+            } @else {
+              @for (number of wordSenseFilterSelected.numbers; track $index) {
+                <ion-chip [disabled]="true"> {{ number.code }}</ion-chip>
+              }
+            }
+            <!-- } -->
+          </ion-item>
+          @for (number of wordSenseFilter.numbers; track $index) {
+            <!-- <div class="ion-padding" slot="content">{{ number }}</div> -->
+
+            <div class="ion-padding" slot="content">
+              <ion-checkbox
+                labelPlacement="end"
+                [formControl]="selectedNumbersFormArray.at(number.globalIndex)"
+                (ionChange)="onChangeSelectedNumbers($event, number)"
+              >
+                {{ number.code }}
+              </ion-checkbox>
+            </div>
+          }
+        </ion-accordion>
+        <!-- <ion-accordion value="mood">
+          <ion-item slot="header" color="light">
+            <ion-label>moods</ion-label>
+          </ion-item>
+          @for (mood of wordSenseFilter.moods; track $index) {
+            <div class="ion-padding" slot="content">
+              <ion-checkbox
+                labelPlacement="end"
+                [formControl]="selectedMoodsFormArray.at(mood.globalIndex)"
+              >
+                {{
+                  mood.code | backEndConstant | transloco | firstChartUpper
+                }}</ion-checkbox
+              >
+            </div>
+          }
+        </ion-accordion> -->
+        <ion-accordion value="moodAndTense">
+          <ion-item slot="header" color="light">
+            <ion-label>Moods & Tenses</ion-label>
+          </ion-item>
+
+          <div class="ion-padding" slot="content">
+            @for (
+              moodWithTense of wordSenseFilter.moodWithTenses;
+              track $index
+            ) {
+              <ion-accordion-group>
+                <ion-accordion value="mood-{{ moodWithTense.mood.code }}">
+                  <ion-item slot="header" color="light">
+                    <ion-checkbox labelPlacement="end">
+                      {{
+                        moodWithTense.mood.code
+                          | backEndConstant
+                          | transloco
+                          | firstChartUpper
+                      }}
+                    </ion-checkbox>
+                  </ion-item>
+
+                  <div class="ion-padding" slot="content">
+                    @for (tense of moodWithTense.tenses; track $index) {
+                      <div class="accordion-subitem">
+                        <ion-checkbox
+                          labelPlacement="end"
+                          (ionChange)="
+                            onChangeSelectedTenses(
+                              $event,
+                              tense,
+                              moodWithTense.mood
+                            )
+                          "
+                        >
+                          {{ tense.name | firstChartUpper }}
+                        </ion-checkbox>
+                      </div>
+                    }
+                  </div>
+                </ion-accordion>
+              </ion-accordion-group>
+            }
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </form>
+  }
+</ion-content>
+
+<!-- <ion-footer>dsdas</ion-footer> -->
+<ion-toolbar class="p-2 ion-toolbar-footer">
+  @if (isPlatformDesktop()) {
+    <ion-buttons slot="end">
+      <ion-button
+        shape="round"
+        expand="full"
+        (click)="onClickReturnDecksPage()"
+        color="medium"
+      >
+        <ion-icon slot="start" name="close"></ion-icon>
+        {{ "global.cancel" | transloco | titlecase }}
+      </ion-button>
+
+      <ion-button
+        shape="round"
+        expand="full"
+        (click)="onClickBack()"
+        color="medium"
+      >
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+        {{ "global.back" | transloco | titlecase }}
+      </ion-button>
+
+      <!-- <ion-button
+        shape="round"
+        expand="full"
+        type="submit"
+        color="primary"
+        fill="solid"
+       
+      >
+        {{ "global.next" | transloco | titlecase }}
+        <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      </ion-button> -->
+
+      <ion-button
+        shape="round"
+        expand="full"
+        type="submit"
+        color="primary"
+        fill="solid"
+        [disabled]="!addWordSenseFilterForm.valid"
+        (click)="onSubmitAppyFilters()"
+      >
+        {{ "global.accept" | transloco | titlecase }}
+        <ion-icon slot="end" name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  }
+  @if (!isPlatformDesktop()) {}
+</ion-toolbar>
+<!--  
+<ion-footer>
+  <ion-toolbar> footer </ion-toolbar>
+</ion-footer> -->

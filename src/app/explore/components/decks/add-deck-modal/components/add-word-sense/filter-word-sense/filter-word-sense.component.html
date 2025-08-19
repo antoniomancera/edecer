@@ -39,14 +39,14 @@
                 | transloco
                 | firstChartUpper
             }}</ion-label>
-            @if (wordSenseFilterSelected.minAccuracy) {
+            @if (wordFilterRequestSelected.minAccuracy) {
               <ion-chip [disabled]="true">
-                > {{ wordSenseFilterSelected.minAccuracy }}%</ion-chip
+                > {{ wordFilterRequestSelected.minAccuracy }}%</ion-chip
               >
             }
-            @if (wordSenseFilterSelected.maxAccuracy) {
+            @if (wordFilterRequestSelected.maxAccuracy) {
               <ion-chip [disabled]="true">
-                < {{ wordSenseFilterSelected.maxAccuracy }}%</ion-chip
+                < {{ wordFilterRequestSelected.maxAccuracy }}%</ion-chip
               >
             }
           </ion-item>
@@ -67,29 +67,37 @@
           </div>
         </ion-accordion>
 
-        <ion-accordion value="type">
+        <ion-accordion value="partSpeech">
           <ion-item slot="header" color="light">
-            <ion-label>types</ion-label>
+            <ion-label>partSpeech</ion-label>
 
-            @if (wordSenseFilterSelected.types.length > 2) {
+            @if (wordFilterRequestSelected.partSpeeches.length > 2) {
               <ion-chip [disabled]="true">
-                {{ wordSenseFilterSelected.types.length }}</ion-chip
+                {{ wordFilterRequestSelected.partSpeeches.length }}</ion-chip
               >
             } @else {
-              @for (type of wordSenseFilterSelected.types; track $index) {
-                <ion-chip [disabled]="true"> {{ type.code }}</ion-chip>
+              @for (
+                partSpeech of wordFilterRequestSelected.partSpeeches;
+                track $index
+              ) {
+                <ion-chip [disabled]="true"> {{ partSpeech.code }}</ion-chip>
               }
             }
           </ion-item>
-          @for (type of wordSenseFilter.types; track $index) {
+          @for (partSpeech of wordFilterOptions.partSpeeches; track $index) {
             <div class="ion-padding" slot="content">
               <ion-checkbox
                 labelPlacement="end"
-                [formControl]="selectedTypesFormArray.at(type.globalIndex)"
-                (ionChange)="onChangeSelectedTypes($event, type)"
+                [formControl]="
+                  selectedPartSpeechesFormArray.at(partSpeech.globalIndex)
+                "
+                (ionChange)="onChangeSelectedPartSpeeches($event, partSpeech)"
               >
                 {{
-                  type.code | backEndConstant | transloco | firstChartUpper
+                  partSpeech.code
+                    | backEndConstant
+                    | transloco
+                    | firstChartUpper
                 }}</ion-checkbox
               >
             </div>
@@ -98,17 +106,17 @@
         <ion-accordion value="level">
           <ion-item slot="header" color="light">
             <ion-label>levels</ion-label>
-            @if (wordSenseFilterSelected.levels.length > 2) {
+            @if (wordFilterRequestSelected.levels.length > 2) {
               <ion-chip [disabled]="true">
-                {{ wordSenseFilterSelected.levels.length }}</ion-chip
+                {{ wordFilterRequestSelected.levels.length }}</ion-chip
               >
             } @else {
-              @for (level of wordSenseFilterSelected.levels; track $index) {
+              @for (level of wordFilterRequestSelected.levels; track $index) {
                 <ion-chip [disabled]="true"> {{ level.code }}</ion-chip>
               }
             }
           </ion-item>
-          @for (level of wordSenseFilter.levels; track $index) {
+          @for (level of wordFilterOptions.levels; track $index) {
             <div class="ion-padding" slot="content">
               <ion-checkbox
                 labelPlacement="end"
@@ -123,20 +131,20 @@
         <ion-accordion value="category">
           <ion-item slot="header" color="light">
             <ion-label>categories</ion-label>
-            @if (wordSenseFilterSelected.categories.length > 2) {
+            @if (wordFilterRequestSelected.categories.length > 2) {
               <ion-chip [disabled]="true">
-                {{ wordSenseFilterSelected.categories.length }}</ion-chip
+                {{ wordFilterRequestSelected.categories.length }}</ion-chip
               >
             } @else {
               @for (
-                gender of wordSenseFilterSelected.categories;
+                gender of wordFilterRequestSelected.categories;
                 track $index
               ) {
                 <ion-chip [disabled]="true"> {{ category.name }}</ion-chip>
               }
             }
           </ion-item>
-          @for (category of wordSenseFilter.categories; track $index) {
+          @for (category of wordFilterOptions.categories; track $index) {
             <div class="ion-padding" slot="content">
               <ion-checkbox
                 labelPlacement="end"
@@ -153,17 +161,17 @@
         <ion-accordion value="person">
           <ion-item slot="header" color="light">
             <ion-label>persons</ion-label>
-            @if (wordSenseFilterSelected.persons.length > 2) {
+            @if (wordFilterRequestSelected.persons.length > 2) {
               <ion-chip [disabled]="true">
-                {{ wordSenseFilterSelected.persons.length }}</ion-chip
+                {{ wordFilterRequestSelected.persons.length }}</ion-chip
               >
             } @else {
-              @for (person of wordSenseFilterSelected.persons; track $index) {
+              @for (person of wordFilterRequestSelected.persons; track $index) {
                 <ion-chip [disabled]="true"> > {{ person.code }}</ion-chip>
               }
             }
           </ion-item>
-          @for (person of wordSenseFilter.persons; track $index) {
+          @for (person of wordFilterOptions.persons; track $index) {
             <div class="ion-padding" slot="content">
               <ion-checkbox
                 labelPlacement="end"
@@ -180,17 +188,17 @@
         <ion-accordion value="gender">
           <ion-item slot="header" color="light">
             <ion-label>genders</ion-label>
-            @if (wordSenseFilterSelected.genders.length > 2) {
+            @if (wordFilterRequestSelected.genders.length > 2) {
               <ion-chip [disabled]="true">
-                {{ wordSenseFilterSelected.genders.length }}</ion-chip
+                {{ wordFilterRequestSelected.genders.length }}</ion-chip
               >
             } @else {
-              @for (gender of wordSenseFilterSelected.genders; track $index) {
+              @for (gender of wordFilterRequestSelected.genders; track $index) {
                 <ion-chip [disabled]="true"> {{ gender.code }}</ion-chip>
               }
             }
           </ion-item>
-          @for (gender of wordSenseFilter.genders; track $index) {
+          @for (gender of wordFilterOptions.genders; track $index) {
             <div class="ion-padding" slot="content">
               <ion-checkbox
                 labelPlacement="end"
@@ -207,19 +215,19 @@
         <ion-accordion value="number">
           <ion-item slot="header" color="light">
             <ion-label>numbers</ion-label>
-            <!-- @if (wordSenseFilterSelected && wordSenseFilterSelected.persons) { -->
-            @if (wordSenseFilterSelected.numbers.length > 2) {
+            <!-- @if (wordSenseFilterSelected && wordFilterRequestSelected.persons) { -->
+            @if (wordFilterRequestSelected.numbers.length > 2) {
               <ion-chip [disabled]="true">
-                {{ wordSenseFilterSelected.numbers.length }}</ion-chip
+                {{ wordFilterRequestSelected.numbers.length }}</ion-chip
               >
             } @else {
-              @for (number of wordSenseFilterSelected.numbers; track $index) {
+              @for (number of wordFilterRequestSelected.numbers; track $index) {
                 <ion-chip [disabled]="true"> {{ number.code }}</ion-chip>
               }
             }
             <!-- } -->
           </ion-item>
-          @for (number of wordSenseFilter.numbers; track $index) {
+          @for (number of wordFilterOptions.numbers; track $index) {
             <!-- <div class="ion-padding" slot="content">{{ number }}</div> -->
 
             <div class="ion-padding" slot="content">
@@ -257,7 +265,7 @@
 
           <div class="ion-padding" slot="content">
             @for (
-              moodWithTense of wordSenseFilter.moodWithTenses;
+              moodWithTense of wordFilterOptions.moodWithTenses;
               track $index
             ) {
               <ion-accordion-group>

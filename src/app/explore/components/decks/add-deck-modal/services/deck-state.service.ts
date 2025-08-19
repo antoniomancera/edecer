@@ -4,8 +4,8 @@ import { deepEqual } from 'assert';
 import { BehaviorSubject } from 'rxjs';
 
 import {
-  compareWordSenseFilter,
-  WordSenseFilter,
+  compareWordFilterRequest,
+  WordFilterRequest,
 } from 'src/app/shared/models/word.interface';
 
 export enum AddDeckState {
@@ -54,11 +54,11 @@ export class DeckStateService {
   private isAddTitleDescriptionFormValid = new BehaviorSubject<boolean>(false);
   private isActualFormValid = new BehaviorSubject<boolean>(false);
 
-  private wordSenseFilter = new BehaviorSubject<WordSenseFilter>({
+  private wordFilterRequest = new BehaviorSubject<WordFilterRequest>({
     textFiltered: [],
     minAccuracy: null,
     maxAccuracy: null,
-    types: [],
+    partSpeeches: [],
     levels: [],
     categories: [],
     persons: [],
@@ -128,8 +128,8 @@ export class DeckStateService {
     return this.isActualFormValid.asObservable();
   }
 
-  getWordSenseFilter() {
-    return this.wordSenseFilter.asObservable();
+  getWordFilterRequest() {
+    return this.wordFilterRequest.asObservable();
   }
 
   setIsLoading(isLoading: boolean) {
@@ -259,9 +259,11 @@ export class DeckStateService {
     this.isActualFormValid.next(isActualFormValid);
   }
 
-  setWordSenseFilter(wordSenseFilter: WordSenseFilter) {
-    if (!compareWordSenseFilter(wordSenseFilter, this.wordSenseFilter.value)) {
-      this.wordSenseFilter.next(wordSenseFilter);
+  setWordFilterRequest(wordFilterRequest: WordFilterRequest) {
+    if (
+      !compareWordFilterRequest(wordFilterRequest, this.wordFilterRequest.value)
+    ) {
+      this.wordFilterRequest.next(wordFilterRequest);
     }
   }
 

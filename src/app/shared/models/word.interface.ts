@@ -1,6 +1,7 @@
 import { Category } from './category.model';
 import { Level } from './level.model';
 import { MoodWithTense } from './mood.interface';
+import { PartSpeech } from './part-speech.interface';
 import { Gender, Number, Person } from './person-gender-number.model';
 import { Tense } from './tense.interface';
 import { Type } from './type.interface';
@@ -8,7 +9,8 @@ import { Type } from './type.interface';
 export interface Word {
   id: number;
   name: string;
-  type: Type;
+  partSpeech: PartSpeech;
+  level: Level;
   isChecked?: boolean;
 }
 

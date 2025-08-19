@@ -11,12 +11,12 @@ import {
 import { ModalController, Platform } from '@ionic/angular';
 
 import {
-  Word,
-  WordSenseFilter,
-  WordSenseFilterArrays,
+  WordFilterOptions,
+  WordFilterRequest,
 } from 'src/app/shared/models/word.interface';
-import { WordSenseService } from 'src/app/shared/services/word-sense.service';
+
 import { DeckStateService } from '../../../services/deck-state.service';
+import { WordService } from 'src/app/shared/services/word.service';
 
 @Component({
   selector: 'app-filter-word-sense',
@@ -26,14 +26,14 @@ import { DeckStateService } from '../../../services/deck-state.service';
 export class FilterWordSenseComponent implements OnInit {
   addWordSenseFilterForm: FormGroup;
   isPlatformDesktop = signal<boolean>(null);
-  wordSenseFilter: WordSenseFilter;
-  wordSenseFilterSelected: WordSenseFilter;
+  wordFilterOptions: WordFilterOptions;
+  wordFilterRequestSelected: WordFilterRequest;
 
   isLoading = signal(true);
 
   constructor(
     private platform: Platform,
-    private wordSenseService: WordSenseService,
+    private wordService: WordService,
     private fb: FormBuilder,
     private deckStateService: DeckStateService,
     private modalController: ModalController,
@@ -42,7 +42,7 @@ export class FilterWordSenseComponent implements OnInit {
       {
         successesAccuracyRange: new FormControl({ lower: null, upper: null }),
         textFiltered: new FormControl([]),
-        selectedTypes: new FormArray([]),
+        selectedPartSpeeches: new FormArray([]),
         selectedLevels: new FormArray([]),
         selectedCategories: new FormArray([]),
         selectedPersons: new FormArray([]),
@@ -57,17 +57,18 @@ export class FilterWordSenseComponent implements OnInit {
 
   ngOnInit() {
     this.deckStateService
-      .getWordSenseFilter()
+      .getWordFilterRequest()
       .subscribe(
-        (wordSenseFilter) => (this.wordSenseFilterSelected = wordSenseFilter),
+        (wordFilterRequestSelected) =>
+          (this.wordFilterRequestSelected = wordFilterRequestSelected),
       );
 
-    this.wordSenseService
-      .getAllWordSenseFilters()
-      .subscribe((wordSenseFilter) => {
-        this.wordSenseFilter = wordSenseFilter;
+    this.wordService
+      .getAllWordFilterOptions()
+      .subscribe((wordFilterOptions) => {
+        this.wordFilterOptions = wordFilterOptions;
 
-        this.initFormArray('types', 'selectedTypes', 'code');
+        this.initFormArray('partSpeeches', 'selectedPartSpeeches', 'code');
         this.initFormArray('levels', 'selectedLevels', 'code');
         this.initFormArray('categories', 'selectedCategories', 'id');
         this.initFormArray('persons', 'selectedPersons', 'code');
@@ -82,8 +83,8 @@ export class FilterWordSenseComponent implements OnInit {
     this.isPlatformDesktop.set(this.platform.is('desktop'));
   }
 
-  get selectedTypesFormArray() {
-    return this.addWordSenseFilterForm.get('selectedTypes') as FormArray;
+  get selectedPartSpeechesFormArray() {
+    return this.addWordSenseFilterForm.get('selectedPartSpeeches') as FormArray;
   }
 
   get selectedLevelsFormArray() {
@@ -115,12 +116,13 @@ export class FilterWordSenseComponent implements OnInit {
   }
 
   private initFormArray(
-    sourceProperty: keyof WordSenseFilterArrays,
+    sourceProperty: keyof WordFilterOptions,
     formArrayName: string,
     compareField: string,
   ): void {
-    const sourceArray = this.wordSenseFilter[sourceProperty];
-    const selectedArray = this.wordSenseFilterSelected?.[sourceProperty] || [];
+    const sourceArray = this.wordFilterOptions[sourceProperty];
+    const selectedArray =
+      this.wordFilterRequestSelected?.[sourceProperty] || [];
     let globalIndex = 0;
 
     const controls = sourceArray.map((item) => {
@@ -137,11 +139,11 @@ export class FilterWordSenseComponent implements OnInit {
   }
 
   private initFormArrayTenses() {
-    const sourceArray = this.wordSenseFilter.moodWithTenses;
+    const sourceArray = this.wordFilterOptions.moodWithTenses;
     let globalIndex = 0;
 
     const controls = [];
-    this.wordSenseFilter.moodWithTenses.forEach((moodWithTense) => {
+    this.wordFilterOptions.moodWithTenses.forEach((moodWithTense) => {
       moodWithTense.tenses.forEach((tense) => {
         tense.globalIndex = globalIndex;
         tense.isChecked = false;
@@ -152,7 +154,14 @@ export class FilterWordSenseComponent implements OnInit {
   }
 
   onSubmitAppyFilters() {
-    this.deckStateService.setWordSenseFilter(this.wordSenseFilterSelected);
+    this.deckStateService.setWordFilterRequest(this.wordFilterRequestSelected);
+    this.wordService
+      .getWordWithSensePaginatedAplyingWordSenseFilter(
+        0,
+        10,
+        this.wordFilterRequestSelected,
+      )
+      .subscribe((data) => console.log(data));
     this.modalController.dismiss();
   }
 
@@ -162,7 +171,7 @@ export class FilterWordSenseComponent implements OnInit {
     const successesAccuracyRangeControl = control.get('successesAccuracyRange');
     const textFilteredControl = control.get('textFiltered');
     const formArraysCheckboxControls = [
-      control.get('selectedTypes') as FormArray,
+      control.get('selectedPartSpeeches') as FormArray,
       control.get('selectedLevels') as FormArray,
       control.get('selectedCategories') as FormArray,
       control.get('selectedPersons') as FormArray,
@@ -189,60 +198,62 @@ export class FilterWordSenseComponent implements OnInit {
   };
 
   onChangeSuccessesAccuracyRange(selectedAccuracyRange) {
-    this.wordSenseFilterSelected.maxAccuracy =
+    this.wordFilterRequestSelected.maxAccuracy =
       selectedAccuracyRange.detail.value.upper;
-    this.wordSenseFilterSelected.minAccuracy =
+    this.wordFilterRequestSelected.minAccuracy =
       selectedAccuracyRange.detail.value.lower;
   }
 
-  onChangeSelectedTypes(event, type) {
+  onChangeSelectedPartSpeeches(event, partSpeech) {
     if (event.detail.checked) {
-      this.wordSenseFilterSelected.types.push(type);
+      this.wordFilterRequestSelected.partSpeeches.push(partSpeech);
     } else {
-      this.wordSenseFilterSelected.types.filter((type) => type.id != type.id);
+      this.wordFilterRequestSelected.partSpeeches.filter(
+        (partSpeech) => partSpeech.id != partSpeech.id,
+      );
     }
   }
   onChangeSelectedLevels(event, level) {
     if (event.detail.checked) {
-      this.wordSenseFilterSelected.levels.push(level);
+      this.wordFilterRequestSelected.levels.push(level);
     } else {
-      this.wordSenseFilterSelected.levels.filter(
+      this.wordFilterRequestSelected.levels.filter(
         (level) => level.id != level.id,
       );
     }
   }
   onChangeSelectedCategories(event, category) {
     if (event.detail.checked) {
-      this.wordSenseFilterSelected.categories.push(category);
+      this.wordFilterRequestSelected.categories.push(category);
     } else {
-      this.wordSenseFilterSelected.categories.filter(
+      this.wordFilterRequestSelected.categories.filter(
         (category) => category.id != category.id,
       );
     }
   }
   onChangeSelectedPersons(event, person) {
     if (event.detail.checked) {
-      this.wordSenseFilterSelected.persons.push(person);
+      this.wordFilterRequestSelected.persons.push(person);
     } else {
-      this.wordSenseFilterSelected.persons.filter(
+      this.wordFilterRequestSelected.persons.filter(
         (person) => person.id != person.id,
       );
     }
   }
   onChangeSelectedGenders(event, gender) {
     if (event.detail.checked) {
-      this.wordSenseFilterSelected.genders.push(gender);
+      this.wordFilterRequestSelected.genders.push(gender);
     } else {
-      this.wordSenseFilterSelected.genders.filter(
+      this.wordFilterRequestSelected.genders.filter(
         (gender) => gender.id != gender.id,
       );
     }
   }
   onChangeSelectedNumbers(event, number) {
     if (event.detail.checked) {
-      this.wordSenseFilterSelected.numbers.push(number);
+      this.wordFilterRequestSelected.numbers.push(number);
     } else {
-      this.wordSenseFilterSelected.numbers.filter(
+      this.wordFilterRequestSelected.numbers.filter(
         (number) => number.id != number.id,
       );
     }
@@ -251,16 +262,16 @@ export class FilterWordSenseComponent implements OnInit {
   onChangeSelectedTenses(event, tense, mood) {
     if (event.detail.checked) {
       tense.mood = mood;
-      this.wordSenseFilterSelected.tenses.push(tense);
+      this.wordFilterRequestSelected.tenses.push(tense);
     } else {
-      this.wordSenseFilterSelected.tenses.filter(
+      this.wordFilterRequestSelected.tenses.filter(
         (tense) => tense.code != tense.code,
       );
     }
   }
 
   getWordSenseFilterSelected(event) {
-    this.wordSenseFilterSelected.textFiltered = event.detail.value
+    this.wordFilterRequestSelected.textFiltered = event.detail.value
       .trim()
       .split(/\s+/);
   }

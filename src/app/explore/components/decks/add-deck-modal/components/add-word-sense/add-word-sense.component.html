@@ -18,8 +18,13 @@
               {{ wordWithSense.word.name }}</ion-checkbox
             >
             <ion-chip [disabled]="true">
-              {{ wordWithSense.word.type.code }}</ion-chip
+              {{ wordWithSense.word.partSpeech.code }}</ion-chip
             >
+            @if (wordWithSense.word.level) {
+              <ion-chip [disabled]="true">
+                {{ wordWithSense.word.level.code }}</ion-chip
+              >
+            }
           </ion-item>
           @for (wordSense of wordWithSense.wordSenses; track $index) {
             <div class="ion-padding" slot="content">

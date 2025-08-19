@@ -2,8 +2,8 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import {
+  WordFilterRequest,
   WordSense,
-  WordSenseFilter,
   WordWithSense,
 } from 'src/app/shared/models/word.interface';
 import { ToastService } from 'src/app/shared/services/toast.service';
@@ -26,7 +26,7 @@ export class AddWordSenseComponent implements OnInit {
   hasMoreWords = true;
   wordWithSenses: WordWithSense[] = [];
   wordSenseIds: number[] = [];
-  wordSenseFilter: WordSenseFilter;
+  wordFilterRequest: WordFilterRequest;
 
   constructor(
     private toastService: ToastService,
@@ -46,8 +46,10 @@ export class AddWordSenseComponent implements OnInit {
     this.deckStateService.setIsAddWordSenseInitialized(true);
 
     this.deckStateService
-      .getWordSenseFilter()
-      .subscribe((wordSenseFilter) => (this.wordSenseFilter = wordSenseFilter));
+      .getWordFilterRequest()
+      .subscribe(
+        (wordFilterRequest) => (this.wordFilterRequest = wordFilterRequest),
+      );
 
     this.createSelectedSensesFormArray(this.pageNumber, this.pageSize);
     this.addWordSensesForm.statusChanges.subscribe((validity) => {

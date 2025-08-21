@@ -26,6 +26,12 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+
+            &.underline {
+                border-bottom: 1px solid var(--ion-color-primary-contrast);
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
         }
     }
 }

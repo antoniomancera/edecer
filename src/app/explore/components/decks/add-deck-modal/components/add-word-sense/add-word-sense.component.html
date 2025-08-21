@@ -1,37 +1,48 @@
-<form
-  class="bottom"
-  (ngSubmit)="onSubmitSelectPhrases()"
-  [formGroup]="addWordSensesForm"
->
-  @for (wordWithSense of wordWithSenses; track $index) {
-    <ion-accordion-group>
-      <ion-accordion value="wordWithPhrase">
-        <ion-item slot="header">
-          <ion-checkbox
-            justify="start"
-            labelPlacement="end"
-            [checked]="wordWithSense.word.isChecked"
-            (ionChange)="onChangeWord($event, wordWithSense)"
-          >
-            {{ wordWithSense.word.name }} ({{
-              wordWithSense.word.type.type
-            }})</ion-checkbox
-          >
-        </ion-item>
-        @for (wordSense of wordWithSense.wordSenses; track $index) {
-          <div class="ion-padding" slot="content">
+<!-- <ion-searchbar show-clear-button="focus" value="Show on Focus"></ion-searchbar> -->
+<ion-button shape="round" (click)="onClickOpenFilterModal()" color="medium">
+  <ion-icon slot="start" name="funnel"></ion-icon>
+  filtros
+</ion-button>
+<form (ngSubmit)="onSubmitSelectPhrases()" [formGroup]="addWordSensesForm">
+  <div formArrayName="selectedSenses">
+    @for (wordWithSense of wordWithSenses; track $index) {
+      <ion-accordion-group>
+        <ion-accordion value="wordWithPhrase">
+          <ion-item slot="header">
             <ion-checkbox
+              justify="start"
               labelPlacement="end"
-              [formControl]="selectedSensesFormArray.at(wordSense.globalIndex)"
-              (ionChange)="onChangeWordSense(wordWithSense, wordSense)"
+              [checked]="wordWithSense.word.isChecked"
+              (ionChange)="onChangeWord($event, wordWithSense)"
             >
-              {{ wordSense.sense }}</ion-checkbox
+              {{ wordWithSense.word.name }}</ion-checkbox
             >
-          </div>
-        }
-      </ion-accordion>
-    </ion-accordion-group>
-  }
+            <ion-chip [disabled]="true">
+              {{ wordWithSense.word.partSpeech.code }}</ion-chip
+            >
+            @if (wordWithSense.word.level) {
+              <ion-chip [disabled]="true">
+                {{ wordWithSense.word.level.code }}</ion-chip
+              >
+            }
+          </ion-item>
+          @for (wordSense of wordWithSense.wordSenses; track $index) {
+            <div class="ion-padding" slot="content">
+              <ion-checkbox
+                labelPlacement="end"
+                [formControl]="
+                  selectedSensesFormArray.at(wordSense.globalIndex)
+                "
+                (ionChange)="onChangeWordSense(wordWithSense, wordSense)"
+              >
+                {{ wordSense.sense }}</ion-checkbox
+              >
+            </div>
+          }
+        </ion-accordion>
+      </ion-accordion-group>
+    }
+  </div>
   <ion-infinite-scroll
     [disabled]="!hasMoreWords"
     (ionInfinite)="onIonInfiniteGetNextPageWordSenses($event)"

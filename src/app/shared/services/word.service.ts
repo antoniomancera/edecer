@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Word, WordWithSense } from '../models/word.interface';
+import {
+  Word,
+  WordFilterOptions,
+  WordFilterRequest,
+  WordWithSense,
+} from '../models/word.interface';
 import { environment } from 'src/environments/environment';
 import { ConjugationTense } from '../models/conjugation-tense.model';
 
@@ -13,6 +18,8 @@ export class WordService {
   private readonly VERBS = '/allVerbs';
   private readonly CONJGUATION = '/conjugationVerb';
   private readonly PAGINATED = '/paginated';
+  private readonly FILTERS_ALL_GET = '/allFilters/';
+  private readonly APPLY_FILTERS = '/applyFilters';
 
   constructor(private http: HttpClient) {}
 
@@ -36,7 +43,7 @@ export class WordService {
       environment.BASE_URL +
         this.CONJGUATION +
         '/allComplete/wordSense/' +
-        wordSenseId
+        wordSenseId,
     );
   }
 
@@ -49,7 +56,7 @@ export class WordService {
    */
   getWordWithSensePaginated(
     pageNumber?: number,
-    pageSize?: number
+    pageSize?: number,
   ): Observable<WordWithSense[]> {
     return this.http.get<WordWithSense[]>(
       environment.BASE_URL +
@@ -58,7 +65,31 @@ export class WordService {
         '/' +
         pageNumber +
         '/' +
-        pageSize
+        pageSize,
+    );
+  }
+
+  getAllWordFilterOptions(): Observable<WordFilterOptions> {
+    return this.http.get<WordFilterOptions>(
+      environment.BASE_URL + this.WORD + this.FILTERS_ALL_GET,
+    );
+  }
+
+  getWordWithSensePaginatedAplyingWordSenseFilter(
+    pageNumber: number,
+    pageSize: number,
+    wordFilterRequest: WordFilterRequest,
+  ) {
+    return this.http.post<WordWithSense[]>(
+      environment.BASE_URL +
+        this.WORD +
+        this.APPLY_FILTERS +
+        this.PAGINATED +
+        '/' +
+        pageNumber +
+        '/' +
+        pageSize,
+      wordFilterRequest,
     );
   }
 }

@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
+import { deepEqual } from 'assert';
 
 import { BehaviorSubject } from 'rxjs';
+
+import {
+  compareWordFilterRequest,
+  WordFilterRequest,
+} from 'src/app/shared/models/word.interface';
 
 export enum AddDeckState {
   WORD_SENSE = 'WORD_SENSE',
@@ -34,7 +40,7 @@ export class DeckStateService {
   private wordSenseIds = new BehaviorSubject<number[]>(null);
   private wordPhraseTranslationIds = new BehaviorSubject<number[]>(null);
   private addDeckState = new BehaviorSubject<AddDeckState>(
-    AddDeckState.WORD_SENSE
+    AddDeckState.WORD_SENSE,
   );
   private addOrEdit = new BehaviorSubject<AddOrEdit>(AddOrEdit.ADD);
   private addDeckStateIndex = new BehaviorSubject<number>(null);
@@ -47,6 +53,20 @@ export class DeckStateService {
   private isAddPhraseFormValid = new BehaviorSubject<boolean>(false);
   private isAddTitleDescriptionFormValid = new BehaviorSubject<boolean>(false);
   private isActualFormValid = new BehaviorSubject<boolean>(false);
+
+  private wordFilterRequest = new BehaviorSubject<WordFilterRequest>({
+    textFiltered: [],
+    minAccuracy: null,
+    maxAccuracy: null,
+    partSpeeches: [],
+    levels: [],
+    categories: [],
+    persons: [],
+    genders: [],
+    numbers: [],
+    moodWithTenses: [],
+    tenses: [],
+  });
 
   getIsLoading() {
     return this.isLoading.asObservable();
@@ -106,6 +126,10 @@ export class DeckStateService {
 
   getIsActualFormValid() {
     return this.isActualFormValid.asObservable();
+  }
+
+  getWordFilterRequest() {
+    return this.wordFilterRequest.asObservable();
   }
 
   setIsLoading(isLoading: boolean) {
@@ -233,6 +257,14 @@ export class DeckStateService {
         break;
     }
     this.isActualFormValid.next(isActualFormValid);
+  }
+
+  setWordFilterRequest(wordFilterRequest: WordFilterRequest) {
+    if (
+      !compareWordFilterRequest(wordFilterRequest, this.wordFilterRequest.value)
+    ) {
+      this.wordFilterRequest.next(wordFilterRequest);
+    }
   }
 
   private getCurrentAddDeckStateIndexByState(addOrEdit: AddOrEdit) {

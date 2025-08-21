@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { minSelectedCheckboxes } from 'src/app/shared/validators/custom-validators';
@@ -25,7 +19,6 @@ export class AddPhraseComponent implements OnInit {
     private deckStateService: DeckStateService,
     private wordPhraseTranslationService: WordPhraseTranslationService,
     private fb: FormBuilder,
-    private cdRef: ChangeDetectorRef
   ) {
     this.addPhrasesForm = this.fb.group({
       selectedPhrases: new FormArray([], minSelectedCheckboxes()),

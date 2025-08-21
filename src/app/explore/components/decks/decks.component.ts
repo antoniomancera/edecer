@@ -48,7 +48,7 @@ export class DecksComponent implements OnInit {
   async onClickOpenEditDeck(selectedDeck: Deck) {
     this.selectedDeck = selectedDeck;
     const modal = await this.modalController.create({
-      component: EditDeckModalComponent,
+      component: InfoDeckModalComponent,
       componentProps: {
         selectedDeck: selectedDeck,
       },

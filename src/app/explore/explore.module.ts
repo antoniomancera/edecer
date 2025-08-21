@@ -10,7 +10,7 @@ import { ExplorePageRoutingModule } from './explore-routing.module';
 import { ExplorePage } from './explore.page';
 import { SharedModule } from '../shared/shared.module';
 import { DecksComponent } from './components/decks/decks.component';
-import { EditDeckModalComponent } from './components/edit-deck-modal/edit-deck-modal.component';
+import { InfoDeckModalComponent } from './components/info-deck-modal/info-deck-modal.component';
 import { WordsComponent } from './components/words/words.component';
 import { PhrasesComponent } from './components/phrases/phrases.component';
 import { VerbsComponent } from './components/verbs/verbs.component';
@@ -36,7 +36,7 @@ import { FilterWordSenseComponent } from './components/decks/add-deck-modal/comp
   declarations: [
     ExplorePage,
     DecksComponent,
-    EditDeckModalComponent,
+    InfoDeckModalComponent,
     WordsComponent,
     PhrasesComponent,
     VerbsComponent,

@@ -33,6 +33,10 @@ const routes: Routes = [
     path: 'add-deck',
     component: AddDeckModalComponent,
   },
+  {
+    path: 'edit-deck',
+    component: AddDeckModalComponent,
+  },
 ];
 
 @NgModule({

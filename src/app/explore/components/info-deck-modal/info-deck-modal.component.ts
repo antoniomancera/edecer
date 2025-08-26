@@ -1,10 +1,7 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  signal,
-  Signal,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, signal } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { ModalController } from '@ionic/angular';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { PhraseWithWordTranslations } from 'src/app/shared/models/phrase.interface';
@@ -14,6 +11,10 @@ import { DeckWordPhraseTranslationService } from 'src/app/shared/services/deck-w
 import { PhraseService } from 'src/app/shared/services/phrase.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { WordTranslationService } from 'src/app/shared/services/word-translation.service';
+import {
+  AddEditOrInfo,
+  DeckStateService,
+} from '../decks/add-deck-modal/services/deck-state.service';
 
 @Component({
   selector: 'app-info-deck-modal',
@@ -40,6 +41,9 @@ export class InfoDeckModalComponent {
     private wordTranslationService: WordTranslationService,
     private deckWordPhraseTranslationService: DeckWordPhraseTranslationService,
     private cdRef: ChangeDetectorRef,
+    private modalController: ModalController,
+    private deckStateService: DeckStateService,
+    private router: Router,
   ) {}
 
   onChangeSegment(selectedSegment: string) {
@@ -109,5 +113,12 @@ export class InfoDeckModalComponent {
         word.word.isLoading = false;
       });
     console.log(word);
+  }
+
+  onClickEditDeck() {
+    this.modalController.dismiss();
+    this.deckStateService.setAddEditOrInfo(AddEditOrInfo.EDIT);
+    this.deckStateService.setSelectedDeck(this.selectedDeck);
+    this.router.navigate(['decks/edit-deck']);
   }
 }

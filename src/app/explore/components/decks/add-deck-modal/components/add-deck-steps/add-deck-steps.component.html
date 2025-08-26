@@ -1,22 +1,37 @@
 <ion-toolbar>
-  <ion-title>{{
-    "explore.decks.add-edit-deck-modal.add-title" | transloco | titlecase
-  }}</ion-title>
+  <ion-title>
+    @if (selectedDeck()) {
+      {{ selectedDeck().name }}
+    } @else {
+      {{
+        "explore.decks.add-edit-deck-modal.add-title" | transloco | titlecase
+      }}
+    }
+  </ion-title>
   <ion-grid class="wizard-stepper ion-no-padding">
     <ion-row class="segments">
-      <ion-col class="segment" [class.filled]="actualStateIndex >= 0"></ion-col>
-      <ion-col class="segment" [class.filled]="actualStateIndex >= 1"></ion-col>
-      <ion-col class="segment" [class.filled]="actualStateIndex >= 2"></ion-col>
+      <ion-col
+        class="segment"
+        [class.filled]="actualStateIndex() >= 0"
+      ></ion-col>
+      <ion-col
+        class="segment"
+        [class.filled]="actualStateIndex() >= 1"
+      ></ion-col>
+      <ion-col
+        class="segment"
+        [class.filled]="actualStateIndex() >= 2"
+      ></ion-col>
     </ion-row>
 
     <ion-row class="step-labels">
-      <ion-col class="step-label" [class.underline]="actualStateIndex == 0">
+      <ion-col class="step-label" [class.underline]="actualStateIndex() == 0">
         {{ "global.words" | transloco | titlecase }}
       </ion-col>
-      <ion-col class="step-label" [class.underline]="actualStateIndex == 1">
+      <ion-col class="step-label" [class.underline]="actualStateIndex() == 1">
         {{ "global.phrases" | transloco | titlecase }}
       </ion-col>
-      <ion-col class="step-label" [class.underline]="actualStateIndex == 2">
+      <ion-col class="step-label" [class.underline]="actualStateIndex() == 2">
         {{ "global.info" | transloco | titlecase }}
       </ion-col>
     </ion-row>

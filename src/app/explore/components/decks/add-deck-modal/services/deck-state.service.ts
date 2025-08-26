@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { deepEqual } from 'assert';
 
 import { BehaviorSubject } from 'rxjs';
+import { Deck } from 'src/app/shared/models/deck.interface';
 
 import {
   compareWordFilterRequest,
@@ -14,21 +15,21 @@ export enum AddDeckState {
   TITLE = 'TITLE',
 }
 
-export enum AddOrEdit {
+export enum AddEditOrInfo {
   ADD = 'ADD',
   EDIT = 'EDIT',
 }
 
 export const DECK_STATE_ORDER = {
-  [AddOrEdit.ADD]: [
+  [AddEditOrInfo.ADD]: [
     AddDeckState.WORD_SENSE,
     AddDeckState.PHRASE,
     AddDeckState.TITLE,
   ],
-  [AddOrEdit.EDIT]: [
-    AddDeckState.TITLE,
+  [AddEditOrInfo.EDIT]: [
     AddDeckState.WORD_SENSE,
     AddDeckState.PHRASE,
+    AddDeckState.TITLE,
   ],
 } as const;
 
@@ -42,7 +43,7 @@ export class DeckStateService {
   private addDeckState = new BehaviorSubject<AddDeckState>(
     AddDeckState.WORD_SENSE,
   );
-  private addOrEdit = new BehaviorSubject<AddOrEdit>(AddOrEdit.ADD);
+  private addEditOrInfo = new BehaviorSubject<AddEditOrInfo>(AddEditOrInfo.ADD);
   private addDeckStateIndex = new BehaviorSubject<number>(null);
   private isFirstStep = new BehaviorSubject<boolean>(true);
   private isLastStep = new BehaviorSubject<boolean>(false);
@@ -53,6 +54,7 @@ export class DeckStateService {
   private isAddPhraseFormValid = new BehaviorSubject<boolean>(false);
   private isAddTitleDescriptionFormValid = new BehaviorSubject<boolean>(false);
   private isActualFormValid = new BehaviorSubject<boolean>(false);
+  private selectedDeck = new BehaviorSubject<Deck>(null);
 
   private wordFilterRequest = new BehaviorSubject<WordFilterRequest>({
     textFiltered: [],
@@ -84,8 +86,8 @@ export class DeckStateService {
     return this.wordPhraseTranslationIds.asObservable();
   }
 
-  getAddOrEdit() {
-    return this.addOrEdit.asObservable();
+  getAddEditOrInfo() {
+    return this.addEditOrInfo.asObservable();
   }
 
   getAddDeckStateIndex() {
@@ -132,6 +134,10 @@ export class DeckStateService {
     return this.wordFilterRequest.asObservable();
   }
 
+  getSelectedDeck() {
+    return this.selectedDeck.asObservable();
+  }
+
   setIsLoading(isLoading: boolean) {
     this.isLoading.next(isLoading);
   }
@@ -151,8 +157,8 @@ export class DeckStateService {
     this.wordPhraseTranslationIds.next(phraseTranslationIds);
   }
 
-  setAddOrEdit(addOrdEdit: AddOrEdit) {
-    this.addOrEdit.next(addOrdEdit);
+  setAddEditOrInfo(addEditOrInfo: AddEditOrInfo) {
+    this.addEditOrInfo.next(addEditOrInfo);
   }
 
   setAddDeckStateIndex(addDeckStateIndex: number) {
@@ -160,11 +166,11 @@ export class DeckStateService {
   }
 
   setNextState() {
-    const addOrEdit = this.addOrEdit.value;
-    const deckState = DECK_STATE_ORDER[addOrEdit];
+    const addEditOrInfo = this.addEditOrInfo.value;
+    const deckState = DECK_STATE_ORDER[addEditOrInfo];
     const deckStateLength = deckState.length;
     const currentAddDeckStateIndex =
-      this.getCurrentAddDeckStateIndexByState(addOrEdit);
+      this.getCurrentAddDeckStateIndexByState(addEditOrInfo);
 
     let nextState;
     if (currentAddDeckStateIndex === deckStateLength) {
@@ -179,10 +185,10 @@ export class DeckStateService {
   }
 
   setPreviousState() {
-    const addOrEdit = this.addOrEdit.value;
-    const deckState = DECK_STATE_ORDER[addOrEdit];
+    const addEditOrInfo = this.addEditOrInfo.value;
+    const deckState = DECK_STATE_ORDER[addEditOrInfo];
     const currentAddDeckStateIndex =
-      this.getCurrentAddDeckStateIndexByState(addOrEdit);
+      this.getCurrentAddDeckStateIndexByState(addEditOrInfo);
 
     let nextState;
     if (currentAddDeckStateIndex === 0) {
@@ -196,8 +202,8 @@ export class DeckStateService {
   }
 
   setIsFirstStep() {
-    const addOrEdit = this.addOrEdit.value;
-    const deckState = DECK_STATE_ORDER[addOrEdit];
+    const addEditOrInfo = this.addEditOrInfo.value;
+    const deckState = DECK_STATE_ORDER[addEditOrInfo];
     if (deckState[0] === this.addDeckState.value) {
       this.isFirstStep.next(true);
       return;
@@ -206,8 +212,8 @@ export class DeckStateService {
   }
 
   setIsLastStep() {
-    const addOrEdit = this.addOrEdit.value;
-    const deckState = DECK_STATE_ORDER[addOrEdit];
+    const addEditOrInfo = this.addEditOrInfo.value;
+    const deckState = DECK_STATE_ORDER[addEditOrInfo];
     const deckStateLength = deckState.length;
     if (deckState[deckStateLength - 1] === this.addDeckState.value) {
       this.isLastStep.next(true);
@@ -267,7 +273,11 @@ export class DeckStateService {
     }
   }
 
-  private getCurrentAddDeckStateIndexByState(addOrEdit: AddOrEdit) {
-    return DECK_STATE_ORDER[addOrEdit].indexOf(this.addDeckState.value);
+  setSelectedDeck(deck: Deck) {
+    return this.selectedDeck.next(deck);
+  }
+
+  private getCurrentAddDeckStateIndexByState(addEditOrInfo: AddEditOrInfo) {
+    return DECK_STATE_ORDER[addEditOrInfo].indexOf(this.addDeckState.value);
   }
 }

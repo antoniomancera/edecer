@@ -5,6 +5,8 @@ import {
   Word,
   WordFilterOptions,
   WordFilterRequest,
+  WordSenseInfoWithoutWord,
+  WordWithAttemptsAndSuccess,
   WordWithSense,
 } from '../models/word.interface';
 import { environment } from 'src/environments/environment';
@@ -20,6 +22,8 @@ export class WordService {
   private readonly PAGINATED = '/paginated';
   private readonly FILTERS_ALL_GET = '/allFilters/';
   private readonly APPLY_FILTERS = '/applyFilters';
+  private readonly WITH_ATTEMPTS_AND_SUCCESS = '/withAttemptsAndSuccesses';
+  private readonly WORD_SENSE_INFO = '/wordSenseInfo';
 
   constructor(private http: HttpClient) {}
 
@@ -90,6 +94,28 @@ export class WordService {
         '/' +
         pageSize,
       wordFilterRequest,
+    );
+  }
+
+  getWordWithAttemptsAndSuccessPaginated(
+    pageNumber: number,
+    pageSize: number,
+  ): Observable<WordWithAttemptsAndSuccess[]> {
+    return this.http.get<WordWithAttemptsAndSuccess[]>(
+      environment.BASE_URL +
+        this.WORD +
+        this.WITH_ATTEMPTS_AND_SUCCESS +
+        this.PAGINATED +
+        '/' +
+        pageNumber +
+        '/' +
+        pageSize,
+    );
+  }
+
+  getWordSenseInfosWithoutWordByWordId(wordId: number) {
+    return this.http.get<WordSenseInfoWithoutWord[]>(
+      environment.BASE_URL + this.WORD + this.WORD_SENSE_INFO + '/' + wordId,
     );
   }
 }

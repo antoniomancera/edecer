@@ -5,7 +5,11 @@ import { ModalController } from '@ionic/angular';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { MessagingService } from 'src/app/shared/services/messaging.service';
-import { EditDeckModalComponent } from '../edit-deck-modal/edit-deck-modal.component';
+import { InfoDeckModalComponent } from '../info-deck-modal/info-deck-modal.component';
+import {
+  AddEditOrInfo,
+  DeckStateService,
+} from './add-deck-modal/services/deck-state.service';
 
 @Component({
   selector: 'app-decks',
@@ -28,6 +32,7 @@ export class DecksComponent implements OnInit {
     private route: ActivatedRoute,
     private modalController: ModalController,
     private router: Router,
+    private deckStateService: DeckStateService,
   ) {}
 
   ngOnInit() {
@@ -67,6 +72,7 @@ export class DecksComponent implements OnInit {
   }
 
   onClickNavigateAddDeck() {
+    this.deckStateService.setAddEditOrInfo(AddEditOrInfo.ADD);
     this.router.navigate(['decks/add-deck']);
   }
 }

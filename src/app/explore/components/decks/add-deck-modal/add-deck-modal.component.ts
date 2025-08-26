@@ -1,19 +1,18 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  signal,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, signal, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Platform } from '@ionic/angular';
 
-import { AddDeckState, DeckStateService } from './services/deck-state.service';
+import { combineLatest, map } from 'rxjs';
+
+import {
+  AddDeckState,
+  AddEditOrInfo,
+  DeckStateService,
+} from './services/deck-state.service';
 import { AddWordSenseComponent } from './components/add-word-sense/add-word-sense.component';
 import { AddTitleDescriptionComponent } from './components/add-title-description/add-title-description.component';
 import { AddPhraseComponent } from './components/add-phrase/add-phrase.component';
-import { combineLatest, map } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-deck-modal',
@@ -27,9 +26,11 @@ export class AddDeckModalComponent implements OnInit {
   @ViewChild('addTitleDescription')
   addTitleDescription!: AddTitleDescriptionComponent;
 
+  addEditOrInfoSelected = signal<AddEditOrInfo>(null);
   isLoading = signal<boolean>(null);
   isActualFormValid = signal<boolean>(null);
   addDeckState = AddDeckState;
+  addEditOrInfo = AddEditOrInfo;
   actualState = signal<AddDeckState>(AddDeckState.WORD_SENSE);
   isFirstStep = signal<boolean>(null);
   isLastStep = signal<boolean>(null);
@@ -52,6 +53,7 @@ export class AddDeckModalComponent implements OnInit {
     }
 
     combineLatest([
+      this.deckStateService.getAddEditOrInfo(),
       this.deckStateService.getIsLoading(),
       this.deckStateService.getAddDeckState(),
       this.deckStateService.getIsFirstStep(),
@@ -64,6 +66,7 @@ export class AddDeckModalComponent implements OnInit {
       .pipe(
         map(
           ([
+            addEditOrInfoSelected,
             isLoading,
             actualState,
             isFirstStep,
@@ -73,6 +76,7 @@ export class AddDeckModalComponent implements OnInit {
             isAddTitleItialized,
             isActualFormValid,
           ]) => {
+            this.addEditOrInfoSelected.set(addEditOrInfoSelected);
             this.isLoading.set(isLoading);
             this.actualState.set(actualState);
             this.isFirstStep.set(isFirstStep);
@@ -85,9 +89,6 @@ export class AddDeckModalComponent implements OnInit {
         ),
       )
       .subscribe({
-        next: () => {
-          this.isLoading.set(false);
-        },
         error: (err) => {
           this.isLoading.set(false);
         },

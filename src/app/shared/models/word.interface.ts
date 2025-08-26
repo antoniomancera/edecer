@@ -13,6 +13,8 @@ export interface Word {
   partSpeech: PartSpeech;
   level: Level;
   isChecked?: boolean;
+  isLoading?: boolean;
+  color?: string;
 }
 
 export interface WordSense {
@@ -26,6 +28,20 @@ export interface WordSense {
 export interface WordWithSense {
   word: Word;
   wordSenses: WordSense[];
+}
+
+export interface WordWithAttemptsAndSuccess {
+  word: Word;
+  attempts: number;
+  success: number;
+  wordSenseInfoWithoutWord?: WordSenseInfoWithoutWord[];
+}
+
+export interface WordSenseInfoWithoutWord {
+  wordSense: WordSense;
+  attempts: number;
+  success: number;
+  categories: Category[];
 }
 
 export interface WordFilterOptions {

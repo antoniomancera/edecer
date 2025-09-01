@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { ModalController } from '@ionic/angular';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { MessagingService } from 'src/app/shared/services/messaging.service';
-import { EditDeckModalComponent } from '../edit-deck-modal/edit-deck-modal.component';
+import { InfoDeckModalComponent } from '../info-deck-modal/info-deck-modal.component';
+import {
+  AddEditOrInfo,
+  DeckStateService,
+} from './add-deck-modal/services/deck-state.service';
 
 @Component({
   selector: 'app-decks',
@@ -21,10 +26,13 @@ export class DecksComponent implements OnInit {
     header: '',
     subHeader: '',
   };
+
   constructor(
     private messagingService: MessagingService,
     private route: ActivatedRoute,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private router: Router,
+    private deckStateService: DeckStateService,
   ) {}
 
   ngOnInit() {
@@ -45,11 +53,10 @@ export class DecksComponent implements OnInit {
   async onClickOpenEditDeck(selectedDeck: Deck) {
     this.selectedDeck = selectedDeck;
     const modal = await this.modalController.create({
-      component: EditDeckModalComponent,
+      component: InfoDeckModalComponent,
       componentProps: {
         selectedDeck: selectedDeck,
       },
-
       initialBreakpoint: 0.9,
     });
     await modal.present();
@@ -62,5 +69,10 @@ export class DecksComponent implements OnInit {
 
   setIsEditDeckModalOpenFalse() {
     this.isEditDeckModalOpen = false;
+  }
+
+  onClickNavigateAddDeck() {
+    this.deckStateService.setAddEditOrInfo(AddEditOrInfo.ADD);
+    this.router.navigate(['decks/add-deck']);
   }
 }

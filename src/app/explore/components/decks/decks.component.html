@@ -19,4 +19,9 @@
       {{ deck.name }}
     </ion-card>
   </div>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button (click)="onClickNavigateAddDeck()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

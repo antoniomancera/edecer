@@ -1,0 +1,37 @@
+.wizard-stepper {
+    .segments {
+        margin-top: 1rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .segment {
+        height: 10px;
+        border-radius: 4px;
+        transition: background-color 300ms;
+        margin-left: 1rem;
+        margin-right: 1rem;
+
+        &.filled {
+            background-color: var(--ion-color-primary);
+        }
+    }
+
+    .step-labels {
+        text-align: center;
+        font-size: 0.8rem;
+        color: var(--ion-color-dark);
+
+        .step-label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            &.underline {
+                border-bottom: 1px solid var(--ion-color-primary-contrast);
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+        }
+    }
+}

@@ -1,0 +1,20 @@
+<form
+  class="bottom"
+  (ngSubmit)="onSubmitSelectTitle()"
+  [formGroup]="addPhrasesForm"
+>
+  <ion-list>
+    @for (wordPhraseTranslation of wordPhraseTranslations; track $index) {
+      <ion-item>
+        <ion-checkbox
+          labelPlacement="end"
+          [formControl]="
+            selectedPhrasesFormArray.at(wordPhraseTranslation.globalIndex)
+          "
+        >
+          {{ wordPhraseTranslation.phraseTranslation.phraseFr }}</ion-checkbox
+        >
+      </ion-item>
+    }
+  </ion-list>
+</form>

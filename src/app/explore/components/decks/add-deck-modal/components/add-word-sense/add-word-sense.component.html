@@ -1,0 +1,101 @@
+<ion-button shape="round" (click)="onClickOpenFilterModal()" color="medium">
+  <ion-icon slot="start" name="funnel"></ion-icon>
+  filtros
+</ion-button>
+@for (wordFilterRequest of wordFilterRequestAvailables(); track $index) {
+  <ion-chip
+    [color]="wordFilterRequest.isChecked ? 'primary' : null"
+    (click)="getWordWithSensePaginatedAplyingWordSenseFilter(wordFilterRequest)"
+  >
+    {{ wordFilterRequest.name }}
+  </ion-chip>
+}
+
+<form (ngSubmit)="onSubmitSelectPhrases()" [formGroup]="addWordSensesForm">
+  <div formArrayName="selectedSenses">
+    <ion-accordion-group>
+      @for (
+        wordWithAttemptsAndSuccess of wordWithAttemptsAndSuccesses;
+        track $index
+      ) {
+        <ion-accordion
+          [value]="wordWithAttemptsAndSuccess"
+          [disabled]="wordWithAttemptsAndSuccess.word.isLoading"
+          (click)="onClickGetWordSensesByWord(wordWithAttemptsAndSuccess)"
+        >
+          <ion-item slot="header" button="true">
+            <ion-checkbox
+              slot="start"
+              [checked]="wordWithAttemptsAndSuccess.word.isChecked"
+              (click)="$event.stopPropagation()"
+              (ionChange)="
+                onClickToggleWord($event, wordWithAttemptsAndSuccess)
+              "
+            >
+            </ion-checkbox>
+
+            <ion-label>{{ wordWithAttemptsAndSuccess.word.name }}</ion-label>
+
+            <ion-chip [disabled]="true">
+              {{ wordWithAttemptsAndSuccess.word.partSpeech.code }}
+            </ion-chip>
+            <ion-chip [disabled]="true">
+              {{ wordWithAttemptsAndSuccess.word.level.code }}
+              {{ wordWithAttemptsAndSuccess.word.level.color }}
+            </ion-chip>
+            <ion-chip [disabled]="true">
+              @if (wordWithAttemptsAndSuccess.attempts) {
+                {{
+                  wordWithAttemptsAndSuccess.success /
+                    wordWithAttemptsAndSuccess.attempts
+                }}
+              } @else {
+                0
+              }
+              %
+            </ion-chip>
+          </ion-item>
+
+          @if (wordWithAttemptsAndSuccess.word.isLoading) {
+            <div slot="content">
+              <ion-spinner></ion-spinner>
+            </div>
+          } @else {
+            @for (
+              wordSense of wordWithAttemptsAndSuccess.wordSenseInfoWithoutWord;
+              track $index
+            ) {
+              <div class="ion-padding" slot="content">
+                <ion-checkbox
+                  labelPlacement="end"
+                  name="wordSenseName"
+                  [formControl]="
+                    selectedSensesFormArray.at(wordSense.wordSense.globalIndex)
+                  "
+                  (ionChange)="
+                    onClickToggleWordSense(
+                      $event,
+                      wordWithAttemptsAndSuccess,
+                      wordSense
+                    )
+                  "
+                >
+                  {{ wordSense.wordSense.sense }}
+                </ion-checkbox>
+              </div>
+            }
+            @if (isLoading()) {
+              <ion-spinner class="spinner-container"></ion-spinner>
+            }
+          }
+        </ion-accordion>
+      }
+    </ion-accordion-group>
+  </div>
+  <ion-infinite-scroll
+    [disabled]="!hasMoreWords()"
+    (ionInfinite)="getWordWithAttemptsAndSuccessPaginated($event)"
+  >
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</form>

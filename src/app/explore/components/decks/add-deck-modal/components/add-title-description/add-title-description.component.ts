@@ -25,7 +25,7 @@ export class AddTitleDescriptionComponent implements OnInit {
     private deckWordPhraseTranslationService: DeckWordPhraseTranslationService,
     private deckStateService: DeckStateService,
     private mondalController: ModalController,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
   ) {
     this.addTitleForm = new FormGroup({
       name: new FormControl<string>(null, [
@@ -54,8 +54,9 @@ export class AddTitleDescriptionComponent implements OnInit {
       .subscribe((wordPhraseTranslationIds) => {
         this.wordPhraseTranslationIds = wordPhraseTranslationIds;
         this.addTitleForm.controls.description.setValue(
-          wordPhraseTranslationIds.length + ' mots dans le nouveau paquet'
+          wordPhraseTranslationIds.length + ' mots dans le nouveau paquet',
         );
+        this.deckStateService.setIsLoading(false);
       });
 
     this.addTitleForm.statusChanges
@@ -72,14 +73,14 @@ export class AddTitleDescriptionComponent implements OnInit {
       .createDeckWithWordPhraseTranslation(
         this.addTitleForm.controls.name.getRawValue(),
         this.addTitleForm.controls.description.getRawValue(),
-        this.wordPhraseTranslationIds
+        this.wordPhraseTranslationIds,
       )
       .subscribe({ next: () => this.mondalController.dismiss(null) });
   }
 
   customCharactersRemainingFormatter = (
     inputLength: number,
-    maxLength: number
+    maxLength: number,
   ) => {
     return `${maxLength - inputLength} ` + this.customCharactersRemaining;
   };

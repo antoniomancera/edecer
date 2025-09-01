@@ -113,6 +113,15 @@ export class DeckWordPhraseTranslationService {
     );
   }
 
+  /**
+   * Returns a page of WordWithAttemptsAndSuccess of a deck, that is a list of Words with their number of attempts
+   * and accuracy in a deck
+   *
+   * @param deckId
+   * @param pageNumber
+   * @param pageSize
+   * @return HTTP respond with a page of WordWithAttemptsAndSuccessDTO of a deck
+   */
   getWordsWithAttemptsAndSuccessPaginatedByDeckId(
     deckId: number,
     pageNumber: number,
@@ -132,6 +141,13 @@ export class DeckWordPhraseTranslationService {
     );
   }
 
+  /**
+   * Returns the senses of a Word alongside all their categories number of attempts(in  general) and accuracy
+   *
+   * @param deckId
+   * @param wordId
+   * @return HTTP respond with a page of WordSenseInfoWithoutWordDTO of a deck
+   */
   getWordSenseInfosWithoutWordByWordIdAndDeckId(
     deckId: number,
     wordId: number,
@@ -147,6 +163,13 @@ export class DeckWordPhraseTranslationService {
     );
   }
 
+  /**
+   * Return a map with the words and wordSenses already in the deck, alongside the first page of a WordWithAttemptsAndSuccesses
+   *
+   * @param deckId
+   * @param pageSize
+   * @return HTTP respond with DeckEditInitInfoDTO
+   */
   getDeckEditInit(
     deckId: number,
     pageSize: number,

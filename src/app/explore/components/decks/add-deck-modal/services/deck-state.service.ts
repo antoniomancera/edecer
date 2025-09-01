@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { deepEqual } from 'assert';
 
 import { BehaviorSubject } from 'rxjs';
-import { Deck } from 'src/app/shared/models/deck.interface';
 
+import { Deck } from 'src/app/shared/models/deck.interface';
 import {
   compareWordFilterRequest,
   WordFilterRequest,
-} from 'src/app/shared/models/word.interface';
+} from 'src/app/shared/models/word-filter.model';
 
 export enum AddDeckState {
   WORD_SENSE = 'WORD_SENSE',
@@ -55,20 +54,12 @@ export class DeckStateService {
   private isAddTitleDescriptionFormValid = new BehaviorSubject<boolean>(false);
   private isActualFormValid = new BehaviorSubject<boolean>(false);
   private selectedDeck = new BehaviorSubject<Deck>(null);
-
-  private wordFilterRequest = new BehaviorSubject<WordFilterRequest>({
-    textFiltered: [],
-    minAccuracy: null,
-    maxAccuracy: null,
-    partSpeeches: [],
-    levels: [],
-    categories: [],
-    persons: [],
-    genders: [],
-    numbers: [],
-    moodWithTenses: [],
-    tenses: [],
-  });
+  private wordFilterRequest = new BehaviorSubject<WordFilterRequest>(
+    this.getWordFilterRequestAll(),
+  );
+  private wordFilterRequestAvailables = new BehaviorSubject<
+    WordFilterRequest[]
+  >(this.getWordFilterRequestAvailablesInit());
 
   getIsLoading() {
     return this.isLoading.asObservable();
@@ -136,6 +127,10 @@ export class DeckStateService {
 
   getSelectedDeck() {
     return this.selectedDeck.asObservable();
+  }
+
+  getWordFilterRequestAvailables() {
+    return this.wordFilterRequestAvailables.asObservable();
   }
 
   setIsLoading(isLoading: boolean) {
@@ -277,7 +272,56 @@ export class DeckStateService {
     return this.selectedDeck.next(deck);
   }
 
+  setwordFilterRequestAvailables(
+    wordFilterRequestAvailables: WordFilterRequest[],
+  ) {
+    return this.wordFilterRequestAvailables.next(wordFilterRequestAvailables);
+  }
+
+  addwordFilterRequestAvailables(wordFilterRequest: WordFilterRequest) {
+    return this.wordFilterRequestAvailables.next([
+      ...this.wordFilterRequestAvailables.value,
+      wordFilterRequest,
+    ]);
+  }
+
   private getCurrentAddDeckStateIndexByState(addEditOrInfo: AddEditOrInfo) {
     return DECK_STATE_ORDER[addEditOrInfo].indexOf(this.addDeckState.value);
+  }
+
+  private getWordFilterRequestAvailablesInit(): WordFilterRequest[] {
+    const wordFilterRequestA1: WordFilterRequest = {
+      name: 'A1',
+      levels: [{ code: 'A1' }],
+    };
+    const wordFilterRequestMin20Max90 = {
+      name: '20-90%',
+      minAccuracy: 20,
+      maxAccuracy: 90,
+    };
+
+    return [
+      this.getWordFilterRequestAll(),
+      wordFilterRequestA1,
+      wordFilterRequestMin20Max90,
+    ];
+  }
+
+  private getWordFilterRequestAll(): WordFilterRequest {
+    return {
+      name: 'All',
+      isChecked: true,
+      textFiltered: [],
+      minAccuracy: null,
+      maxAccuracy: null,
+      partSpeeches: [],
+      levels: [],
+      categories: [],
+      persons: [],
+      genders: [],
+      numbers: [],
+      moodWithTenses: [],
+      tenses: [],
+    };
   }
 }

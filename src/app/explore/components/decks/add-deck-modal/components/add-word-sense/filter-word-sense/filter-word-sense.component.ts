@@ -10,13 +10,12 @@ import {
 
 import { ModalController, Platform } from '@ionic/angular';
 
+import { DeckStateService } from '../../../services/deck-state.service';
+import { WordService } from 'src/app/shared/services/word.service';
 import {
   WordFilterOptions,
   WordFilterRequest,
-} from 'src/app/shared/models/word.interface';
-
-import { DeckStateService } from '../../../services/deck-state.service';
-import { WordService } from 'src/app/shared/services/word.service';
+} from 'src/app/shared/models/word-filter.model';
 
 @Component({
   selector: 'app-filter-word-sense',
@@ -27,7 +26,19 @@ export class FilterWordSenseComponent implements OnInit {
   addWordSenseFilterForm: FormGroup;
   isPlatformDesktop = signal<boolean>(null);
   wordFilterOptions: WordFilterOptions;
-  wordFilterRequestSelected: WordFilterRequest;
+  wordFilterRequestSelected: WordFilterRequest = {
+    textFiltered: [],
+    minAccuracy: null,
+    maxAccuracy: null,
+    partSpeeches: [],
+    levels: [],
+    categories: [],
+    persons: [],
+    genders: [],
+    numbers: [],
+    moodWithTenses: [],
+    tenses: [],
+  };
 
   isLoading = signal(true);
 
@@ -56,12 +67,12 @@ export class FilterWordSenseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.deckStateService
-      .getWordFilterRequest()
-      .subscribe(
-        (wordFilterRequestSelected) =>
-          (this.wordFilterRequestSelected = wordFilterRequestSelected),
-      );
+    // this.deckStateService
+    //   .getWordFilterRequest()
+    //   .subscribe(
+    //     (wordFilterRequestSelected) =>
+    //       (this.wordFilterRequestSelected = wordFilterRequestSelected),
+    //   );
 
     this.wordService
       .getAllWordFilterOptions()
@@ -115,54 +126,16 @@ export class FilterWordSenseComponent implements OnInit {
     return this.addWordSenseFilterForm.get('selectedTenses') as FormArray;
   }
 
-  private initFormArray(
-    sourceProperty: keyof WordFilterOptions,
-    formArrayName: string,
-    compareField: string,
-  ): void {
-    const sourceArray = this.wordFilterOptions[sourceProperty];
-    const selectedArray =
-      this.wordFilterRequestSelected?.[sourceProperty] || [];
-    let globalIndex = 0;
-
-    const controls = sourceArray.map((item) => {
-      item.globalIndex = globalIndex;
-      globalIndex++;
-      const isSelected = selectedArray.some(
-        (selectedItem) => item[compareField] === selectedItem[compareField],
-      );
-      return new FormControl(isSelected);
-    });
-
-    const formArray = new FormArray(controls);
-    this.addWordSenseFilterForm.setControl(formArrayName, formArray);
-  }
-
-  private initFormArrayTenses() {
-    const sourceArray = this.wordFilterOptions.moodWithTenses;
-    let globalIndex = 0;
-
-    const controls = [];
-    this.wordFilterOptions.moodWithTenses.forEach((moodWithTense) => {
-      moodWithTense.tenses.forEach((tense) => {
-        tense.globalIndex = globalIndex;
-        tense.isChecked = false;
-        globalIndex++;
-        controls.push(new FormControl(false));
-      });
-    });
-  }
-
   onSubmitAppyFilters() {
     this.deckStateService.setWordFilterRequest(this.wordFilterRequestSelected);
-    this.wordService
-      .getWordWithSensePaginatedAplyingWordSenseFilter(
-        0,
-        10,
-        this.wordFilterRequestSelected,
-      )
-      .subscribe((data) => console.log(data));
-    this.modalController.dismiss();
+    this.deckStateService.addwordFilterRequestAvailables(
+      this.wordFilterRequestSelected,
+    );
+    this.modalController.dismiss(this.wordFilterRequestSelected);
+  }
+
+  onClickBack() {
+    this.modalController.dismiss(this.wordFilterRequestSelected);
   }
 
   atLeastOneFilterSelected: ValidatorFn = (
@@ -213,6 +186,7 @@ export class FilterWordSenseComponent implements OnInit {
       );
     }
   }
+
   onChangeSelectedLevels(event, level) {
     if (event.detail.checked) {
       this.wordFilterRequestSelected.levels.push(level);
@@ -222,6 +196,7 @@ export class FilterWordSenseComponent implements OnInit {
       );
     }
   }
+
   onChangeSelectedCategories(event, category) {
     if (event.detail.checked) {
       this.wordFilterRequestSelected.categories.push(category);
@@ -231,6 +206,7 @@ export class FilterWordSenseComponent implements OnInit {
       );
     }
   }
+
   onChangeSelectedPersons(event, person) {
     if (event.detail.checked) {
       this.wordFilterRequestSelected.persons.push(person);
@@ -240,6 +216,7 @@ export class FilterWordSenseComponent implements OnInit {
       );
     }
   }
+
   onChangeSelectedGenders(event, gender) {
     if (event.detail.checked) {
       this.wordFilterRequestSelected.genders.push(gender);
@@ -249,6 +226,7 @@ export class FilterWordSenseComponent implements OnInit {
       );
     }
   }
+
   onChangeSelectedNumbers(event, number) {
     if (event.detail.checked) {
       this.wordFilterRequestSelected.numbers.push(number);
@@ -274,5 +252,42 @@ export class FilterWordSenseComponent implements OnInit {
     this.wordFilterRequestSelected.textFiltered = event.detail.value
       .trim()
       .split(/\s+/);
+  }
+
+  private initFormArray(
+    sourceProperty: keyof WordFilterOptions,
+    formArrayName: string,
+    compareField: string,
+  ): void {
+    const sourceArray = this.wordFilterOptions[sourceProperty];
+    const selectedArray =
+      this.wordFilterRequestSelected?.[sourceProperty] || [];
+    let globalIndex = 0;
+
+    const controls = sourceArray.map((item) => {
+      item.globalIndex = globalIndex;
+      globalIndex++;
+      const isSelected = selectedArray.some(
+        (selectedItem) => item[compareField] === selectedItem[compareField],
+      );
+      return new FormControl(isSelected);
+    });
+
+    const formArray = new FormArray(controls);
+    this.addWordSenseFilterForm.setControl(formArrayName, formArray);
+  }
+
+  private initFormArrayTenses() {
+    let globalIndex = 0;
+
+    const controls = [];
+    this.wordFilterOptions.moodWithTenses.forEach((moodWithTense) => {
+      moodWithTense.tenses.forEach((tense) => {
+        tense.globalIndex = globalIndex;
+        tense.isChecked = false;
+        globalIndex++;
+        controls.push(new FormControl(false));
+      });
+    });
   }
 }

@@ -44,6 +44,7 @@ export class AddPhraseComponent implements OnInit {
 
           const formArray = new FormArray(controls, minSelectedCheckboxes());
           this.addPhrasesForm.setControl('selectedPhrases', formArray);
+          this.deckStateService.setIsLoading(false);
         });
     });
 

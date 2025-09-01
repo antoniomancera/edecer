@@ -1,8 +1,14 @@
-@if (addEditOrInfoSelected != addEditOrInfo.INFO) {
-  <ion-button shape="round" (click)="onClickOpenFilterModal()" color="medium">
-    <ion-icon slot="start" name="funnel"></ion-icon>
-    filtros
-  </ion-button>
+<ion-button shape="round" (click)="onClickOpenFilterModal()" color="medium">
+  <ion-icon slot="start" name="funnel"></ion-icon>
+  filtros
+</ion-button>
+@for (wordFilterRequest of wordFilterRequestAvailables(); track $index) {
+  <ion-chip
+    [color]="wordFilterRequest.isChecked ? 'primary' : null"
+    (click)="getWordWithSensePaginatedAplyingWordSenseFilter(wordFilterRequest)"
+  >
+    {{ wordFilterRequest.name }}
+  </ion-chip>
 }
 
 <form (ngSubmit)="onSubmitSelectPhrases()" [formGroup]="addWordSensesForm">
@@ -22,7 +28,9 @@
               slot="start"
               [checked]="wordWithAttemptsAndSuccess.word.isChecked"
               (click)="$event.stopPropagation()"
-              (ionChange)="onChangeWord($event, wordWithAttemptsAndSuccess)"
+              (ionChange)="
+                onClickToggleWord($event, wordWithAttemptsAndSuccess)
+              "
             >
             </ion-checkbox>
 
@@ -33,6 +41,7 @@
             </ion-chip>
             <ion-chip [disabled]="true">
               {{ wordWithAttemptsAndSuccess.word.level.code }}
+              {{ wordWithAttemptsAndSuccess.word.level.color }}
             </ion-chip>
             <ion-chip [disabled]="true">
               @if (wordWithAttemptsAndSuccess.attempts) {
@@ -64,12 +73,19 @@
                     selectedSensesFormArray.at(wordSense.wordSense.globalIndex)
                   "
                   (ionChange)="
-                    onChangeWordSense(wordWithAttemptsAndSuccess, wordSense)
+                    onClickToggleWordSense(
+                      $event,
+                      wordWithAttemptsAndSuccess,
+                      wordSense
+                    )
                   "
                 >
                   {{ wordSense.wordSense.sense }}
                 </ion-checkbox>
               </div>
+            }
+            @if (isLoading()) {
+              <ion-spinner class="spinner-container"></ion-spinner>
             }
           }
         </ion-accordion>

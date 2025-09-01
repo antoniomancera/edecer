@@ -1,8 +1,11 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
+import { ModalController } from '@ionic/angular';
+
+import { combineLatest, map, Observable, take } from 'rxjs';
+
 import {
-  WordFilterRequest,
   WordSenseInfoWithoutWord,
   WordWithAttemptsAndSuccess,
 } from 'src/app/shared/models/word.interface';
@@ -13,33 +16,35 @@ import {
   AddEditOrInfo,
   DeckStateService,
 } from '../../services/deck-state.service';
-import { ModalController } from '@ionic/angular';
 import { FilterWordSenseComponent } from './filter-word-sense/filter-word-sense.component';
-import { combineLatest, map } from 'rxjs';
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { DeckWordPhraseTranslationService } from 'src/app/shared/services/deck-word-phrase-translation.service';
-
-import { DeckEditInitInfoHelperService } from '../../services/deck-edit-init-info-helper.service';
-import { DeckEditInitInfo } from '../../models/deck-edit-init-info.model';
+import { WordToWordSensesIdMap } from '../../models/deck-edit-init-info.model';
+import { WordToWordSensesIdMapService } from '../../services/word-to-word-senses-id-map.service';
+import { WordFilterRequest } from 'src/app/shared/models/word-filter.model';
 
 @Component({
   selector: 'app-add-word-sense',
   templateUrl: './add-word-sense.component.html',
   styleUrls: ['./add-word-sense.component.scss'],
 })
-export class AddWordSenseComponent implements OnInit {
+export class AddWordSenseComponent implements OnInit, OnDestroy {
   addWordSensesForm!: FormGroup;
   globalIndex = 0;
-  pageNumber = 0;
-  pageSize = 50;
+  pageNumber = 1;
+  pageSize = 10;
   hasMoreWords = signal<boolean>(true);
-  wordFilterRequest: WordFilterRequest;
   addEditOrInfo = AddEditOrInfo;
   addEditOrInfoSelected: AddEditOrInfo;
   wordWithAttemptsAndSuccesses: WordWithAttemptsAndSuccess[] = [];
-  deckEditInitInfo: DeckEditInitInfo;
+  wordToWordSensesIdMap: WordToWordSensesIdMap = {
+    wordToWordSensesIdMap: null,
+  };
   selectedWordSenseEditInitIds: number[] = [];
   selectedDeck = signal<Deck>(null);
+  selectedWordFilterRequest = signal<WordFilterRequest>(null);
+  wordFilterRequestAvailables = signal<WordFilterRequest[]>([]);
+  isLoading = signal<boolean>(false);
 
   constructor(
     private toastService: ToastService,
@@ -48,7 +53,7 @@ export class AddWordSenseComponent implements OnInit {
     private deckStateService: DeckStateService,
     private modalController: ModalController,
     private deckWordPhraseTranslationService: DeckWordPhraseTranslationService,
-    private deckEditInitInfoHelperService: DeckEditInitInfoHelperService,
+    private wordToWordSensesIdMapService: WordToWordSensesIdMapService,
   ) {
     this.addWordSensesForm = this.fb.group({
       selectedSenses: new FormArray([], minSelectedCheckboxes()),
@@ -65,15 +70,22 @@ export class AddWordSenseComponent implements OnInit {
 
     combineLatest([
       this.deckStateService.getAddEditOrInfo(),
-      this.deckStateService.getWordFilterRequest(),
       this.deckStateService.getSelectedDeck(),
+      this.deckStateService.getWordFilterRequestAvailables(),
     ])
       .pipe(
-        map(([addEditOrInfoSelected, wordFilterRequest, selectedDeck]) => {
-          this.addEditOrInfoSelected = addEditOrInfoSelected;
-          this.wordFilterRequest = wordFilterRequest;
-          this.selectedDeck.set(selectedDeck);
-        }),
+        take(1),
+        map(
+          ([
+            addEditOrInfoSelected,
+            selectedDeck,
+            wordFilterRequestAvailables,
+          ]) => {
+            this.addEditOrInfoSelected = addEditOrInfoSelected;
+            this.selectedDeck.set(selectedDeck);
+            this.wordFilterRequestAvailables.set(wordFilterRequestAvailables);
+          },
+        ),
       )
       .subscribe({
         next: () => {
@@ -85,30 +97,31 @@ export class AddWordSenseComponent implements OnInit {
                   this.wordWithAttemptsAndSuccesses =
                     deckEditInit.wordWithAttemptsAndSuccesses;
 
-                  if (this.addEditOrInfoSelected === this.addEditOrInfo.EDIT) {
-                    this.deckEditInitInfo = deckEditInit;
+                  this.wordToWordSensesIdMap.wordToWordSensesIdMap =
+                    deckEditInit.wordToWordSensesIdMap;
 
-                    this.selectedWordSenseEditInitIds =
-                      this.deckEditInitInfoHelperService.getAllWordSenseIds(
-                        deckEditInit,
-                      );
-                    this.wordWithAttemptsAndSuccesses.map(
-                      (wordWithAttemptsAndSuccess) => {
-                        if (
-                          this.deckEditInitInfoHelperService.hasWord(
-                            this.deckEditInitInfo,
-                            wordWithAttemptsAndSuccess.word.id,
-                          )
-                        ) {
-                          wordWithAttemptsAndSuccess.word.isChecked = true;
-                        }
-                      },
+                  this.selectedWordSenseEditInitIds =
+                    this.wordToWordSensesIdMapService.getAllWordSenseIds(
+                      deckEditInit,
                     );
-                  }
+                  this.wordWithAttemptsAndSuccesses.map(
+                    (wordWithAttemptsAndSuccess) => {
+                      if (
+                        this.wordToWordSensesIdMapService.hasWord(
+                          this.wordToWordSensesIdMap,
+                          wordWithAttemptsAndSuccess.word.id,
+                        )
+                      ) {
+                        wordWithAttemptsAndSuccess.word.isChecked = true;
+                      }
+                    },
+                  );
+                  this.subscribeFormValidation();
                 },
               });
           } else {
             this.getWordWithAttemptsAndSuccessPaginated();
+            this.subscribeFormValidation();
           }
 
           const formArray = new FormArray([], minSelectedCheckboxes());
@@ -120,44 +133,40 @@ export class AddWordSenseComponent implements OnInit {
           this.toastService.showDangerToast(err);
         },
       });
-
-    this.addWordSensesForm.statusChanges.subscribe((validity) => {
-      validity === 'VALID' || this.selectedWordSenseEditInitIds.length > 0
-        ? this.deckStateService.setIsAddWordSenseFormValid(true)
-        : this.deckStateService.setIsAddWordSenseFormValid(false);
-    });
   }
 
+  ngOnDestroy() {
+    this.resetSelectedSensesFormArray();
+  }
+
+  /**
+   * On submit go to step selectPhrases with the actual wordSenses selected
+   */
   onSubmitSelectPhrases() {
-    let wordSenseIds: number[] = [];
+    this.setWordToWordSensesIdMapByWordWithAttemptsAndSuccesses();
 
-    wordSenseIds = this.selectedWordSenseEditInitIds;
-
-    this.wordWithAttemptsAndSuccesses.forEach((wordWithAttemptsAndSuccess) => {
-      if (wordWithAttemptsAndSuccess.wordSenseInfoWithoutWord) {
-        wordWithAttemptsAndSuccess.wordSenseInfoWithoutWord.forEach(
-          (wordSenseInfo) => {
-            const control = this.selectedSensesFormArray.at(
-              wordSenseInfo.wordSense.globalIndex,
-            );
-            if (control?.value === true && wordSenseInfo.wordSense.id != null) {
-              wordSenseIds.push(wordSenseInfo.wordSense.id);
-            }
-          },
-        );
-      }
-    });
+    let wordSenseIds: number[] =
+      this.wordToWordSensesIdMapService.getAllWordSenseIds(
+        this.wordToWordSensesIdMap,
+      );
 
     wordSenseIds = [...new Set(wordSenseIds)];
 
     this.deckStateService.setWordSenseIds(wordSenseIds);
     this.deckStateService.setNextState();
-
-    return wordSenseIds;
   }
 
-  onChangeWord(event, wordWithAttemptsAndSuccess: WordWithAttemptsAndSuccess) {
-    console.log('onChangeWord', event);
+  /**
+   * On Click toggle isChecked parameter of word, alongside their senses. In case word pass to not checked
+   * and the mode is edit, all the senses are removed from selectedWordSenseEditInitIds.
+   *
+   * @param event
+   * @param wordWithAttemptsAndSuccess
+   */
+  onClickToggleWord(
+    event,
+    wordWithAttemptsAndSuccess: WordWithAttemptsAndSuccess,
+  ) {
     event.stopPropagation();
     const isChecked = event.detail.checked;
     wordWithAttemptsAndSuccess.word.isChecked = isChecked;
@@ -175,23 +184,33 @@ export class AddWordSenseComponent implements OnInit {
         control.setValue(isChecked);
       });
 
-      if (
-        this.addEditOrInfoSelected === this.addEditOrInfo.EDIT &&
-        !isChecked
-      ) {
-        this.deckEditInitInfo =
-          this.deckEditInitInfoHelperService.removeWordFromMap(
-            this.deckEditInitInfo,
+      if (this.selectedWordSenseEditInitIds.length > 0 && !isChecked) {
+        this.wordToWordSensesIdMap =
+          this.wordToWordSensesIdMapService.removeWord(
+            this.wordToWordSensesIdMap,
             wordWithAttemptsAndSuccess.word.id,
           );
       }
     }
   }
 
-  onChangeWordSense(
+  /**
+   * On click toggle isChecked of wordSense, if is false and there are not other wordSense selected
+   * for the word the isChecked parameter of the word change to false, on the contrary isChecked of
+   * word is true. If is EDIT mode and the sense is unselected the wordSense if remove to the initially
+   * selected wordSenses
+   *
+   * @param event
+   * @param wordWithSense
+   * @param wordSense
+   */
+  onClickToggleWordSense(
+    event,
     wordWithSense: WordWithAttemptsAndSuccess,
     wordSense: WordSenseInfoWithoutWord,
   ) {
+    const isChecked = event.detail.checked;
+
     if (
       this.selectedSensesFormArray.at(wordSense.wordSense.globalIndex).value
     ) {
@@ -210,6 +229,14 @@ export class AddWordSenseComponent implements OnInit {
 
       wordWithSense.word.isChecked = hasSelectedWordSense;
     }
+    if (this.selectedWordSenseEditInitIds.length > 0 && !isChecked) {
+      this.wordToWordSensesIdMap =
+        this.wordToWordSensesIdMapService.removeWordSenseToWord(
+          this.wordToWordSensesIdMap,
+          wordWithSense.word.id,
+          wordSense.wordSense.id,
+        );
+    }
   }
 
   async onClickOpenFilterModal() {
@@ -218,12 +245,31 @@ export class AddWordSenseComponent implements OnInit {
 
       initialBreakpoint: 0.9,
     });
+    modal.onWillDismiss().then((wordFilterRequestSelected) => {
+      if (wordFilterRequestSelected && wordFilterRequestSelected.data) {
+        this.wordFilterRequestAvailables().push(wordFilterRequestSelected.data);
+        this.getWordWithSensePaginatedAplyingWordSenseFilter(
+          wordFilterRequestSelected.data,
+        );
+      }
+    });
+
     await modal.present();
   }
 
+  /**
+   * Search senses of word taking into account if exists any filter. If isToggleWord means that this method is
+   * called after clicking on a word checkbox, therefore the controls of the senses will be created initially as
+   * false or true depending on if word is checked or not. However, isToggleWord woill be false if this method
+   * is called after clicking on a accordion, therefore the controls will be false if is ADD mode, whereas if is EDIT
+   * it would depend on if the sense was currently in the deck
+   *
+   * @param wordWithAttemptsAndSuccess
+   * @param isToggleWord true if the method is called after clicking a word.
+   */
   onClickGetWordSensesByWord(
     wordWithAttemptsAndSuccess: WordWithAttemptsAndSuccess,
-    isChangeWord?: boolean,
+    isToggleWord?: boolean,
   ) {
     const isChecked = wordWithAttemptsAndSuccess.word.isChecked;
     if (
@@ -233,37 +279,36 @@ export class AddWordSenseComponent implements OnInit {
       wordWithAttemptsAndSuccess.word.isLoading = true;
 
       this.wordService
-        .getWordSenseInfosWithoutWordByWordId(
+        .getWordSenseInfosWithoutWordByWordIdAplyingWordSenseFiltersIfExists(
           wordWithAttemptsAndSuccess.word.id,
+          this.selectedWordFilterRequest(),
         )
         .subscribe({
           next: (wordSenseInfoWithoutWord) => {
-            console.log('prueba2');
             wordSenseInfoWithoutWord.map((worSenseInfo) => {
               worSenseInfo.wordSense.globalIndex = this.globalIndex;
               this.globalIndex++;
 
-              if (isChangeWord) {
+              if (isToggleWord) {
                 if (isChecked) {
                   this.selectedSensesFormArray.push(new FormControl(true));
                 } else if (
                   !isChecked &&
-                  this.addEditOrInfoSelected === this.addEditOrInfo.EDIT
+                  this.selectedWordSenseEditInitIds.length > 0
                 ) {
                   this.selectedSensesFormArray.push(new FormControl(false));
-                  this.deckEditInitInfo =
-                    this.deckEditInitInfoHelperService.removeWordFromMap(
-                      this.deckEditInitInfo,
+                  this.wordToWordSensesIdMap =
+                    this.wordToWordSensesIdMapService.removeWord(
+                      this.wordToWordSensesIdMap,
                       wordWithAttemptsAndSuccess.word.id,
                     );
                 }
               } else {
-                if (
-                  isChecked &&
-                  this.addEditOrInfoSelected === this.addEditOrInfo.EDIT
-                ) {
+                if (isChecked && this.selectedWordSenseEditInitIds.length > 0) {
                   if (
-                    this.selectedWordSenseEditInitIds.includes(
+                    this.wordToWordSensesIdMapService.hasSpecificWordSenseInWord(
+                      this.wordToWordSensesIdMap,
+                      wordWithAttemptsAndSuccess.word.id,
                       worSenseInfo.wordSense.id,
                     )
                   ) {
@@ -285,16 +330,43 @@ export class AddWordSenseComponent implements OnInit {
     }
   }
 
+  /**
+   * Apply the filter after reseting the form
+   *
+   * @param wordFilterRequest apply for getWordWithAttemptAndSuccesses
+   */
+
+  getWordWithSensePaginatedAplyingWordSenseFilter(wordFilterRequest) {
+    this.resetSelectedSensesFormArray();
+
+    this.wordFilterRequestAvailables().map(
+      (wordFilterRequest) => (wordFilterRequest.isChecked = false),
+    );
+    wordFilterRequest.isChecked = true;
+    this.selectedWordFilterRequest.set(wordFilterRequest);
+    this.getWordWithAttemptsAndSuccessPaginated();
+  }
+
+  /**
+   * Get the next page of Words with number of attempts and accuracy
+   *
+   * @param infiniteScroll
+   */
   private getWordWithAttemptsAndSuccessPaginated(infiniteScroll?) {
+    this.isLoading.set(true);
     this.wordService
-      .getWordWithAttemptsAndSuccessPaginated(this.pageNumber, this.pageSize)
+      .getWordWithAttemptsAndSuccessesPaginatedAplyingWordFilterIfExists(
+        this.pageNumber,
+        this.pageSize,
+        this.selectedWordFilterRequest(),
+      )
       .subscribe({
         next: (wordWithAttemptsAndSuccesses) => {
           wordWithAttemptsAndSuccesses.map((wordWithAttemptsAndSuccess) => {
             if (
-              this.addEditOrInfoSelected === this.addEditOrInfo.EDIT &&
-              this.deckEditInitInfoHelperService.hasWord(
-                this.deckEditInitInfo,
+              this.selectedWordSenseEditInitIds.length > 0 &&
+              this.wordToWordSensesIdMapService.hasWord(
+                this.wordToWordSensesIdMap,
                 wordWithAttemptsAndSuccess.word.id,
               )
             ) {
@@ -306,7 +378,6 @@ export class AddWordSenseComponent implements OnInit {
             ...wordWithAttemptsAndSuccesses,
           ];
           if (wordWithAttemptsAndSuccesses.length < this.pageSize) {
-            // this.hasMoreWordsUnselected.set(false);
             this.hasMoreWords.set(false);
           } else {
             this.pageNumber += 1;
@@ -314,7 +385,65 @@ export class AddWordSenseComponent implements OnInit {
           if (infiniteScroll) {
             infiniteScroll.target.complete();
           }
+
+          this.isLoading.set(false);
         },
       });
+  }
+
+  /**
+   * Reset the form and the other values
+   */
+  private resetSelectedSensesFormArray() {
+    this.setWordToWordSensesIdMapByWordWithAttemptsAndSuccesses();
+
+    while (this.selectedSensesFormArray.length > 0) {
+      this.selectedSensesFormArray.removeAt(0);
+    }
+    this.globalIndex = 0;
+    this.wordWithAttemptsAndSuccesses = [];
+    this.hasMoreWords.set(true);
+    this.pageNumber = 0;
+
+    this.addWordSensesForm.markAsPristine();
+    this.addWordSensesForm.markAsUntouched();
+    this.addWordSensesForm.updateValueAndValidity();
+  }
+
+  /**
+   * Add to wordToWordSensesIdMap the map with selected word and wordSenses of the deck
+   */
+  private setWordToWordSensesIdMapByWordWithAttemptsAndSuccesses() {
+    this.wordWithAttemptsAndSuccesses.forEach((wordWithAttemptsAndSuccess) => {
+      if (wordWithAttemptsAndSuccess.wordSenseInfoWithoutWord) {
+        wordWithAttemptsAndSuccess.wordSenseInfoWithoutWord.forEach(
+          (wordSenseInfo) => {
+            const control = this.selectedSensesFormArray.at(
+              wordSenseInfo.wordSense.globalIndex,
+            );
+            if (control?.value === true && wordSenseInfo.wordSense.id != null) {
+              this.wordToWordSensesIdMap =
+                this.wordToWordSensesIdMapService.addWordToWordSense(
+                  this.wordToWordSensesIdMap,
+                  wordWithAttemptsAndSuccess.word.id,
+                  wordSenseInfo.wordSense.id,
+                );
+            }
+          },
+        );
+      }
+    });
+  }
+
+  private subscribeFormValidation() {
+    if (this.wordToWordSensesIdMap.wordToWordSensesIdMap) {
+      this.deckStateService.setIsAddWordSenseFormValid(true);
+    }
+
+    this.addWordSensesForm.statusChanges.subscribe((validity) => {
+      validity === 'VALID' || this.wordToWordSensesIdMap.wordToWordSensesIdMap
+        ? this.deckStateService.setIsAddWordSenseFormValid(true)
+        : this.deckStateService.setIsAddWordSenseFormValid(false);
+    });
   }
 }

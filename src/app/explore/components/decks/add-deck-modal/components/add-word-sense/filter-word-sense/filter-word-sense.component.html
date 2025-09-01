@@ -71,7 +71,10 @@
           <ion-item slot="header" color="light">
             <ion-label>partSpeech</ion-label>
 
-            @if (wordFilterRequestSelected.partSpeeches.length > 2) {
+            @if (
+              wordFilterRequestSelected.partSpeeches &&
+              wordFilterRequestSelected.partSpeeches.length > 2
+            ) {
               <ion-chip [disabled]="true">
                 {{ wordFilterRequestSelected.partSpeeches.length }}</ion-chip
               >
@@ -106,7 +109,10 @@
         <ion-accordion value="level">
           <ion-item slot="header" color="light">
             <ion-label>levels</ion-label>
-            @if (wordFilterRequestSelected.levels.length > 2) {
+            @if (
+              wordFilterRequestSelected.levels &&
+              wordFilterRequestSelected.levels.length > 2
+            ) {
               <ion-chip [disabled]="true">
                 {{ wordFilterRequestSelected.levels.length }}</ion-chip
               >
@@ -131,7 +137,10 @@
         <ion-accordion value="category">
           <ion-item slot="header" color="light">
             <ion-label>categories</ion-label>
-            @if (wordFilterRequestSelected.categories.length > 2) {
+            @if (
+              wordFilterRequestSelected.categories &&
+              wordFilterRequestSelected.categories.length > 2
+            ) {
               <ion-chip [disabled]="true">
                 {{ wordFilterRequestSelected.categories.length }}</ion-chip
               >
@@ -161,7 +170,10 @@
         <ion-accordion value="person">
           <ion-item slot="header" color="light">
             <ion-label>persons</ion-label>
-            @if (wordFilterRequestSelected.persons.length > 2) {
+            @if (
+              wordFilterRequestSelected.persons &&
+              wordFilterRequestSelected.persons.length > 2
+            ) {
               <ion-chip [disabled]="true">
                 {{ wordFilterRequestSelected.persons.length }}</ion-chip
               >
@@ -188,7 +200,10 @@
         <ion-accordion value="gender">
           <ion-item slot="header" color="light">
             <ion-label>genders</ion-label>
-            @if (wordFilterRequestSelected.genders.length > 2) {
+            @if (
+              wordFilterRequestSelected.genders &&
+              wordFilterRequestSelected.genders.length > 2
+            ) {
               <ion-chip [disabled]="true">
                 {{ wordFilterRequestSelected.genders.length }}</ion-chip
               >
@@ -216,7 +231,10 @@
           <ion-item slot="header" color="light">
             <ion-label>numbers</ion-label>
             <!-- @if (wordSenseFilterSelected && wordFilterRequestSelected.persons) { -->
-            @if (wordFilterRequestSelected.numbers.length > 2) {
+            @if (
+              wordFilterRequestSelected.numbers &&
+              wordFilterRequestSelected.numbers.length > 2
+            ) {
               <ion-chip [disabled]="true">
                 {{ wordFilterRequestSelected.numbers.length }}</ion-chip
               >
@@ -309,20 +327,9 @@
   }
 </ion-content>
 
-<!-- <ion-footer>dsdas</ion-footer> -->
 <ion-toolbar class="p-2 ion-toolbar-footer">
   @if (isPlatformDesktop()) {
     <ion-buttons slot="end">
-      <ion-button
-        shape="round"
-        expand="full"
-        (click)="onClickReturnDecksPage()"
-        color="medium"
-      >
-        <ion-icon slot="start" name="close"></ion-icon>
-        {{ "global.cancel" | transloco | titlecase }}
-      </ion-button>
-
       <ion-button
         shape="round"
         expand="full"
@@ -332,18 +339,6 @@
         <ion-icon slot="start" name="arrow-back"></ion-icon>
         {{ "global.back" | transloco | titlecase }}
       </ion-button>
-
-      <!-- <ion-button
-        shape="round"
-        expand="full"
-        type="submit"
-        color="primary"
-        fill="solid"
-       
-      >
-        {{ "global.next" | transloco | titlecase }}
-        <ion-icon slot="end" name="arrow-forward"></ion-icon>
-      </ion-button> -->
 
       <ion-button
         shape="round"
@@ -358,10 +353,38 @@
         <ion-icon slot="end" name="checkmark"></ion-icon>
       </ion-button>
     </ion-buttons>
+  } @else {
+    <ion-buttons>
+      <ion-grid>
+        <ion-row>
+          <ion-col size-sm="6" size="6" class="ion-text-center">
+            <ion-button
+              shape="round"
+              expand="full"
+              (click)="onClickBack()"
+              color="medium"
+            >
+              <ion-icon slot="start" name="arrow-back"></ion-icon>
+              {{ "global.back" | transloco | titlecase }}
+            </ion-button>
+          </ion-col>
+
+          <ion-col size-sm="6" size="6" class="ion-text-center">
+            <ion-button
+              shape="round"
+              expand="full"
+              type="submit"
+              color="primary"
+              fill="solid"
+              [disabled]="!addWordSenseFilterForm.valid"
+              (click)="onSubmitAppyFilters()"
+            >
+              {{ "global.accept" | transloco | titlecase }}
+              <ion-icon slot="end" name="checkmark"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-buttons>
   }
-  @if (!isPlatformDesktop()) {}
 </ion-toolbar>
-<!--  
-<ion-footer>
-  <ion-toolbar> footer </ion-toolbar>
-</ion-footer> -->

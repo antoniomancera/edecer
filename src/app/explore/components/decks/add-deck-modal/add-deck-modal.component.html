@@ -26,111 +26,109 @@
     ></app-add-title-description>
   }
 </ion-content>
-@if (!isLoading()) {
-  <ion-toolbar class="p-2 ion-toolbar-footer">
-    @if (isPlatformDesktop()) {
-      <ion-buttons slot="end">
-        <ion-button
-          shape="round"
-          expand="full"
-          (click)="onClickReturnDecksPage()"
-          [disabled]="!isFirstStep()"
-          color="medium"
-        >
-          <ion-icon slot="start" name="close"></ion-icon>
-          {{ "global.cancel" | transloco | titlecase }}
-        </ion-button>
+<ion-toolbar class="p-2 ion-toolbar-footer">
+  @if (isPlatformDesktop()) {
+    <ion-buttons slot="end">
+      <ion-button
+        shape="round"
+        expand="full"
+        (click)="onClickReturnDecksPage()"
+        [disabled]="!isFirstStep()"
+        color="medium"
+      >
+        <ion-icon slot="start" name="close"></ion-icon>
+        {{ "global.cancel" | transloco | titlecase }}
+      </ion-button>
 
-        <ion-button
-          shape="round"
-          expand="full"
-          (click)="onClickBack()"
-          [disabled]="isFirstStep()"
-          color="medium"
-        >
-          <ion-icon slot="start" name="arrow-back"></ion-icon>
-          {{ "global.back" | transloco | titlecase }}
-        </ion-button>
+      <ion-button
+        shape="round"
+        expand="full"
+        (click)="onClickBack()"
+        [disabled]="isFirstStep()"
+        color="medium"
+      >
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+        {{ "global.back" | transloco | titlecase }}
+      </ion-button>
 
-        <ion-button
-          shape="round"
-          expand="full"
-          type="submit"
-          color="primary"
-          fill="solid"
-          [disabled]="!isActualFormValid() || isLastStep()"
-          (click)="onClickSubmit()"
-        >
-          {{ "global.next" | transloco | titlecase }}
-          <ion-icon slot="end" name="arrow-forward"></ion-icon>
-        </ion-button>
+      <ion-button
+        shape="round"
+        expand="full"
+        type="submit"
+        color="primary"
+        fill="solid"
+        [disabled]="!isActualFormValid() || isLastStep()"
+        (click)="onClickSubmit()"
+      >
+        {{ "global.next" | transloco | titlecase }}
+        <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      </ion-button>
 
-        <ion-button
-          shape="round"
-          expand="full"
-          type="submit"
-          color="primary"
-          fill="solid"
-          [disabled]="!isActualFormValid() || !isLastStep()"
-          (click)="onClickSubmit()"
-        >
-          {{ "global.accept" | transloco | titlecase }}
-          <ion-icon slot="end" name="checkmark"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    }
-    @if (!isPlatformDesktop()) {
-      <ion-buttons>
-        <ion-grid>
-          <ion-row>
-            <ion-col size-sm="6" size="6" class="ion-text-center">
-              @if (isFirstStep()) {
-                <ion-button
-                  shape="round"
-                  expand="full"
-                  (click)="onClickReturnDecksPage()"
-                  color="medium"
-                >
-                  <ion-icon slot="start" name="close"></ion-icon>
-                  {{ "global.cancel" | transloco | titlecase }}
-                </ion-button>
-              }
-              @if (!isFirstStep()) {
-                <ion-button
-                  shape="round"
-                  expand="full"
-                  (click)="onClickBack()"
-                  color="medium"
-                >
-                  <ion-icon slot="start" name="arrow-back"></ion-icon>
-                  {{ "global.back" | transloco | titlecase }}
-                </ion-button>
-              }
-            </ion-col>
-
-            <ion-col size-sm="6" size="6" class="ion-text-center">
+      <ion-button
+        shape="round"
+        expand="full"
+        type="submit"
+        color="primary"
+        fill="solid"
+        [disabled]="!isActualFormValid() || !isLastStep()"
+        (click)="onClickSubmit()"
+      >
+        {{ "global.accept" | transloco | titlecase }}
+        <ion-icon slot="end" name="checkmark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  }
+  @if (!isPlatformDesktop()) {
+    <ion-buttons>
+      <ion-grid>
+        <ion-row>
+          <ion-col size-sm="6" size="6" class="ion-text-center">
+            @if (isFirstStep()) {
               <ion-button
                 shape="round"
                 expand="full"
-                type="submit"
-                color="primary"
-                fill="solid"
-                [disabled]="!isActualFormValid()"
-                (click)="onClickSubmit()"
+                (click)="onClickReturnDecksPage()"
+                color="medium"
               >
-                @if (isLastStep()) {
-                  {{ "global.accept" | transloco | titlecase }}
-                  <ion-icon slot="end" name="checkmark"></ion-icon>
-                }
-                @if (!isLastStep()) {
-                  {{ "global.next" | transloco | titlecase }}
-                  <ion-icon slot="end" name="arrow-forward"></ion-icon>
-                }
+                <ion-icon slot="start" name="close"></ion-icon>
+                {{ "global.cancel" | transloco | titlecase }}
               </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-buttons>
-    }
-  </ion-toolbar>
-}
+            }
+            @if (!isFirstStep()) {
+              <ion-button
+                shape="round"
+                expand="full"
+                (click)="onClickBack()"
+                color="medium"
+              >
+                <ion-icon slot="start" name="arrow-back"></ion-icon>
+                {{ "global.back" | transloco | titlecase }}
+              </ion-button>
+            }
+          </ion-col>
+
+          <ion-col size-sm="6" size="6" class="ion-text-center">
+            <ion-button
+              shape="round"
+              expand="full"
+              type="submit"
+              color="primary"
+              fill="solid"
+              [disabled]="!isActualFormValid()"
+              (click)="onClickSubmit()"
+            >
+              @if (isLastStep()) {
+                {{ "global.accept" | transloco | titlecase }}
+                <ion-icon slot="end" name="checkmark"></ion-icon>
+              }
+              @if (!isLastStep()) {
+                {{ "global.next" | transloco | titlecase }}
+                <ion-icon slot="end" name="arrow-forward"></ion-icon>
+              }
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-buttons>
+  }
+</ion-toolbar>

@@ -1,5 +1,5 @@
 export interface BasicEntity {
-  id: number;
+  id?: number;
   name?: string;
   code?: string;
 }

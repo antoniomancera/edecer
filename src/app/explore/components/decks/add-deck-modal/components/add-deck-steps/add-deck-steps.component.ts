@@ -12,11 +12,11 @@ import { Deck } from 'src/app/shared/models/deck.interface';
 export class AddDeckStepsComponent implements OnInit {
   actualStateIndex = signal<number>(0);
   selectedDeck = signal<Deck>(null);
+
   constructor(private deckStateService: DeckStateService) {}
   ngOnInit() {
     combineLatest([
       this.deckStateService.getAddDeckStateIndex(),
-      this.deckStateService.getSelectedDeck(),
       this.deckStateService.getSelectedDeck(),
     ])
       .pipe(

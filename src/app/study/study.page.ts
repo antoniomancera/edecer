@@ -12,6 +12,7 @@ import { DeckWordPhraseTranslationService } from '../shared/services/deck-word-p
   templateUrl: './study.page.html',
   styleUrls: ['./study.page.scss'],
 })
+
 export class StudyPage implements OnInit {
   wordPhraseTranslation: WordPhraseTranslation;
   decks: Deck[] = [];
@@ -23,7 +24,7 @@ export class StudyPage implements OnInit {
 
   constructor(
     private deckWordPhraseTranslationService: DeckWordPhraseTranslationService,
-    private messagingService: MessagingService
+    private messagingService: MessagingService,
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +35,7 @@ export class StudyPage implements OnInit {
         ? home.lastDeckId
         : this.decks[0].id;
       this.lastDeck = this.decks.find(
-        (deck) => deck.id === this.selectedDeckId
+        (deck) => deck.id === this.selectedDeckId,
       );
       this.stat = home.weekStats.find((stat) => {
         let statDate =

@@ -58,7 +58,8 @@ export class ContactModalComponent implements OnInit {
 
   addUserRequest() {
     let userRequest: UserRequest = this.contactForm.getRawValue();
-    userRequest.email = this.userInfo.email;
+    //TODO correct
+    userRequest.email = 'this.userInfo.email';
     if (this.contactForm.valid) {
       this.profileService.addUserRequest(userRequest).subscribe({
         next: (userRequest) => {

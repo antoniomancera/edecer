@@ -124,6 +124,7 @@
         "settings": {
             "title": "configuración",
             "select-language": "Escoja el idioma",
+            "select-course": "Escoja el curso",
             "contact-modal": {
                 "title": "contacta con nosotros",
                 "message": "mensaje",

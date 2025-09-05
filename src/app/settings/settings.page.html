@@ -8,23 +8,23 @@
           size="large"
         ></ion-icon></ion-button
     ></ion-buttons>
-    <ion-title class="p-0"
-      >{{'profile.settings.title' | transloco | titlecase}}</ion-title
-    >
+    <ion-title class="p-0">{{
+      "profile.settings.title" | transloco | titlecase
+    }}</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <ion-list lines="full" class="flex p-0 m-0">
     <ion-item>
       <ion-icon class="p-3" name="language-sharp"></ion-icon
-      ><ion-label
-        >{{ "profile.settings.language" | transloco | titlecase }}</ion-label
-      >
+      ><ion-label>{{
+        "profile.settings.language" | transloco | titlecase
+      }}</ion-label>
       <ion-select
         #selectLanguage
         [(ngModel)]="selectedLanguage"
         slot="end"
-        [interfaceOptions]="customActionSheetOptions"
+        [interfaceOptions]="customActionSheetOptionsSelectLanguage"
         interface="action-sheet"
         (ionChange)="onChangeLanguage(selectLanguage.value)"
       >
@@ -33,11 +33,31 @@
         </ion-select-option>
       </ion-select>
     </ion-item>
+
+    <ion-item>
+      <ion-icon class="p-3" name="easel-outline"></ion-icon>
+      <ion-label>{{
+        "profile.settings.language" | transloco | titlecase
+      }}</ion-label>
+
+      <ion-select
+        #selectCourse
+        [(ngModel)]="selectedCourse"
+        slot="end"
+        [interfaceOptions]="customActionSheetOptionsSelectCourse"
+        interface="action-sheet"
+        (ionChange)="onChangeCourse(selectCourse.value)"
+      >
+        <ion-select-option *ngFor="let course of courses" [value]="course.code">
+          {{ course.baseLanguage.code }}-{{ course.targetLanguage.code }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
     <ion-item>
       <ion-icon class="p-3" name="contrast-sharp"></ion-icon
-      ><ion-label
-        >{{ "profile.settings.dark-mode" | transloco | titlecase }}</ion-label
-      >
+      ><ion-label>{{
+        "profile.settings.dark-mode" | transloco | titlecase
+      }}</ion-label>
       <ion-toggle
         slot="end"
         [checked]="isDarkMode"
@@ -46,9 +66,9 @@
     </ion-item>
     <ion-item class="cursor-pointer" (click)="onClickLogOut()">
       <ion-icon class="p-3" name="log-out-sharp"></ion-icon
-      ><ion-label
-        >{{ "profile.settings.log-out" | transloco | titlecase }}</ion-label
-      >
+      ><ion-label>{{
+        "profile.settings.log-out" | transloco | titlecase
+      }}</ion-label>
     </ion-item>
   </ion-list>
 </ion-content>

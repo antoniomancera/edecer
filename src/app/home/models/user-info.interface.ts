@@ -1,6 +1,6 @@
+import { Course } from 'src/app/shared/models/course.model';
+
 export interface UserInfo {
-  name: string;
-  surname: string;
-  email: string;
-  image: Int8Array[];
+  userName: string;
+  currentCourse: Course;
 }

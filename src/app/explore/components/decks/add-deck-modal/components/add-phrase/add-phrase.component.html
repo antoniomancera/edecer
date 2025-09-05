@@ -12,7 +12,9 @@
             selectedPhrasesFormArray.at(wordPhraseTranslation.globalIndex)
           "
         >
-          {{ wordPhraseTranslation.phraseTranslation.phraseFr }}</ion-checkbox
+          {{
+            wordPhraseTranslation.phraseTranslation.phraseTarget.phrase
+          }}</ion-checkbox
         >
       </ion-item>
     }

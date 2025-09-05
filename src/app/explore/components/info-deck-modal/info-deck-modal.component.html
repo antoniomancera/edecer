@@ -71,11 +71,13 @@
         <ion-accordion-group>
           <ion-accordion value="phraseWithWords">
             <ion-item slot="header">
-              <ion-label>{{ phraseWithWords.phrase.phraseFr }}</ion-label>
+              <ion-label>{{
+                phraseWithWords.phrase.phraseTarget.phrase
+              }}</ion-label>
             </ion-item>
             @for (word of phraseWithWords.wordTranslations; track word) {
               <div class="ion-padding" slot="content">
-                {{ word.wordSenseFr.word.name }}
+                {{ word.wordSenseTarget.word.name }}
               </div>
             }
           </ion-accordion>

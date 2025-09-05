@@ -1,10 +1,9 @@
+import { Language } from './language.interface';
 import { WordTranslation } from './word-translation.model';
 
 export interface Phrase {
-  id: number;
-  phraseEs: string;
-  phraseFr: string;
-  description: string;
+  phrase: string;
+  language: Language;
 }
 
 export interface PhraseWithWordTranslations {

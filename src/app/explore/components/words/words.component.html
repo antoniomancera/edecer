@@ -9,10 +9,10 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    @for(word of wordsTranslation; track word){
-    <ion-item>
-      <ion-label>{{ word.wordSenseFr.word.name }}</ion-label>
-    </ion-item>
+    @for (word of wordsTranslation; track word) {
+      <ion-item>
+        <ion-label>{{ word.wordSenseTarget.word.name }}</ion-label>
+      </ion-item>
     }
   </ion-list>
   <ion-infinite-scroll

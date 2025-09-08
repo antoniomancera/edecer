@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TranslocoService } from '@jsverse/transloco';
@@ -14,13 +14,13 @@ import { SettingsService } from './service/settings.service';
 import { Course } from '../shared/models/course.model';
 import { UserInfoService } from '../shared/services/user-info.service';
 
-
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
+  isProfilePage = true;
   isDarkMode: boolean = false;
   customActionSheetOptionsSelectLanguage = {
     header: '',
@@ -34,6 +34,7 @@ export class SettingsPage implements OnInit {
   userInfo: UserInfo = null;
   courses: Course[] = [];
   currentCourse: Course;
+  isPlatformDesktop = signal<boolean>(false);
 
   constructor(
     private translocoService: TranslocoService,
@@ -54,14 +55,16 @@ export class SettingsPage implements OnInit {
     combineLatest([
       this.messagingService.getSelectedLanguage(),
       this.messagingService.getHome(),
+      this.messagingService.getIsPlatformDesktop(),
     ])
       .pipe(
-        map(([selectedLanguage, home]) => {
+        map(([selectedLanguage, home, isPlatformDesktop]) => {
           this.selectedLanguage = selectedLanguage;
           if (home) {
             this.userInfo = home.userInfo;
             this.selectedCourse = home.userInfo.currentCourse.code;
           }
+          this.isPlatformDesktop.set(isPlatformDesktop);
         }),
       )
       .subscribe();
@@ -77,7 +80,6 @@ export class SettingsPage implements OnInit {
         }),
       )
       .subscribe();
-
   }
 
   onToggleDarkMode() {

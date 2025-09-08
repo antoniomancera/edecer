@@ -11,12 +11,13 @@ import { AuthenticationService } from '../shared/services/authentication.service
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  isProfilePage = true;
   userInfo: UserInfo = null;
 
   constructor(
     private messagingService: MessagingService,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
   ) {}
 
   ngOnInit() {

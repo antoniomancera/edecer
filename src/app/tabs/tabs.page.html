@@ -1,18 +1,19 @@
 <ion-tabs (ionTabsDidChange)="setToggleSelectedTabOutline($event)">
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="home">
-      <ion-icon
-        [name]="selectedTab === 'home' ? 'home' : 'home-outline'"
-      ></ion-icon>
-      {{ 'tabs.home' | transloco | titlecase }}
-    </ion-tab-button>
-    <ion-tab-button tab="study">
-      <ion-icon
-        [name]="selectedTab === 'study' ? 'book' : 'book-outline'"
-      ></ion-icon>
-      {{ 'tabs.study' | transloco | titlecase }}
-    </ion-tab-button>
-    <!-- <ion-tab-button tab="stats">
+  @if (!isPlatformDesktop()) {
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="home">
+        <ion-icon
+          [name]="selectedTab === 'home' ? 'home' : 'home-outline'"
+        ></ion-icon>
+        {{ "tabs.home" | transloco | titlecase }}
+      </ion-tab-button>
+      <ion-tab-button tab="study">
+        <ion-icon
+          [name]="selectedTab === 'study' ? 'book' : 'book-outline'"
+        ></ion-icon>
+        {{ "tabs.study" | transloco | titlecase }}
+      </ion-tab-button>
+      <!-- <ion-tab-button tab="stats">
       <ion-icon
         [name]="
           selectedTab === 'stats' ? 'stats-chart' : 'stats-chart-outline'
@@ -20,27 +21,25 @@
       ></ion-icon>
       {{ 'tabs.progress' | transloco | titlecase}}
     </ion-tab-button> -->
-    <ion-tab-button tab="explore">
-      <ion-icon
-        [name]="
-          selectedTab === 'explore'
-            ? 'search'
-            : 'search-outline'
-        "
-      ></ion-icon>
-      {{ 'tabs.explore' | transloco | titlecase }}
-    </ion-tab-button>
-    <!-- <ion-tab-button tab="settings">
+      <ion-tab-button tab="explore">
+        <ion-icon
+          [name]="selectedTab === 'explore' ? 'search' : 'search-outline'"
+        ></ion-icon>
+        {{ "tabs.explore" | transloco | titlecase }}
+      </ion-tab-button>
+      <!-- <ion-tab-button tab="settings">
       <ion-icon
         [name]="selectedTab === 'settings' ? 'cog' : 'cog-outline'"
       ></ion-icon>
       {{ 'tabs.settings' | transloco | titlecase }}
     </ion-tab-button> -->
-    <ion-tab-button tab="profile">
-      <ion-icon
-        [name]="selectedTab === 'profile' ? 'happy' : 'happy-outline'"
-      ></ion-icon>
-      {{ 'tabs.profile' | transloco | titlecase }}
-    </ion-tab-button>
-  </ion-tab-bar>
+      <ion-tab-button tab="profile">
+        <ion-icon
+          [name]="selectedTab === 'profile' ? 'happy' : 'happy-outline'"
+        ></ion-icon>
+        {{ "tabs.profile" | transloco | titlecase }}
+      </ion-tab-button>
+    </ion-tab-bar>
+  }
 </ion-tabs>
+<!-- } -->

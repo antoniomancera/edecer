@@ -12,6 +12,7 @@ export class MessagingService {
   private home = new BehaviorSubject<Home>(null);
   private isDarkMode = new BehaviorSubject<boolean>(null);
   private selectedLanguage = new BehaviorSubject<string>(null);
+  private isPlatformDesktop = new BehaviorSubject<boolean>(false);
 
   getHome() {
     return this.home.asObservable();
@@ -23,6 +24,10 @@ export class MessagingService {
 
   getSelectedLanguage() {
     return this.selectedLanguage.asObservable();
+  }
+
+  getIsPlatformDesktop() {
+    return this.isPlatformDesktop.asObservable();
   }
 
   setHome(home: Home) {
@@ -41,5 +46,9 @@ export class MessagingService {
     let home = this.home.value;
     home.userInfo = userInfo;
     this.setHome(home);
+  }
+
+  setIsPlatformDesktop(isPlatformDesktop: boolean) {
+    this.isPlatformDesktop.next(isPlatformDesktop);
   }
 }

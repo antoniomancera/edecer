@@ -126,6 +126,7 @@
         "settings": {
             "title": "settings",
             "select-language": "Select language",
+            "select-course": "Select course",
             "contact-modal": {
                 "title": "contact with us",
                 "message": "message",

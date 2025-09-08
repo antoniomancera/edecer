@@ -8,6 +8,7 @@ import { TranslocoModule } from '@jsverse/transloco';
 
 import { SettingsPageRoutingModule } from './settings-routing.module';
 import { SettingsPage } from './settings.page';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { SettingsPage } from './settings.page';
     IonicModule,
     SettingsPageRoutingModule,
     TranslocoModule,
+    SharedModule,
   ],
   declarations: [SettingsPage],
 })

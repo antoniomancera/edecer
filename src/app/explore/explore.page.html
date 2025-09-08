@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ 'explore.title' | transloco |titlecase }}</ion-title>
+    <ion-title>{{ "explore.title" | transloco | titlecase }}</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
@@ -10,15 +10,15 @@
         <ion-card
           class="deck-card"
           color="secondary"
-          (click)="onClickNavigateDeck(1)"
+          (click)="onClickNavigateDeck()"
         >
           <ion-card-header>
-            <ion-card-title
-              >{{ "shared.decks" | transloco | titlecase }}</ion-card-title
-            >
-            <ion-card-subtitle
-              >{{ 'explore.manage-decks' | transloco }}</ion-card-subtitle
-            >
+            <ion-card-title>{{
+              "shared.decks" | transloco | titlecase
+            }}</ion-card-title>
+            <ion-card-subtitle>{{
+              "explore.manage-decks" | transloco
+            }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content
             ><img src="assets/images/deck.svg" alt="Wave" class="wave"
@@ -32,12 +32,12 @@
           (click)="onClickNavigateWords()"
         >
           <ion-card-header>
-            <ion-card-title
-              >{{ "global.words" | transloco | titlecase }}</ion-card-title
-            >
-            <ion-card-subtitle
-              >{{ 'explore.manage-words' | transloco }}</ion-card-subtitle
-            >
+            <ion-card-title>{{
+              "global.words" | transloco | titlecase
+            }}</ion-card-title>
+            <ion-card-subtitle>{{
+              "explore.manage-words" | transloco
+            }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content
             ><img src="assets/images/words.svg" alt="Wave" class="wave"
@@ -56,12 +56,12 @@
           (click)="onClickNavigatePhrases()"
         >
           <ion-card-header>
-            <ion-card-title
-              >{{ "global.phrases" | transloco | titlecase }}</ion-card-title
-            >
-            <ion-card-subtitle
-              >{{ 'explore.manage-phrases' | transloco }}</ion-card-subtitle
-            >
+            <ion-card-title>{{
+              "global.phrases" | transloco | titlecase
+            }}</ion-card-title>
+            <ion-card-subtitle>{{
+              "explore.manage-phrases" | transloco
+            }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content
             ><img src="assets/images/phrase.svg" alt="Wave" class="wave"
@@ -76,11 +76,11 @@
           (click)="onClickNavigateVerbs()"
         >
           <ion-card-header>
-            <ion-card-title
-              >{{ "global.phrases" | transloco | titlecase }}</ion-card-title
-            >
+            <ion-card-title>{{
+              "global.phrases" | transloco | titlecase
+            }}</ion-card-title>
             <ion-card-subtitle
-              >{{ 'explore.manage-phrases' | transloco }}1</ion-card-subtitle
+              >{{ "explore.manage-phrases" | transloco }}1</ion-card-subtitle
             >
           </ion-card-header>
           <ion-card-content

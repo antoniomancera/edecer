@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,15 +6,11 @@ import { Router } from '@angular/router';
   templateUrl: './explore.page.html',
   styleUrls: ['./explore.page.scss'],
 })
-export class ExplorePage implements OnInit {
+export class ExplorePage {
   constructor(private router: Router) {}
 
-  ngOnInit() {}
-
-  onClickNavigateDeck(deckId: number) {
-    this.router.navigate(['tabs/explore/decks'], {
-      queryParams: { deckId: deckId },
-    });
+  onClickNavigateDeck() {
+    this.router.navigate(['tabs/explore/decks']);
   }
 
   onClickNavigateWords() {

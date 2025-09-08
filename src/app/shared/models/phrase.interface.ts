@@ -1,4 +1,5 @@
 import { Language } from './language.interface';
+import { PhraseTranslation } from './phrase-translation.interface';
 import { WordTranslation } from './word-translation.model';
 
 export interface Phrase {
@@ -6,7 +7,7 @@ export interface Phrase {
   language: Language;
 }
 
-export interface PhraseWithWordTranslations {
-  phrase: Phrase;
+export interface PhraseTranslationWithWordTranslations {
+  phrase: PhraseTranslation;
   wordTranslations: WordTranslation[];
 }

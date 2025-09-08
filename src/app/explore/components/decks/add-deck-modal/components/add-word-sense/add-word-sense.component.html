@@ -41,7 +41,6 @@
             </ion-chip>
             <ion-chip [disabled]="true">
               {{ wordWithAttemptsAndSuccess.word.level.code }}
-              {{ wordWithAttemptsAndSuccess.word.level.color }}
             </ion-chip>
             <ion-chip [disabled]="true">
               @if (wordWithAttemptsAndSuccess.attempts) {
@@ -69,9 +68,7 @@
                 <ion-checkbox
                   labelPlacement="end"
                   name="wordSenseName"
-                  [formControl]="
-                    selectedSensesFormArray.at(wordSense.wordSense.globalIndex)
-                  "
+                  [formControl]="getControlAt(wordSense.wordSense.globalIndex)"
                   (ionChange)="
                     onClickToggleWordSense(
                       $event,

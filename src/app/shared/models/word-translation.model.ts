@@ -6,8 +6,8 @@ export class WordTranslation {
   id: number;
   wordSenseTarget: WordSense;
   wordSenseBase: WordSense;
-  attempts: number;
-  successes: number;
+  // attempts: number;
+  // successes: number;
 }
 
 export interface WordTranslationWithPhraseTranslations {

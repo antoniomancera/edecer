@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
 
-import { Phrase } from 'src/app/shared/models/phrase.interface';
+import { PhraseTranslation } from 'src/app/shared/models/phrase-translation.interface';
 import { MessagingService } from 'src/app/shared/services/messaging.service';
 import { PhraseService } from 'src/app/shared/services/phrase.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
@@ -18,7 +18,7 @@ export class PhrasesComponent implements OnInit {
   pageNumber = 1;
   pageSize = 10;
   isLoading = false;
-  phrases: Phrase[] = [];
+  phrases: PhraseTranslation[] = [];
   isPlatformDesktop = signal<boolean>(false);
 
   constructor(

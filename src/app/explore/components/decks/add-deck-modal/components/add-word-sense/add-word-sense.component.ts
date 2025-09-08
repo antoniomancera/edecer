@@ -64,6 +64,10 @@ export class AddWordSenseComponent implements OnInit, OnDestroy {
     return this.addWordSensesForm.get('selectedSenses') as FormArray;
   }
 
+  getControlAt(index: number): FormControl {
+    return this.selectedSensesFormArray.at(index) as FormControl;
+  }
+
   ngOnInit() {
     this.deckStateService.setIsLoading(true);
     this.deckStateService.setIsAddWordSenseInitialized(true);
@@ -352,7 +356,7 @@ export class AddWordSenseComponent implements OnInit, OnDestroy {
    *
    * @param infiniteScroll
    */
-  private getWordWithAttemptsAndSuccessPaginated(infiniteScroll?) {
+  getWordWithAttemptsAndSuccessPaginated(infiniteScroll?) {
     this.isLoading.set(true);
     this.wordService
       .getWordWithAttemptsAndSuccessesPaginatedAplyingWordFilterIfExists(

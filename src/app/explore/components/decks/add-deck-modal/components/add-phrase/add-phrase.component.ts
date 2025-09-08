@@ -34,6 +34,12 @@ export class AddPhraseComponent implements OnInit {
         .getAllWordPhraseTranslationByWordSense(wordSenseIds)
         .subscribe((wordPhraseTranslations) => {
           this.wordPhraseTranslations = wordPhraseTranslations;
+
+          //TODO no sé si es necesario, o si conviene destruir el form en en ngDestroy
+          while (this.selectedPhrasesFormArray.length !== 0) {
+            this.selectedPhrasesFormArray.removeAt(0);
+          }
+
           const controls = [];
           let globalIndex = 0;
           this.wordPhraseTranslations.forEach((wordPhraseTranslation) => {
@@ -53,6 +59,10 @@ export class AddPhraseComponent implements OnInit {
         ? this.deckStateService.setIsAddPhraseFormValid(true)
         : this.deckStateService.setIsAddPhraseFormValid(false);
     });
+  }
+
+  getControlAt(index: number): FormControl {
+    return this.selectedPhrasesFormArray.at(index) as FormControl;
   }
 
   get selectedPhrasesFormArray() {

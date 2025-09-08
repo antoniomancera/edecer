@@ -92,7 +92,7 @@
               <ion-checkbox
                 labelPlacement="end"
                 [formControl]="
-                  selectedPartSpeechesFormArray.at(partSpeech.globalIndex)
+                  getSelectedPartSpeechesControlAt(partSpeech.globalIndex)
                 "
                 (ionChange)="onChangeSelectedPartSpeeches($event, partSpeech)"
               >
@@ -126,7 +126,7 @@
             <div class="ion-padding" slot="content">
               <ion-checkbox
                 labelPlacement="end"
-                [formControl]="selectedLevelsFormArray.at(level.globalIndex)"
+                [formControl]="getSelectedLevelsControlAt(level.globalIndex)"
                 (ionChange)="onChangeSelectedLevels($event, level)"
               >
                 {{ level.code }}</ion-checkbox
@@ -146,7 +146,7 @@
               >
             } @else {
               @for (
-                gender of wordFilterRequestSelected.categories;
+                category of wordFilterRequestSelected.categories;
                 track $index
               ) {
                 <ion-chip [disabled]="true"> {{ category.name }}</ion-chip>
@@ -158,7 +158,7 @@
               <ion-checkbox
                 labelPlacement="end"
                 [formControl]="
-                  selectedCategoriesFormArray.at(category.globalIndex)
+                  getSelectedCategoriesControlAt(category.globalIndex)
                 "
                 (ionChange)="onChangeSelectedCategories($event, category)"
               >
@@ -187,7 +187,7 @@
             <div class="ion-padding" slot="content">
               <ion-checkbox
                 labelPlacement="end"
-                [formControl]="selectedPersonsFormArray.at(person.globalIndex)"
+                [formControl]="getSelectedPersonsControlAt(person.globalIndex)"
                 (ionChange)="onChangeSelectedPersons($event, person)"
               >
                 {{
@@ -217,7 +217,7 @@
             <div class="ion-padding" slot="content">
               <ion-checkbox
                 labelPlacement="end"
-                [formControl]="selectedGendersFormArray.at(gender.globalIndex)"
+                [formControl]="getSelectedGendersControlAt(gender.globalIndex)"
                 (ionChange)="onChangeSelectedGenders($event, gender)"
               >
                 {{
@@ -251,7 +251,7 @@
             <div class="ion-padding" slot="content">
               <ion-checkbox
                 labelPlacement="end"
-                [formControl]="selectedNumbersFormArray.at(number.globalIndex)"
+                [formControl]="getSelectedNumbersControlAt(number.globalIndex)"
                 (ionChange)="onChangeSelectedNumbers($event, number)"
               >
                 {{ number.code }}
@@ -267,7 +267,7 @@
             <div class="ion-padding" slot="content">
               <ion-checkbox
                 labelPlacement="end"
-                [formControl]="selectedMoodsFormArray.at(mood.globalIndex)"
+                [formControl]="getSelectedMoodsControlAt(mood.globalIndex)"
               >
                 {{
                   mood.code | backEndConstant | transloco | firstChartUpper

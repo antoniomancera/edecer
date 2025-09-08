@@ -8,6 +8,7 @@ import {
   PhraseTranslationWithWordTranslations,
 } from '../models/phrase.interface';
 import { environment } from 'src/environments/environment';
+import { PhraseTranslation } from '../models/phrase-translation.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -33,8 +34,8 @@ export class PhraseService {
    * @param pageSize
    * @returns Phrase[]
    */
-  getAllPhrases(pageNumber?: number, pageSize?: number): Observable<Phrase[]> {
-    return this.http.get<Phrase[]>(
+  getAllPhrases(pageNumber?: number, pageSize?: number): Observable<PhraseTranslation[]> {
+    return this.http.get<PhraseTranslation[]>(
       environment.BASE_URL +
         this.PHRASE +
         this.PAGINATED +

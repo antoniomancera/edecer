@@ -1,24 +1,35 @@
 <ion-header>
+  <app-nav-bar [isDecksComponent]="isDecksComponent"></app-nav-bar>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
+    @if (!isPlatformDesktop()) {
+      <ion-buttons slot="start">
+        <ion-button fill="clear" (click)="onClickNavigateExplore()">
+          <ion-icon
+            slot="start"
+            name="arrow-back-outline"
+            size="large"
+          ></ion-icon
+        ></ion-button>
+      </ion-buttons>
+    }
     <ion-title>{{ "shared.decks" | transloco | titlecase }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div *ngIf="!isLoading && decks && decks.length > 0">
-    <ion-card
-      button
-      *ngFor="let deck of decks"
-      class="p-4 m-2 deck-card"
-      [color]="deck.color ? deck.color : 'tertiary'"
-      (click)="onClickOpenEditDeck(deck)"
-    >
-      {{ deck.name }}
-    </ion-card>
-  </div>
+<ion-content [fullscreen]="!isPlatformDesktop()">
+  @if (!isLoading && decks && decks.length > 0) {
+    @for (deck of decks; track $index) {
+      <ion-card
+        button
+        class="p-4 m-2 deck-card"
+        [color]="deck.color ? deck.color : 'tertiary'"
+        (click)="onClickOpenEditDeck(deck)"
+      >
+        {{ deck.name }}
+      </ion-card>
+    }
+  }
+
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button (click)="onClickNavigateAddDeck()">
       <ion-icon name="add"></ion-icon>

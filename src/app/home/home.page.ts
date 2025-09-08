@@ -15,6 +15,7 @@ import { StudyJournalModalComponent } from './components/study-journal-modal/stu
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  isHomePage: boolean = true;
   isDarkMode: boolean = false;
   wordTranslation: WordTranslation;
   home: Home;
@@ -23,7 +24,7 @@ export class HomePage implements OnInit {
   constructor(
     private modalController: ModalController,
     private messagingService: MessagingService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {

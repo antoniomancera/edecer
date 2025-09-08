@@ -11,6 +11,7 @@ import { BoldPipe } from './pipes/bold.pipe';
 import { TrackProgressTotalPercentageComponent } from './components/track-progress-total-percentage/track-progress-total-percentage.component';
 import { ConjugationTensePronounPipe } from './pipes/conjugation-tense-pronoun.pipe';
 import { BackEndConstantPipe } from './pipes/back-end-constant.pipe';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { BackEndConstantPipe } from './pipes/back-end-constant.pipe';
     FirstChartUpperPipe,
     TrackProgressTotalPercentageComponent,
     ConjugationTensePronounPipe,
+    NavBarComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +37,7 @@ import { BackEndConstantPipe } from './pipes/back-end-constant.pipe';
     BackEndConstantPipe,
     TrackProgressTotalPercentageComponent,
     ConjugationTensePronounPipe,
+    NavBarComponent,
   ],
 })
 export class SharedModule {}

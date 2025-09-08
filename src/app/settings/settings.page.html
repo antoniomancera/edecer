@@ -1,19 +1,23 @@
 <ion-header>
+  <app-nav-bar [isProfilePage]="isProfilePage"></app-nav-bar>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button fill="clear" (click)="onClickNavigateProfile()">
-        <ion-icon
-          slot="start"
-          name="arrow-back-outline"
-          size="large"
-        ></ion-icon></ion-button
-    ></ion-buttons>
+    @if (!isPlatformDesktop()) {
+      <ion-buttons slot="start">
+        <ion-button fill="clear" (click)="onClickNavigateProfile()">
+          <ion-icon
+            slot="start"
+            name="arrow-back-outline"
+            size="large"
+          ></ion-icon
+        ></ion-button>
+      </ion-buttons>
+    }
     <ion-title class="p-0">{{
       "profile.settings.title" | transloco | titlecase
     }}</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content [fullscreen]="!isPlatformDesktop()">
   <ion-list lines="full" class="flex p-0 m-0">
     <ion-item>
       <ion-icon class="p-3" name="language-sharp"></ion-icon
@@ -28,6 +32,7 @@
         interface="action-sheet"
         (ionChange)="onChangeLanguage(selectLanguage.value)"
       >
+        <!-- For select options we keep the old fashion of ofr loop, this is ngFor -->
         <ion-select-option *ngFor="let lang of languages" [value]="lang.code">
           {{ lang.title }}
         </ion-select-option>
@@ -48,8 +53,9 @@
         interface="action-sheet"
         (ionChange)="onChangeCourse(selectCourse.value)"
       >
+        <!-- For select options we keep the old fashion of ofr loop, this is ngFor -->
         <ion-select-option *ngFor="let course of courses" [value]="course.code">
-          {{ course.baseLanguage.code }}-{{ course.targetLanguage.code }}
+          {{ course.code }}
         </ion-select-option>
       </ion-select>
     </ion-item>

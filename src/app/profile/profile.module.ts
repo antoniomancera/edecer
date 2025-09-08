@@ -10,6 +10,7 @@ import { ProfilePageRoutingModule } from './profile-routing.module';
 import { ProfilePage } from './profile.page';
 import { AboutModalComponent } from './components/about-modal/about-modal.component';
 import { ContactModalComponent } from './components/contact-modal/contact-modal.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { ContactModalComponent } from './components/contact-modal/contact-modal.
     ProfilePageRoutingModule,
     TranslocoModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
   declarations: [ProfilePage, AboutModalComponent, ContactModalComponent],
 })

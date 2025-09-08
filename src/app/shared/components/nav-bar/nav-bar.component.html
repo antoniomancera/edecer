@@ -1,0 +1,110 @@
+@if (isPlatformDesktop()) {
+  <span class="navbar p-5">
+    <div>Apprendre</div>
+    <!-- <divs slot="end"> -->
+    <span>
+      <span
+        class="nav-link"
+        [class.active]="isHomePage"
+        (click)="onClickNavigate('home')"
+        >Home</span
+      >
+      <span
+        class="nav-link"
+        [class.active]="isStudyPage"
+        (click)="onClickNavigate('study')"
+        >Study</span
+      >
+      <span
+        class="nav-link dropdown"
+        [class.active]="isExplorePage"
+        (mouseenter)="showExplore = true"
+        (mouseleave)="showExplore = false"
+      >
+        <span [class.active]="isExploreActive">Explore</span>
+        @if (showExplore) {
+          <div class="dropdown-card">
+            <ion-card>
+              <ion-card-content>
+                <div
+                  class="submenu-item"
+                  [class.active]="isWordsComponent"
+                  (click)="onClickNavigate('words')"
+                >
+                  {{ "global.words" | transloco | titlecase }}
+                </div>
+
+                <div
+                  class="submenu-item"
+                  [class.active]="isPhrasesComponent"
+                  (click)="onClickNavigate('phrases')"
+                >
+                  {{ "explore.manage-phrases" | transloco }}
+                </div>
+                <div
+                  class="submenu-item"
+                  [class.active]="isDecksComponent"
+                  (click)="onClickNavigate('decks')"
+                >
+                  Decks
+                </div>
+                <div
+                  class="submenu-item"
+                  [class.active]="isVerbsComponent"
+                  (click)="onClickNavigate('verbs')"
+                >
+                  Verbs
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        }
+      </span>
+      <span
+        class="nav-link"
+        [class.active]="isProfilePage"
+        (click)="onClickNavigate('profile')"
+      >
+        Profile
+      </span></span
+    >
+
+    <!-- </ion-buttons> -->
+    <!-- <a
+    routerLink="/tabs/home"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class="nav-link"
+  >
+    Home
+  </a> -->
+
+    <!-- <a routerLink="../study" routerLinkActive="active" class="nav-link">
+    Study
+  </a>
+
+  <div
+    class="nav-link dropdown"
+    (mouseenter)="showExplore = true"
+    (mouseleave)="showExplore = false"
+  >
+    <span [class.active]="isExploreActive">Explore</span>
+
+    <div class="dropdown-card" *ngIf="showExplore">
+      <ion-card>
+        <ion-card-content>
+          <div class="submenu-item" routerLink="/tabs/explore">
+            Search words
+          </div>
+          <div class="submenu-item" routerLink="/tabs/decks">Decks</div>
+          <div class="submenu-item" routerLink="/tabs/stats">Stats</div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <a routerLink="/tabs/profile" routerLinkActive="active" class="nav-link">
+    Profile
+  </a> -->
+  </span>
+}

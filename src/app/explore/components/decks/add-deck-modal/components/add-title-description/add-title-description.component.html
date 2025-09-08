@@ -1,0 +1,22 @@
+<form [formGroup]="addTitleForm">
+  <ion-item class="p-2">
+    <ion-input
+      formControlName="name"
+      label="{{ 'global.title' | transloco | titlecase }}"
+      type="text"
+      labelPlacement="floating"
+    ></ion-input>
+  </ion-item>
+  <ion-item class="p-2">
+    <ion-textarea
+      formControlName="description"
+      label="{{ 'global.description' | transloco | titlecase }}"
+      labelPlacement="floating"
+      [autoGrow]="true"
+      [counter]="true"
+      maxlength="250"
+      [counterFormatter]="customCharactersRemainingFormatter"
+    >
+    </ion-textarea>
+  </ion-item>
+</form>

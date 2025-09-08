@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { ModalController } from '@ionic/angular';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { MessagingService } from 'src/app/shared/services/messaging.service';
-import { EditDeckModalComponent } from '../edit-deck-modal/edit-deck-modal.component';
+import { InfoDeckModalComponent } from '../info-deck-modal/info-deck-modal.component';
+import {
+  AddEditOrInfo,
+  DeckStateService,
+} from './add-deck-modal/services/deck-state.service';
+import { combineLatest, map } from 'rxjs';
 
 @Component({
   selector: 'app-decks',
@@ -12,6 +18,7 @@ import { EditDeckModalComponent } from '../edit-deck-modal/edit-deck-modal.compo
   styleUrls: ['./decks.component.scss'],
 })
 export class DecksComponent implements OnInit {
+  isDecksComponent = true;
   decks: Deck[] = [];
   selectedDeck: Deck = null;
   isLoading: boolean = true;
@@ -21,10 +28,14 @@ export class DecksComponent implements OnInit {
     header: '',
     subHeader: '',
   };
+  isPlatformDesktop = signal<boolean>(false);
+
   constructor(
     private messagingService: MessagingService,
     private route: ActivatedRoute,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private router: Router,
+    private deckStateService: DeckStateService,
   ) {}
 
   ngOnInit() {
@@ -36,20 +47,28 @@ export class DecksComponent implements OnInit {
         this.deckId = undefined;
       }
     });
-    this.messagingService.getHome().subscribe((home) => {
-      if (home && home.decks) this.decks = home.decks;
-      this.isLoading = false;
-    });
+
+    combineLatest([
+      this.messagingService.getHome(),
+      this.messagingService.getIsPlatformDesktop(),
+    ])
+      .pipe(
+        map(([home, isPlatformDesktop]) => {
+          if (home && home.decks) this.decks = home.decks;
+          this.isLoading = false;
+          this.isPlatformDesktop.set(isPlatformDesktop);
+        }),
+      )
+      .subscribe();
   }
 
   async onClickOpenEditDeck(selectedDeck: Deck) {
     this.selectedDeck = selectedDeck;
     const modal = await this.modalController.create({
-      component: EditDeckModalComponent,
+      component: InfoDeckModalComponent,
       componentProps: {
         selectedDeck: selectedDeck,
       },
-
       initialBreakpoint: 0.9,
     });
     await modal.present();
@@ -62,5 +81,14 @@ export class DecksComponent implements OnInit {
 
   setIsEditDeckModalOpenFalse() {
     this.isEditDeckModalOpen = false;
+  }
+
+  onClickNavigateAddDeck() {
+    this.deckStateService.setAddEditOrInfo(AddEditOrInfo.ADD);
+    this.router.navigate(['decks/add-deck']);
+  }
+
+  onClickNavigateExplore() {
+    this.router.navigate(['tabs/explore']);
   }
 }

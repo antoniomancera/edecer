@@ -20,6 +20,12 @@ const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'decks',
+    loadChildren: () =>
+      import('./explore/explore.module').then((m) => m.ExplorePageModule),
+    canActivate: [authGuard],
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full',

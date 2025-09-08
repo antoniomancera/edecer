@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 
 import { MessagingService } from '../shared/services/messaging.service';
 import { Deck } from '../shared/models/deck.interface';
@@ -6,6 +6,7 @@ import { Goal } from '../home/models/goal.interface';
 import { DailyStats } from '../stats/models/daily-stats.interface';
 import { WordPhraseTranslation } from '../shared/models/word-phrase-translation.model';
 import { DeckWordPhraseTranslationService } from '../shared/services/deck-word-phrase-translation.service';
+import { combineLatest, map } from 'rxjs';
 
 @Component({
   selector: 'app-study',
@@ -13,6 +14,8 @@ import { DeckWordPhraseTranslationService } from '../shared/services/deck-word-p
   styleUrls: ['./study.page.scss'],
 })
 export class StudyPage implements OnInit {
+  isPlatformDesktop = signal<boolean>(false);
+  isStudyPage = signal<boolean>(true);
   wordPhraseTranslation: WordPhraseTranslation;
   decks: Deck[] = [];
   lastDeck: Deck;
@@ -23,31 +26,39 @@ export class StudyPage implements OnInit {
 
   constructor(
     private deckWordPhraseTranslationService: DeckWordPhraseTranslationService,
-    private messagingService: MessagingService
+    private messagingService: MessagingService,
   ) {}
 
   ngOnInit(): void {
-    this.messagingService.getHome().subscribe((home) => {
-      this.decks = home.decks;
-      this.goal = home.goal;
-      this.selectedDeckId = home.lastDeckId
-        ? home.lastDeckId
-        : this.decks[0].id;
-      this.lastDeck = this.decks.find(
-        (deck) => deck.id === this.selectedDeckId
-      );
-      this.stat = home.weekStats.find((stat) => {
-        let statDate =
-          typeof stat.date === 'string' ? new Date(stat.date) : stat.date;
-        let today = new Date();
-        today.setHours(0, 0, 0, 0);
-        statDate.setHours(0, 0, 0, 0);
+    combineLatest([
+      this.messagingService.getHome(),
+      this.messagingService.getIsPlatformDesktop(),
+    ])
+      .pipe(
+        map(([home, isPlatformDesktop]) => {
+          this.isPlatformDesktop.set(isPlatformDesktop);
+          this.decks = home.decks;
+          this.goal = home.goal;
+          this.selectedDeckId = home.lastDeckId
+            ? home.lastDeckId
+            : this.decks[0].id;
+          this.lastDeck = this.decks.find(
+            (deck) => deck.id === this.selectedDeckId,
+          );
+          this.stat = home.weekStats.find((stat) => {
+            let statDate =
+              typeof stat.date === 'string' ? new Date(stat.date) : stat.date;
+            let today = new Date();
+            today.setHours(0, 0, 0, 0);
+            statDate.setHours(0, 0, 0, 0);
 
-        return statDate.getTime() === today.getTime();
-      });
+            return statDate.getTime() === today.getTime();
+          });
 
-      this.isLoading = false;
-    });
+          this.isLoading = false;
+        }),
+      )
+      .subscribe();
   }
 
   onChangeDeck(deckId: number) {

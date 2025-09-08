@@ -1,17 +1,28 @@
 <ion-header>
+  <app-nav-bar [isPhrasesComponent]="isPhrasesComponent"></app-nav-bar>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
+    @if (!isPlatformDesktop()) {
+      <ion-buttons slot="start">
+        <ion-button fill="clear" (click)="onClickNavigateExplore()">
+          <ion-icon
+            slot="start"
+            name="arrow-back-outline"
+            size="large"
+          ></ion-icon
+        ></ion-button>
+      </ion-buttons>
+    }
     <ion-title>{{ "global.phrases" | transloco | titlecase }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="!isPlatformDesktop()">
   <ion-list>
-    <ion-item *ngFor="let phrase of phrases">
-      <ion-label>{{ phrase.phraseFr }}</ion-label>
-    </ion-item>
+    @for (phrase of phrases; track $index) {
+      <ion-item>
+        <ion-label>{{ phrase.phraseTarget.phrase }}</ion-label>
+      </ion-item>
+    }
   </ion-list>
   <ion-infinite-scroll (ionInfinite)="onIonInfiniteGetNextPagePhrases($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>

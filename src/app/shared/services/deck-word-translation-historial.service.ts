@@ -10,8 +10,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class DeckWordTranslationHistorialService {
-  private readonly DECK_WORD_TRANSLATION_HISTORIAL =
-    '/deckWordTranslationHistorial';
+  //TODO cambiar
+  private readonly DECK_WORD_TRANSLATION_HISTORIAL = '/userHistorial';
 
   constructor(private http: HttpClient) {}
 
@@ -23,13 +23,13 @@ export class DeckWordTranslationHistorialService {
    * that must be translated
    */
   getDeckWordTranslationHistorialByDayMillis(
-    dayMillis: number
+    dayMillis: number,
   ): Observable<DeckWordTranslationHistorial[]> {
     return this.http.get<DeckWordTranslationHistorial[]>(
       environment.BASE_URL +
         this.DECK_WORD_TRANSLATION_HISTORIAL +
         '/' +
-        dayMillis
+        dayMillis,
     );
   }
 }

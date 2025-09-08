@@ -3,6 +3,31 @@
         "error": {
             "DECK_WORD_TRANSLATION_HISTORIAL_NOT_FOUND": "Not found any historial for the day {{date}}"
         },
+        "constant": {
+            "SUSTANTIVE": "noun",
+            "VERB": "verb",
+            "ADJECTIVE": "adjective",
+            "ADVERB": "adverb",
+            "PRONOUN": "pronoun",
+            "PREPOSITION": "preposition",
+            "CONJUNCTION": "conjunction",
+            "INTERJECTION": "interjection",
+            "PARTICLE": "particle",
+            "FIRST": "first person",
+            "SECOND": "second person",
+            "THIRD": "third person",
+            "NON_PERSONAL": "non-personal",
+            "NEUTRAL": "neutral",
+            "FEMININE": "feminine",
+            "MASCULINE": "masculine",
+            "SINGULAR": "singular",
+            "PLURAL": "plural",
+            "NON_NUMBER": "non-number",
+            "INDICATIVE": "indicative",
+            "SUBJUNCTIVE": "subjunctive",
+            "CONDITIONAL": "conditional",
+            "IMPERATIVE": "imperative"
+        },
         "email": "email",
         "unknown-error": "unknown error",
         "week-days": {
@@ -25,7 +50,10 @@
         "percentage": "percentage",
         "back": "back",
         "send": "send",
-        "welcome": "welcome"
+        "welcome": "welcome",
+        "next": "next",
+        "title": "title",
+        "description": "description"
     },
     "login": {
         "password": "password",
@@ -67,7 +95,12 @@
         "title": "explore",
         "manage-decks": "Manage your decks",
         "manage-words": "Manage your words",
-        "manage-phrases": "Manage your phrases"
+        "manage-phrases": "Manage your phrases",
+        "decks": {
+            "add-edit-deck-modal": {
+                "add-title": "New deck"
+            }
+        }
     },
     "home":{
         "statistics": "statistics",
@@ -93,6 +126,7 @@
         "settings": {
             "title": "settings",
             "select-language": "Select language",
+            "select-course": "Select course",
             "contact-modal": {
                 "title": "contact with us",
                 "message": "message",

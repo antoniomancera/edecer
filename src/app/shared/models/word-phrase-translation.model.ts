@@ -5,8 +5,9 @@ export class WordPhraseTranslation {
   id: number;
   wordTranslation: WordTranslation;
   phraseTranslation: PhraseTranslation;
-  phraseFrFirstPart?: string;
-  phraseFrSecondPart?: string;
+  phraseTargetFirstPart?: string;
+  phraseTargetSecondPart?: string;
+  globalIndex?: number;
 
   constructor(
     id: number,
@@ -20,15 +21,15 @@ export class WordPhraseTranslation {
 
   getWordPhraseTranslationWithParts(): WordPhraseTranslation {
     if (
-      this.phraseTranslation.phraseFr.split(
-        this.wordTranslation.wordSenseFr.word.name
+      this.phraseTranslation.phraseTarget.phrase.split(
+        this.wordTranslation.wordSenseTarget.word.name
       )
     ) {
-      const phraseFrSplit = this.phraseTranslation.phraseFr.split(
-        this.wordTranslation.wordSenseFr.word.name
+      const phraseTargetSplit = this.phraseTranslation.phraseTarget.phrase.split(
+        this.wordTranslation.wordSenseTarget.word.name
       );
-      this.phraseFrFirstPart = phraseFrSplit[0];
-      this.phraseFrSecondPart = phraseFrSplit[1];
+      this.phraseTargetFirstPart = phraseTargetSplit[0];
+      this.phraseTargetSecondPart = phraseTargetSplit[1];
     }
     return this;
   }

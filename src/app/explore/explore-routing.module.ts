@@ -6,6 +6,7 @@ import { DecksComponent } from './components/decks/decks.component';
 import { WordsComponent } from './components/words/words.component';
 import { PhrasesComponent } from './components/phrases/phrases.component';
 import { VerbsComponent } from './components/verbs/verbs.component';
+import { AddDeckModalComponent } from './components/decks/add-deck-modal/add-deck-modal.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,14 @@ const routes: Routes = [
   {
     path: 'verbs',
     component: VerbsComponent,
+  },
+  {
+    path: 'add-deck',
+    component: AddDeckModalComponent,
+  },
+  {
+    path: 'edit-deck',
+    component: AddDeckModalComponent,
   },
 ];
 

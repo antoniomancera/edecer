@@ -11,12 +11,30 @@ import { environment } from 'src/environments/environment';
 })
 export class UserInfoService {
   private readonly USER_INFO = '/userInfo';
+  private readonly CURRENT_COURSE_SET_URL = '/setCurrentCourse';
 
   constructor(private http: HttpClient) {}
+  //TODO eliminar
+  // getUserInfoBySupabaseId(supabaseId: string): Observable<UserInfo> {
+  //   return this.http.get<UserInfo>(
+  //     `${environment.BASE_URL}${this.USER_INFO}/${supabaseId}`,
+  //   );
+  // }
 
-  getUserInfoBySupabaseId(supabaseId: string): Observable<UserInfo> {
-    return this.http.get<UserInfo>(
-      `${environment.BASE_URL}${this.USER_INFO}/${supabaseId}`
+  /**
+   * Update an UserInfo with a course
+   *
+   * @param courseCode
+   * @return HTTP respond with the UserInfo updated with the new course
+   */
+  setCurrentCourse(courseCode: String) {
+    return this.http.put<UserInfo>(
+      environment.BASE_URL +
+        this.USER_INFO +
+        this.CURRENT_COURSE_SET_URL +
+        '/' +
+        courseCode,
+      {},
     );
   }
 }

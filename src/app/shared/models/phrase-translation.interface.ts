@@ -1,5 +1,7 @@
+import { Phrase } from './phrase.interface';
+
 export interface PhraseTranslation {
   id: number;
-  phraseFr: string;
-  phraseSp: string;
+  phraseTarget: Phrase;
+  phraseBase: Phrase;
 }

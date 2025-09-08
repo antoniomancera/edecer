@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class BackEndConstantPipe implements PipeTransform {
-  transform(value: string): unknown {
+  transform(value: string): string {
     return 'global.backend-constant.' + value;
   }
 }

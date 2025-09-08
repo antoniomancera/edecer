@@ -67,13 +67,6 @@ export class FilterWordSenseComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.deckStateService
-    //   .getWordFilterRequest()
-    //   .subscribe(
-    //     (wordFilterRequestSelected) =>
-    //       (this.wordFilterRequestSelected = wordFilterRequestSelected),
-    //   );
-
     this.wordService
       .getAllWordFilterOptions()
       .subscribe((wordFilterOptions) => {
@@ -86,7 +79,6 @@ export class FilterWordSenseComponent implements OnInit {
         this.initFormArray('genders', 'selectedGenders', 'code');
         this.initFormArray('numbers', 'selectedNumbers', 'code');
         this.initFormArrayTenses();
-        // this.initFormArray('moodWithTenses', 'selectedTenses', 'code');
 
         this.isLoading.set(false);
       });
@@ -98,32 +90,64 @@ export class FilterWordSenseComponent implements OnInit {
     return this.addWordSenseFilterForm.get('selectedPartSpeeches') as FormArray;
   }
 
+  getSelectedPartSpeechesControlAt(index: number): FormControl {
+    return this.selectedPartSpeechesFormArray.at(index) as FormControl;
+  }
+
   get selectedLevelsFormArray() {
     return this.addWordSenseFilterForm.get('selectedLevels') as FormArray;
+  }
+
+  getSelectedLevelsControlAt(index: number): FormControl {
+    return this.selectedLevelsFormArray.at(index) as FormControl;
   }
 
   get selectedCategoriesFormArray() {
     return this.addWordSenseFilterForm.get('selectedCategories') as FormArray;
   }
 
+  getSelectedCategoriesControlAt(index: number): FormControl {
+    return this.selectedCategoriesFormArray.at(index) as FormControl;
+  }
+
   get selectedPersonsFormArray() {
     return this.addWordSenseFilterForm.get('selectedPersons') as FormArray;
+  }
+
+  getSelectedPersonsControlAt(index: number): FormControl {
+    return this.selectedPersonsFormArray.at(index) as FormControl;
   }
 
   get selectedGendersFormArray() {
     return this.addWordSenseFilterForm.get('selectedGenders') as FormArray;
   }
 
+  getSelectedGendersControlAt(index: number): FormControl {
+    return this.selectedGendersFormArray.at(index) as FormControl;
+  }
+
   get selectedNumbersFormArray() {
     return this.addWordSenseFilterForm.get('selectedNumbers') as FormArray;
+  }
+
+  getSelectedNumbersControlAt(index: number): FormControl {
+    return this.selectedNumbersFormArray.at(index) as FormControl;
   }
 
   get selectedMoodsFormArray() {
     return this.addWordSenseFilterForm.get('selectedMoods') as FormArray;
   }
 
+  getSelectedMoodsControlAt(index: number): FormControl {
+    return this.selectedMoodsFormArray.at(index) as FormControl;
+  }
+
   get selectedTensesFormArray() {
     return this.addWordSenseFilterForm.get('selectedTenses') as FormArray;
+  }
+
+  getSelectedTensesControlAt(index: number): FormControl {
+    return this.selectedTensesFormArray.at(index) as FormControl;
   }
 
   onSubmitAppyFilters() {

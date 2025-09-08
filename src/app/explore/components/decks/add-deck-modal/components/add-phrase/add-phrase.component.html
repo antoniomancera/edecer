@@ -8,9 +8,7 @@
       <ion-item>
         <ion-checkbox
           labelPlacement="end"
-          [formControl]="
-            selectedPhrasesFormArray.at(wordPhraseTranslation.globalIndex)
-          "
+          [formControl]="getControlAt(wordPhraseTranslation.globalIndex)"
         >
           {{
             wordPhraseTranslation.phraseTranslation.phraseTarget.phrase

@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MessagingService } from 'src/app/shared/services/messaging.service';
@@ -25,6 +19,8 @@ export class NavBarComponent implements OnInit, OnChanges {
   @Input() isVerbsComponent: boolean = false;
 
   isPlatformDesktop = signal<boolean>(false);
+  showExplore = false;
+  isExploreActive = false;
 
   constructor(
     private router: Router,

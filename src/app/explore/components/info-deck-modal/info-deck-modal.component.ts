@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
-import { PhraseWithWordTranslations } from 'src/app/shared/models/phrase.interface';
-import { WordTranslationWithPhraseTranslations } from 'src/app/shared/models/word-translation.model';
+import { PhraseTranslationWithWordTranslations } from 'src/app/shared/models/phrase.interface';
 import { WordWithAttemptsAndSuccess } from 'src/app/shared/models/word.interface';
 import { DeckWordPhraseTranslationService } from 'src/app/shared/services/deck-word-phrase-translation.service';
 import { PhraseService } from 'src/app/shared/services/phrase.service';
@@ -28,7 +27,7 @@ export class InfoDeckModalComponent {
   isLoading = false;
   hasLoadWords = false;
   hasLoadPhrases = false;
-  phrasesWithWordTranslations: PhraseWithWordTranslations[] = [];
+  phrasesWithWordTranslations: PhraseTranslationWithWordTranslations[] = [];
   // wordTranslationsWithPhrases: WordTranslationWithPhraseTranslations[] = [];
   selectedSegment = 'info';
   pageNumber = signal<number>(0);

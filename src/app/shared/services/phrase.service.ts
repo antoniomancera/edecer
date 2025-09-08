@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { Phrase, PhraseWithWordTranslations } from '../models/phrase.interface';
+import {
+  Phrase,
+  PhraseTranslationWithWordTranslations,
+} from '../models/phrase.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,10 +19,10 @@ export class PhraseService {
   constructor(private http: HttpClient) {}
 
   getAllPhrasesWithWordTranslationsByDeck(
-    deckId?: number
-  ): Observable<PhraseWithWordTranslations[]> {
-    return this.http.get<PhraseWithWordTranslations[]>(
-      environment.BASE_URL + this.PHRASE + '/' + deckId
+    deckId?: number,
+  ): Observable<PhraseTranslationWithWordTranslations[]> {
+    return this.http.get<PhraseTranslationWithWordTranslations[]>(
+      environment.BASE_URL + this.PHRASE + '/' + deckId,
     );
   }
 
@@ -38,7 +41,7 @@ export class PhraseService {
         '/' +
         pageNumber +
         '/' +
-        pageSize
+        pageSize,
     );
   }
 }

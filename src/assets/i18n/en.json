@@ -99,6 +99,10 @@
         "decks": {
             "add-edit-deck-modal": {
                 "add-title": "New deck"
+            },
+            "is-deck-limit-reached-alert": {
+                "title": "Maximum Deck Limit Reached",
+                "text": "You have reached the maximum number of available decks. Delete one if you want to create a new one. You can recover it later in the deleted decks section."
             }
         }
     },

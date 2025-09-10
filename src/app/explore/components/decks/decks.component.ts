@@ -1,7 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+
+import { TranslocoService } from '@jsverse/transloco';
+
+import { combineLatest, map } from 'rxjs';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { MessagingService } from 'src/app/shared/services/messaging.service';
@@ -10,7 +14,7 @@ import {
   AddEditOrInfo,
   DeckStateService,
 } from './add-deck-modal/services/deck-state.service';
-import { combineLatest, map } from 'rxjs';
+import { DeckService } from './services/deck.service';
 
 @Component({
   selector: 'app-decks',
@@ -36,6 +40,9 @@ export class DecksComponent implements OnInit {
     private modalController: ModalController,
     private router: Router,
     private deckStateService: DeckStateService,
+    private deckService: DeckService,
+    private alertController: AlertController,
+    private translocoService: TranslocoService,
   ) {}
 
   ngOnInit() {
@@ -74,6 +81,20 @@ export class DecksComponent implements OnInit {
     await modal.present();
   }
 
+  async presentIsDeckLimitReachedAlert() {
+    const alert = await this.alertController.create({
+      header: this.translocoService.translate(
+        'explore.decks.is-deck-limit-reached-alert.title',
+      ),
+      message: this.translocoService.translate(
+        'explore.decks.is-deck-limit-reached-alert.text',
+      ),
+      buttons: [this.translocoService.translate('global.accept')],
+    });
+
+    await alert.present();
+  }
+
   onClickSetSelected(selectedDeck: Deck) {
     this.isEditDeckModalOpen = true;
     this.selectedDeck = selectedDeck;
@@ -84,8 +105,16 @@ export class DecksComponent implements OnInit {
   }
 
   onClickNavigateAddDeck() {
-    this.deckStateService.setAddEditOrInfo(AddEditOrInfo.ADD);
-    this.router.navigate(['decks/add-deck']);
+    this.deckService
+      .isDeckLimitNotReached()
+      .subscribe((isDeckLimitNotReached) => {
+        if (!isDeckLimitNotReached) {
+          this.presentIsDeckLimitReachedAlert();
+        } else {
+          this.deckStateService.setAddEditOrInfo(AddEditOrInfo.ADD);
+          this.router.navigate(['decks/add-deck']);
+        }
+      });
   }
 
   onClickNavigateExplore() {

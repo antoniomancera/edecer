@@ -98,6 +98,10 @@
         "decks": {
             "add-edit-deck-modal": {
                 "add-title": "nuevo mazo"
+            },
+            "is-deck-limit-reached-alert": {
+                "title": "Máximo número de mazos alcanzado",
+                "text": "Has alcanzado el número máximo de mazos disponibles. Borra alguno si quieres crear uno nuevo. POdrás recuperarlo después en las ección maxos borrados."
             }
         }
     },

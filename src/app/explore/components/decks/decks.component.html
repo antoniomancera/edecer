@@ -23,9 +23,33 @@
         button
         class="p-4 m-2 deck-card"
         [color]="deck.color ? deck.color : 'tertiary'"
-        (click)="onClickOpenEditDeck(deck)"
       >
+        <!-- TODO incluir o no en el dck -->
+        <!-- (click)="onClickOpenInfoDeck(deck)" -->
         {{ deck.name }}
+        <span class="icon-float-right">
+          <ion-button (click)="onClickOpenInfoDeck(deck)" fill="outline">
+            Informacion<ion-icon name="information-circle"></ion-icon>
+          </ion-button>
+          <ion-button (click)="onClickNavigateStudy()" fill="outline">
+            Estudiar<ion-icon name="book" color="dark" slot="end"></ion-icon>
+          </ion-button>
+          <ion-button (click)="onClickEditDeck(deck)" fill="outline">
+            Editar <ion-icon name="search" color="dark" slot="end"></ion-icon>
+          </ion-button>
+          <ion-button
+            (click)="onClickPresentRemoveDeckAlert(deck)"
+            fill="outline"
+          >
+            Eliminar<ion-icon name="trash" color="dark" slot="end"></ion-icon>
+          </ion-button>
+        </span>
+        <!-- <ion-buttons slot="end">
+          <ion-button shape="round" (click)="onClickEditDeck()" color="medium">
+            <ion-icon name="pencil"></ion-icon>
+            edit
+          </ion-button>
+        </ion-buttons> -->
       </ion-card>
     }
   }

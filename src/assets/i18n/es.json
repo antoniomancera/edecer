@@ -101,7 +101,11 @@
             },
             "is-deck-limit-reached-alert": {
                 "title": "Máximo número de mazos alcanzado",
-                "text": "Has alcanzado el número máximo de mazos disponibles. Borra alguno si quieres crear uno nuevo. POdrás recuperarlo después en las ección maxos borrados."
+                "text": "Has alcanzado el número máximo de mazos disponibles. Borra alguno si quieres crear uno nuevo. Podrá recuperarlo después en las ección maxos borrados."
+            },
+            "update-end-date-alert": {
+                "title": "Eliminar mazo {{deckName}}",
+                "text": "¿Está seguro de que desea eliminar el mazo?. Podrá recuperarlo después en las ección maxos borrados." 
             }
         }
     },

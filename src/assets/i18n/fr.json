@@ -102,6 +102,10 @@
             "is-deck-limit-reached-alert": {
                 "title": "Nombre maximum de decks atteint",
                 "text": "Vous avez atteint le nombre maximum de decks disponibles. Supprimez-en un si vous souhaitez en créer un nouveau. Vous pourrez le récupérer plus tard dans la section des decks supprimés."
+            },
+            "update-end-date-alert": {
+                "title": "Eliminar mazo {{deckName}}",
+                "text": "¿Está seguro de que desea eliminar el mazo?. Podrá recuperarlo después en las ección maxos borrados." 
             }
         }
     },

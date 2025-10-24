@@ -14,6 +14,7 @@ import {
   WordFilterRequest,
   WordSenseFilterRequest,
 } from '../models/word-filter.model';
+import { ConjugationVerbWithTensesInfo } from '../models/conjugation-verb-with-tenses-info.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,9 @@ export class WordService {
   private readonly FILTERS_ALL_GET = '/allFilters/';
   private readonly APPLY_FILTERS = '/applyFilters';
   private readonly WITH_ATTEMPTS_AND_SUCCESS = '/withAttemptsAndSuccesses';
+  private readonly WORD_SENSE = '/wordSense';
   private readonly WORD_SENSE_INFO = '/wordSenseInfo';
+  private readonly STRUCTURE_IRREGULAR = '/structureIrregulars';
 
   constructor(private http: HttpClient) {}
 
@@ -45,14 +48,15 @@ export class WordService {
    * @param wordSenseId
    * @returns ConjugationTense[]
    */
-  getAllConjugationCompleteByWordSenseId(wordSenseId: number) {
-    return this.http.get<ConjugationTense[]>(
-      environment.BASE_URL +
-        this.CONJGUATION +
-        '/allComplete/wordSense/' +
-        wordSenseId,
-    );
-  }
+  //TODO eliminar?
+  // getAllConjugationCompleteByWordSenseId(wordSenseId: number) {
+  //   return this.http.get<ConjugationTense[]>(
+  //     environment.BASE_URL +
+  //       this.CONJGUATION +
+  //       '/structureIrregulars/wordSense/' +
+  //       wordSenseId,
+  //   );
+  // }
 
   /**
    * Get a list with all the parameters availables to filter for word and wordSense, that are;
@@ -165,6 +169,26 @@ export class WordService {
     }
 
     return this.getWordSenseInfosWithoutWordByWordId(wordId);
+  }
+
+  /**
+   * Given a wordSense return the structure general of every tense Conjugation and their irregulars
+   * 
+   * @param wordSenseId 
+   * @returns 
+   */
+  getConjugationVerbWithTensesInfoByWordSenseId(
+    wordSenseId: number,
+  ): Observable<ConjugationVerbWithTensesInfo> {
+    console.log('prueba');
+    return this.http.get<ConjugationVerbWithTensesInfo>(
+      environment.BASE_URL +
+        this.CONJGUATION +
+        this.STRUCTURE_IRREGULAR +
+        this.WORD_SENSE +
+        '/' +
+        wordSenseId,
+    );
   }
 
   /**

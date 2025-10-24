@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { VERB_MODES } from 'src/app/shared/constants/app.constants';
 import { ConjugationTense } from 'src/app/shared/models/conjugation-tense.model';
+import { ConjugationOrchestratorService } from 'src/app/shared/services/conjugation/conjugation-orchestrator.service';
 import { WordService } from 'src/app/shared/services/word.service';
 
 @Component({
@@ -13,50 +14,54 @@ export class ConjugationCompleteComponent implements OnInit {
   @Input() verbId = 0;
 
   isLoading = true;
-  conjugationComplete: ConjugationTense[] = [];
-
   conjugationIndicative: ConjugationTense[] = [];
   conjugationSubjunctive: ConjugationTense[] = [];
   conjugationConditional: ConjugationTense[] = [];
   conjugationImperative: ConjugationTense[] = [];
   conjugationImpersonal: ConjugationTense[] = [];
 
-  prueba: ConjugationTense = null;
+  conjugationComplete: ConjugationTense[] = [];
 
-  constructor(private wordService: WordService) {}
+  constructor(
+    private wordService: WordService,
+    private conjugationOrchestratorService: ConjugationOrchestratorService,
+  ) {}
 
   ngOnInit() {
     this.wordService
-      .getAllConjugationCompleteByWordSenseId(this.verbId)
+      .getConjugationVerbWithTensesInfoByWordSenseId(this.verbId)
       .subscribe({
         next: (conjugation) => {
+          this.conjugationComplete =
+            this.conjugationOrchestratorService.getConjugationWordPositionsByConjugationVerbWithTensesInfo(
+              conjugation,
+            );
           this.conjugationIndicative =
             ConjugationTense.getConjugationTensesByMode(
-              conjugation,
-              VERB_MODES.INDICATIVE
+              this.conjugationComplete,
+              VERB_MODES.INDICATIVE,
             );
-          this.prueba = this.conjugationIndicative[0];
 
           this.conjugationSubjunctive =
             ConjugationTense.getConjugationTensesByMode(
-              conjugation,
-              VERB_MODES.SUBJUNCTIVE
+              this.conjugationComplete,
+              VERB_MODES.SUBJUNCTIVE,
             );
 
           this.conjugationConditional =
             ConjugationTense.getConjugationTensesByMode(
-              conjugation,
-              VERB_MODES.CONDITIONAL
+              this.conjugationComplete,
+              VERB_MODES.CONDITIONAL,
             );
 
           this.conjugationImperative =
             ConjugationTense.getConjugationTensesByMode(
-              conjugation,
-              VERB_MODES.IMPERATIVE
+              this.conjugationComplete,
+              VERB_MODES.IMPERATIVE,
             );
 
-          this.conjugationImpersonal = conjugation.filter(
-            (conju) => !conju.tense.mood
+          this.conjugationImpersonal = this.conjugationComplete.filter(
+            (conju) => !conju.tense.mood,
           );
           this.isLoading = false;
         },

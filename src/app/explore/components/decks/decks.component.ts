@@ -16,6 +16,7 @@ import {
 } from './add-deck-modal/services/deck-state.service';
 import { DeckService } from './services/deck.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { CreationOptionsAvailable } from './models/creation-options-available.model';
 
 @Component({
   selector: 'app-decks',
@@ -34,6 +35,7 @@ export class DecksComponent implements OnInit {
     subHeader: '',
   };
   isPlatformDesktop = signal<boolean>(false);
+  creationOptionsAvailable = signal<CreationOptionsAvailable>(undefined);
 
   constructor(
     private messagingService: MessagingService,
@@ -165,6 +167,14 @@ export class DecksComponent implements OnInit {
     this.deckStateService.setAddEditOrInfo(AddEditOrInfo.EDIT);
     this.deckStateService.setSelectedDeck(this.selectedDeck);
     this.router.navigate(['decks/edit-deck']);
+  }
+
+  onClickSetCreationOptionsAvailable() {
+    this.deckService
+      .isDeckCreationOptionsAvailable()
+      .subscribe((creationOptionsAvailable) =>
+        this.creationOptionsAvailable.set(creationOptionsAvailable),
+      );
   }
 
   private getActiveDecks() {

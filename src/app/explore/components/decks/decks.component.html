@@ -54,9 +54,34 @@
     }
   }
 
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button (click)="onClickNavigateAddDeck()">
+  <ion-fab
+    horizontal="end"
+    vertical="bottom"
+    slot="fixed"
+    (click)="onClickSetCreationOptionsAvailable()"
+  >
+    <ion-fab-button>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button
+        (click)="onClickNavigateAddDeck()"
+        [disabled]="
+          !creationOptionsAvailable() ||
+          !creationOptionsAvailable().creationNewDeckAvailable
+        "
+      >
+        <ion-icon name="create"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button
+        (click)="onClickNavigateAddDeck()"
+        [disabled]="
+          !creationOptionsAvailable() ||
+          !creationOptionsAvailable().restoreDeckAvailable
+        "
+      >
+        <ion-icon name="refresh"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
 </ion-content>

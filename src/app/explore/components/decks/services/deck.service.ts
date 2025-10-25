@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { environment } from 'src/environments/environment';
+import { CreationOptionsAvailable } from '../models/creation-options-available.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ import { environment } from 'src/environments/environment';
 export class DeckService {
   private readonly DECK = '/deck';
   private readonly IS_DECK_LIMIT_NOT_REACHED = '/isDeckLimitNotReached';
+  private readonly IS_DECK_CREATION_OPTIONS = '/isDeckCreationOptionsAvailable';
 
   constructor(private http: HttpClient) {}
 
@@ -46,5 +48,16 @@ export class DeckService {
    */
   getActiveDecks(): Observable<Deck[]> {
     return this.http.get<Deck[]>(environment.BASE_URL + this.DECK);
+  }
+
+  /**
+   * Return if is possible to create a new Deck o to recycle one already removed
+   *
+   * @returns CreationOptionsAvailable
+   */
+  isDeckCreationOptionsAvailable(): Observable<CreationOptionsAvailable> {
+    return this.http.get<CreationOptionsAvailable>(
+      environment.BASE_URL + this.DECK + this.IS_DECK_CREATION_OPTIONS,
+    );
   }
 }

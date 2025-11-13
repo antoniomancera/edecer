@@ -1,7 +1,11 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+
+import { TranslocoService } from '@jsverse/transloco';
+
+import { combineLatest, map } from 'rxjs';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { MessagingService } from 'src/app/shared/services/messaging.service';
@@ -10,7 +14,9 @@ import {
   AddEditOrInfo,
   DeckStateService,
 } from './add-deck-modal/services/deck-state.service';
-import { combineLatest, map } from 'rxjs';
+import { DeckService } from './services/deck.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
+import { CreationOptionsAvailable } from './models/creation-options-available.model';
 
 @Component({
   selector: 'app-decks',
@@ -29,6 +35,7 @@ export class DecksComponent implements OnInit {
     subHeader: '',
   };
   isPlatformDesktop = signal<boolean>(false);
+  creationOptionsAvailable = signal<CreationOptionsAvailable>(undefined);
 
   constructor(
     private messagingService: MessagingService,
@@ -36,6 +43,10 @@ export class DecksComponent implements OnInit {
     private modalController: ModalController,
     private router: Router,
     private deckStateService: DeckStateService,
+    private deckService: DeckService,
+    private alertController: AlertController,
+    private translocoService: TranslocoService,
+    private toastService: ToastService,
   ) {}
 
   ngOnInit() {
@@ -62,7 +73,7 @@ export class DecksComponent implements OnInit {
       .subscribe();
   }
 
-  async onClickOpenEditDeck(selectedDeck: Deck) {
+  async onClickOpenInfoDeck(selectedDeck: Deck) {
     this.selectedDeck = selectedDeck;
     const modal = await this.modalController.create({
       component: InfoDeckModalComponent,
@@ -71,7 +82,54 @@ export class DecksComponent implements OnInit {
       },
       initialBreakpoint: 0.9,
     });
+
     await modal.present();
+    modal.onDidDismiss().then((deck) => {
+      this.updateDeckEndDate(deck.data);
+    });
+  }
+
+  async presentIsDeckLimitReachedAlert() {
+    const alert = await this.alertController.create({
+      header: this.translocoService.translate(
+        'explore.decks.is-deck-limit-reached-alert.title',
+      ),
+      message: this.translocoService.translate(
+        'explore.decks.is-deck-limit-reached-alert.text',
+      ),
+      buttons: [this.translocoService.translate('global.accept')],
+    });
+
+    await alert.present();
+  }
+
+  async onClickPresentRemoveDeckAlert(deck: Deck) {
+    let deckName = deck.name ? deck.name : '';
+
+    const alert = await this.alertController.create({
+      header: this.translocoService.translate(
+        'explore.decks.update-end-date-alert.title',
+        { deckName: deckName },
+      ),
+      message: this.translocoService.translate(
+        'explore.decks.update-end-date-alert.text',
+      ),
+      buttons: [
+        {
+          text: this.translocoService.translate('global.cancel'),
+          role: 'cancel',
+        },
+        {
+          text: this.translocoService.translate('global.accept'),
+          role: 'confirm',
+          handler: () => {
+            this.updateDeckEndDate(deck);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
   onClickSetSelected(selectedDeck: Deck) {
@@ -84,11 +142,55 @@ export class DecksComponent implements OnInit {
   }
 
   onClickNavigateAddDeck() {
-    this.deckStateService.setAddEditOrInfo(AddEditOrInfo.ADD);
-    this.router.navigate(['decks/add-deck']);
+    this.deckService
+      .isDeckLimitNotReached()
+      .subscribe((isDeckLimitNotReached) => {
+        if (!isDeckLimitNotReached) {
+          this.presentIsDeckLimitReachedAlert();
+        } else {
+          this.deckStateService.setAddEditOrInfo(AddEditOrInfo.ADD);
+          this.router.navigate(['decks/add-deck']);
+        }
+      });
   }
 
   onClickNavigateExplore() {
     this.router.navigate(['tabs/explore']);
+  }
+
+  onClickNavigateStudy() {
+    this.router.navigate(['tabs/study']);
+  }
+
+  onClickEditDeck(selectedDeck: Deck) {
+    this.selectedDeck = selectedDeck;
+    this.deckStateService.setAddEditOrInfo(AddEditOrInfo.EDIT);
+    this.deckStateService.setSelectedDeck(this.selectedDeck);
+    this.router.navigate(['decks/edit-deck']);
+  }
+
+  onClickSetCreationOptionsAvailable() {
+    this.deckService
+      .isDeckCreationOptionsAvailable()
+      .subscribe((creationOptionsAvailable) =>
+        this.creationOptionsAvailable.set(creationOptionsAvailable),
+      );
+  }
+
+  private getActiveDecks() {
+    this.isLoading = true;
+    this.deckService.getActiveDecks().subscribe((decks) => {
+      this.decks = decks;
+      this.messagingService.setDecksHome(decks);
+      this.isLoading = false;
+    });
+  }
+
+  private updateDeckEndDate(deck: Deck) {
+    const deckName = deck.name ? deck.name : '';
+    this.deckService.updateDeckEndDate(deck.id).subscribe((deck) => {
+      this.toastService.showSuccessToast(deckName + ' eliminado con éxito');
+      this.getActiveDecks();
+    });
   }
 }

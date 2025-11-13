@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { Home } from 'src/app/home/models/home.interface';
 import { UserInfo } from 'src/app/home/models/user-info.interface';
+import { Deck } from '../models/deck.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -50,5 +51,11 @@ export class MessagingService {
 
   setIsPlatformDesktop(isPlatformDesktop: boolean) {
     this.isPlatformDesktop.next(isPlatformDesktop);
+  }
+  
+  setDecksHome(decks: Deck[]) {
+    let home = this.home.value;
+    home.decks = decks;
+    this.setHome(home);
   }
 }

@@ -1,7 +1,9 @@
-import { ChangeDetectorRef, Component, Input, signal } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+
+import { TranslocoService } from '@jsverse/transloco';
 
 import { Deck } from 'src/app/shared/models/deck.interface';
 import { PhraseTranslationWithWordTranslations } from 'src/app/shared/models/phrase.interface';
@@ -9,7 +11,6 @@ import { WordWithAttemptsAndSuccess } from 'src/app/shared/models/word.interface
 import { DeckWordPhraseTranslationService } from 'src/app/shared/services/deck-word-phrase-translation.service';
 import { PhraseService } from 'src/app/shared/services/phrase.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { WordTranslationService } from 'src/app/shared/services/word-translation.service';
 import {
   AddEditOrInfo,
   DeckStateService,
@@ -28,7 +29,6 @@ export class InfoDeckModalComponent {
   hasLoadWords = false;
   hasLoadPhrases = false;
   phrasesWithWordTranslations: PhraseTranslationWithWordTranslations[] = [];
-  // wordTranslationsWithPhrases: WordTranslationWithPhraseTranslations[] = [];
   selectedSegment = 'info';
   pageNumber = signal<number>(0);
   pageSize = signal<number>(10);
@@ -37,16 +37,15 @@ export class InfoDeckModalComponent {
   constructor(
     private phraseService: PhraseService,
     private toastService: ToastService,
-    private wordTranslationService: WordTranslationService,
     private deckWordPhraseTranslationService: DeckWordPhraseTranslationService,
-    private cdRef: ChangeDetectorRef,
     private modalController: ModalController,
     private deckStateService: DeckStateService,
     private router: Router,
+    private alertController: AlertController,
+    private translocoService: TranslocoService,
   ) {}
 
   onChangeSegment(selectedSegment: string) {
-    console.log('getWordWithAttemptsAndSuccessPaginated');
     if (selectedSegment === 'words' && !this.hasLoadWords) {
       this.isLoading = true;
       this.hasLoadWords = true;
@@ -67,18 +66,6 @@ export class InfoDeckModalComponent {
             this.toastService.showDangerToast(err.message);
           },
         });
-      // this.wordTranslationService
-      //   .getAllWordTranslationWithPhrasesByDeck(this.selectedDeck.id)
-      //   .subscribe({
-      //     next: (wordTranslationsWithPhrases) => {
-      //       this.wordTranslationsWithPhrases = wordTranslationsWithPhrases;
-      //       this.isLoading = false;
-      //     },
-      //     error: (err) => {
-      //       this.toastService.showDangerToast(err.message);
-      //       this.isLoading = false;
-      //     },
-      //   });
     }
     if (selectedSegment === 'phrases' && !this.hasLoadPhrases) {
       this.isLoading = true;
@@ -111,7 +98,10 @@ export class InfoDeckModalComponent {
         word.wordSenseInfoWithoutWord = data;
         word.word.isLoading = false;
       });
-    console.log(word);
+  }
+
+  onClickNavigateStudy() {
+    this.router.navigate(['tabs/study']);
   }
 
   onClickEditDeck() {
@@ -119,5 +109,34 @@ export class InfoDeckModalComponent {
     this.deckStateService.setAddEditOrInfo(AddEditOrInfo.EDIT);
     this.deckStateService.setSelectedDeck(this.selectedDeck);
     this.router.navigate(['decks/edit-deck']);
+  }
+
+  async onClickPresentRemoveDeckAlert() {
+    let deckName = this.selectedDeck.name ? this.selectedDeck.name : '';
+
+    const alert = await this.alertController.create({
+      header: this.translocoService.translate(
+        'explore.decks.update-end-date-alert.title',
+        { deckName: deckName },
+      ),
+      message: this.translocoService.translate(
+        'explore.decks.update-end-date-alert.text',
+      ),
+      buttons: [
+        {
+          text: this.translocoService.translate('global.cancel'),
+          role: 'cancel',
+        },
+        {
+          text: this.translocoService.translate('global.accept'),
+          role: 'confirm',
+          handler: () => {
+            this.modalController.dismiss(this.selectedDeck);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 }

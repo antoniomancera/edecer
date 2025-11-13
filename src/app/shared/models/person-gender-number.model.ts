@@ -9,3 +9,10 @@ export interface Gender extends BasicEntity {
 export interface Number extends BasicEntity {
   globalIndex?: number;
 }
+
+export interface PersonGenderNumber {
+  person: Person;
+  gender: Gender;
+  number: Number;
+  personGenderNumberEnum: string;
+}

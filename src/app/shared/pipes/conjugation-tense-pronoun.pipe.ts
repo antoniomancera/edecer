@@ -8,7 +8,7 @@ import { ConjugationWordPosition } from '../models/conjugation-word-position.int
 })
 export class ConjugationTensePronounPipe implements PipeTransform {
   transform(
-    conjugationWordPositions: [string, ConjugationWordPosition[]]
+    conjugationWordPositions: [string, ConjugationWordPosition[]],
   ): string {
     return (
       this.getPronoun(conjugationWordPositions[0]) +
@@ -26,22 +26,13 @@ export class ConjugationTensePronounPipe implements PipeTransform {
     conjugationWordPosition.sort((a, b) => a.position - b.position);
     conjugationWordPosition.map((conju) => {
       if (conju.wordSense) {
-        conjugation += conju.wordSense?.word.name;
-      } else if (
-        conju.conjugationRegularIrregular?.conjugationRegular &&
-        conju.conjugationRegularIrregular?.conjugationIrregular
-      ) {
-        conjugation += conju.conjugationRegularIrregular.conjugationIrregular;
-      } else if (
-        !conju.conjugationRegularIrregular?.conjugationRegular &&
-        conju.conjugationRegularIrregular?.conjugationIrregular
-      ) {
-        conjugation += conju.conjugationRegularIrregular.conjugationRegular;
-      } else if (
-        conju.conjugationRegularIrregular?.conjugationRegular &&
-        !conju.conjugationRegularIrregular?.conjugationIrregular
-      ) {
-        conjugation += conju.conjugationRegularIrregular.conjugationIrregular;
+        conjugation += ' ' + conju.wordSense?.word.name;
+      } else if (conju.conjugationRegularIrregular?.conjugationIrregular) {
+        conjugation +=
+          ' ' + conju.conjugationRegularIrregular.conjugationIrregular;
+      } else if (conju.conjugationRegularIrregular?.conjugationRegular) {
+        conjugation +=
+          ' ' + conju.conjugationRegularIrregular.conjugationRegular;
       }
     });
 
